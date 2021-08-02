@@ -1,3 +1,3 @@
 <?php declare(strict_types = 1);
 
-echo 'benis';
+   require_once('../app/start.php');
