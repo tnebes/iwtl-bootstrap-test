@@ -40,6 +40,8 @@
             }
             else
             {
+               require_once '..' . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'controllers' . DIRECTORY_SEPARATOR . 'ErrorPages' . '.php';
+               $this->currentController = new ErrorPages();
                $this->currentMethod = 'notFound';
             }
          }
