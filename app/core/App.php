@@ -3,7 +3,7 @@
    class App
    {
       protected $currentController = 'Pages';
-      protected $currentAction = 'index';
+      protected $currentMethod = 'index';
       protected $currentParams = [];
 
       public function __construct()
@@ -13,7 +13,7 @@
          if (!$url)
          {
             $url[0] = $this->currentController;
-            $url[1] = $this->currentAction;
+            $url[1] = $this->currentMethod;
          }
 
          if (file_exists(APP_ROOT . '/controllers/' . ucwords($url[0]) . '.php'))
@@ -23,21 +23,24 @@
          }
          else
          {
-            $this->currentController = 'Error';
+            $this->currentController = 'ErrorPages';
             $this->currentMethod = 'notFound';
             $skipMethod = true;
          }
+
+         require_once '..' . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'controllers' . DIRECTORY_SEPARATOR . $this->currentController . '.php';
+         $this->currentController = new $this->currentController();
 
          if (!$skipMethod && isset($url[1]))
          {
             if (method_exists($this->currentController, $url[1]))
             {
-               $this->currentAction = $url[1];
+               $this->currentMethod = $url[1];
                unset($url[1]);
             }
             else
             {
-               $this->currentAction = 'notFound';
+               $this->currentMethod = 'notFound';
             }
          }
 
