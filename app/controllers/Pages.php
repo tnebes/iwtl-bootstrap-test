@@ -11,4 +11,11 @@
       {
          $this->view('pages/index');
       }
+
+      // TODO: implement this
+      public function about() : void
+      {
+         $this->view('error/error');
+      }
+
    }

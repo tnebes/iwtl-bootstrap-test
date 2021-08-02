@@ -30,4 +30,18 @@
 html, body
 {
    background-color: var(--bs-gray);
+   /* TODO: check if the colour should be removed */
+   color: var(--bs-white);
 }
+
+
+@media (min-width: 768px) 
+{
+   li > a
+   {
+      margin-top: 0.25rem;
+      margin-bottom: 0.25rem;
+   }
+}
+
+
