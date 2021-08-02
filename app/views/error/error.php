@@ -11,7 +11,7 @@
       require_once(APP_ROOT . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'navigator.php');
    ?>
    <div class="container">
-      Hello, world!
+      Error
    </div>
 
    <?php

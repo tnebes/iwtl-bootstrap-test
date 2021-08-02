@@ -7,13 +7,19 @@
          // TODO:
       }
 
+      // TODO: implement data for these pages instead of using three different pages!
       public function notFound() : void
       {
-         $this->view('error/notFound');
+         $this->view('error/error');
       }
 
       public function restricted() : void
       {
-         $this->view('error/restricted');
+         $this->view('error/error');
+      }
+
+      public function notImplemented() : void
+      {
+         $this->view('error/error');
       }
    }

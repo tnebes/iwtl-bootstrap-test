@@ -23,7 +23,8 @@
 <meta name="msapplication-TileColor" content="#ffffff">
 <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
 <meta name="theme-color" content="#ffffff">
-<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"/>
+<!-- <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"/> -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <!-- ensures that the stylesheet gets loaded every time the user loads the page -->
 <link rel="stylesheet" type="text/css" href="/css/style.css?t=<?php echo time();?>"/>
 <link rel="preconnect" href="https://fonts.googleapis.com">
