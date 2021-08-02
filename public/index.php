@@ -1,3 +1,3 @@
 <?php declare(strict_types = 1);
 
-   require_once('../app/start.php');
+   require_once('..' . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'start.php');

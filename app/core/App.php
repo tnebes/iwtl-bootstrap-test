@@ -23,7 +23,7 @@
          }
          else
          {
-            $this->currentController = 'Pages';
+            $this->currentController = 'Error';
             $this->currentMethod = 'notFound';
             $skipMethod = true;
          }
