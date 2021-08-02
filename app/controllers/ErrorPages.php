@@ -17,5 +17,3 @@
          $this->view('error/restricted');
       }
    }
-
-?>

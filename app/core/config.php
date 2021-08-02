@@ -13,4 +13,3 @@
 
    /* Constants for the database */
 
-?>
