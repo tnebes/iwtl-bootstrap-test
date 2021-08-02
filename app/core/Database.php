@@ -24,6 +24,7 @@
          }
          catch (PDOException $e)
          {
+            // TODO: find a more secure way to handle this
             $this->error = $e->getMessage();
             debugDisplay($this->error);
          }
@@ -53,9 +54,9 @@
          $this->statement->bindValue($parameter, $value, $type);
       }
 
-      public function execute() : void
+      public function execute() : bool
       {
-         $this->statement->execute();
+         return $this->statement->execute();
       }
 
       // TODO: do something here so that the object gets cast into its respective object
@@ -76,5 +77,5 @@
          $this->execute();
          return $this->statement->rowCount();
       }
-      
+
    }

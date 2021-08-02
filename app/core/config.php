@@ -11,5 +11,7 @@
    define('DB_USER', 'edunova');
    define('DB_PASS', 'edunova');
 
-   /* Constants for the database */
+   // Constants for the database
+   define('PUBLIC_SQL_DATA', 'id, username, registrationDate');
+   define('PRIVATE_SQL_DATA', 'id, username, email, registrationDate, role, lastLogin, banned, dateBanned');
 
