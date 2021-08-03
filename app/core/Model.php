@@ -3,6 +3,7 @@
 abstract Class Model
 {
    protected $db;
+   protected $TABLE_NAME;
 
    public function __construct()
    {
@@ -11,7 +12,8 @@ abstract Class Model
 
    /**
     * Protected create function.
-    * @param tname is the table name in the SQL database
+    * @return bool
+    * @param tName is the table name in the SQL database
     * @param cols is the column(s) to be created
     * @param vals is the values to be inserted into the columns
     */
@@ -21,6 +23,11 @@ abstract Class Model
       if (empty($tName))
       {
          die('Table name not defined.');
+      }
+
+      if (empty($cols) || empty($vals))
+      {
+         die('No columns or values specified');
       }
 
       if (count($cols) != count($vals))
@@ -59,14 +66,76 @@ abstract Class Model
       return $this->db->execute();
    }
 
-   protected function read() : array
+   /**
+    * Protected read function
+    * @return bool
+    * @param tName table name
+    * @param cols affected columns
+    * @param criteria where criteria
+    * @param criteriaVals where criteria values
+    * SELECT cols FROM tName WHERE criterion0 = criteriaVal0 OR criterion1 = criterionVal1...
+    */
+   protected function read(string $tName, array $cols, ?array $criteria, ?array $criteriaVals) : array
    {
+      if (empty($tName))
+      {
+         die('Table name not defined.');
+      }
+      if (empty($cols))
+      {
+         die('Columns not defined.');
+      }
 
-      return [];
+      $statement = 'SELECT ';
+      if (count($cols) === 1 && $cols[0] == '*')
+      {
+         $statement .= $cols[0] . ' ';
+      }
+      else
+      {
+         for ($i = 0; $i < count($cols); $i++)
+         {
+            $statement .= $cols[$i];
+            if ($i < count($cols) - 1)
+            {
+               $statement .= ',';
+            }   
+         }
+      }
+
+      $statement .= 'FROM';
+      $statement .= $tName;
+      if (!empty($criteria) && !empty($criteriaVals))
+      {
+         $statement .= ' WHERE';
+         for ($i = 0; $i < count($criteria); $i++)
+         {
+            $statement .= $criteria[$i] . '=' . '?';
+            if ($i < count($cols) - 1)
+            {
+               $statement .= ' OR ';
+            }   
+         }
+      }
+      $statement .= ';';
+      $this->db->query($statement);
+
+      for ($i = 1; $i <= count($criteriaVals); $i++)
+      {
+         $this->db->bind($i, $criteriaVals[$i - 1]);
+      }
+
+      return $this->db->resultSet();
    }
+
+   protected function readSingle(string $tName, array $cols, ?array $criteria, ?array $criteriaVals) : ?stdClass
+   {
+      return $this->read($tName, $cols, $criteria, $criteriaVals)[0];
+   }
+
+
    protected function update() : bool
    {
-
       return true;
    }
    protected function delete() : bool
