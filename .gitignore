@@ -1,0 +1,6 @@
+*.log
+*.un~
+*.*~
+*id_rsa*
+*error_log*
+*.map
