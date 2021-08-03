@@ -1,12 +1,7 @@
 <?php declare(strict_types = 1);
 
-   Class User
+   Class User extends Model
    {
-      private $db;
-
-      public function __construct()
-      {
-         $this->db = new Database();
-      }
+      
 
    }

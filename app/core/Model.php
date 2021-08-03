@@ -2,100 +2,63 @@
 
 abstract Class Model
 {
-   protected $data;
+   protected $db;
 
    public function __construct()
    {
-      $this->data = [];
+      $this->db = new Database();
    }
 
-   private function query(string $tableName, array $columnNames, array $values, array $criteria,  array $criteriaValues) : array
+   /**
+    * Protected create function.
+    * @param tname is the table name in the SQL database
+    * @param cols is the column(s) to be created
+    * @param vals is the values to be inserted into the columns
+    */
+   protected function create(string $tName, array $cols, array $vals) : bool
    {
-      define('TABLE_NAME', 0);
-      define('CONDITIONS_VALUES', 1);
-      define('CRITERIA_VALUES', 2);
-
-      // edge case for select and other possible SQL queries.
-      if (count($values) != 0 && (count($columnNames) != count($values)))
+      // TODO: proper exception required.
+      if (empty($tName))
       {
-         die('You have entered too few values into SQL.');
-      }
-      if (count($criteriaValues) != 0 && (count($criteria) != count($criteriaValues)))
-      {
-         die('You have entered too few criteria values into SQL.');
+         die('Table name not defined.');
       }
 
-      $statement = [];
-      $statement[TABLE_NAME] = $tableName;
-      $statement[CONDITIONS_VALUES] = [];
-      if (count($columnNames) == 1 && $columnNames[0] == '*')
+      if (count($cols) != count($vals))
       {
-         $statement[CONDITIONS_VALUES][0] = '*';
+         die('Too few arguments for creation');
       }
-      else
+      //
+
+      $statement = 'INSERT INTO ';
+      $statement .= $tName;
+      $statement .= ' (';
+      for ($i = 0; $i < count($cols); $i++)
       {
-         for ($i = 0; $i < count($columnNames) - 1; $i++)
+         $statement .= $cols[$i];
+         if ($i < count($cols) - 1)
          {
-            $phrase = '';
-            $phrase .= "$columnNames[$i]";
-            if (!($i > count($values)))
-            {
-               $phrase .= "=$values[$i]";
-            }
-            // TODO: this is not efficient
-            if ($i == count($columnNames) - 2)
-            {
-               $statement[CONDITIONS_VALUES][$i] = $phrase;
-            }
-            else
-            {
-               $phrase = ',';
-               $statement[CONDITIONS_VALUES][$i] = $phrase;
-            }
+            $statement .= ',';
          }
       }
-
-      $statement[CRITERIA_VALUES] = [];
-      if (count($criteria) == 1 && $criteria[0] == '*')
+      $statement .= ') ';
+      $statement .= 'VALUES (';
+      for ($i = 0; $i < count($vals); $i++)
       {
-         $statement[CONDITIONS_VALUES][0] = '*';
-      }
-      else
-      {
-         for ($i = 0; $i < count($criteria) - 1; $i++)
+         $statement .= '?';
+         if ($i < count($vals) - 1)
          {
-            $phrase = '';
-            $phrase .= "$criteria[$i]";
-            if (!($i > count($criteriaValues)))
-            {
-               $phrase .= "=$criteriaValues[$i]";
-            }
-            // TODO: this is not efficient
-            if ($i == count($criteria) - 2)
-            {
-               $statement[CONDITIONS_VALUES][$i] = $phrase;
-            }
-            else
-            {
-               $phrase = ',';
-               $statement[CONDITIONS_VALUES][$i] = $phrase;
-            }
+            $statement .= ',';
          }
       }
-
-
-
-
-
-
-      return [];
+      $statement .= ');';
+      $this->db->query($statement);
+      for ($i = 1; $i <= count($vals); $i++)
+      {
+         $this->db->bind($i, $vals[$i - 1]);
+      }
+      return $this->db->execute();
    }
 
-   protected function create() : bool
-   {
-
-      return true;
-   }
    protected function read() : array
    {
 
