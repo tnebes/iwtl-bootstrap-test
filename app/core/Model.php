@@ -123,11 +123,13 @@ abstract Class Model
       $statement .= ';';
       $this->db->query($statement);
 
-      for ($i = 1; $i <= count($criteriaVals); $i++)
+      if (!empty($criteria) && !empty($criteriaVals))
       {
-         $this->db->bind($i, $criteriaVals[$i - 1]);
+         for ($i = 1; $i <= count($criteriaVals); $i++)
+         {
+            $this->db->bind($i, $criteriaVals[$i - 1]);
+         }
       }
-
       return $this->db->resultSet();
    }
 

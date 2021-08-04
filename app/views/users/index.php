@@ -12,7 +12,10 @@
    ?>
 
    <!-- Boostrap table containing id, username, email, role, dateRegistered, lastLogin, banned, dateBanned -->
+   
    <div class="table-responsive">
+      <?php if(isAdmin()): ?>
+      <?php $users = $data['users']; ?>
       <table class="table table-hover">
          <thead>
             <tr>
@@ -24,26 +27,51 @@
                <th>Last Login</th>
                <th>Banned</th>
                <th>Date Banned</th>
+               <th>Actions</th>
             </tr>
          </thead>
          <tbody>
             <?php
-               // foreach ($users as $user) 
+               foreach ($users as $user) 
                {
                   echo '<tr>';
                   echo '<td>' . $user->id . '</td>';
                   echo '<td>' . $user->username . '</td>';
                   echo '<td>' . $user->email . '</td>';
                   echo '<td>' . $user->role . '</td>';
-                  echo '<td>' . $user->dateRegistered . '</td>';
+                  echo '<td>' . $user->registrationDate . '</td>';
                   echo '<td>' . $user->lastLogin . '</td>';
                   echo '<td>' . $user->banned . '</td>';
                   echo '<td>' . $user->dateBanned . '</td>';
+                  echo '<td>' . '</td>';
                   echo '</tr>';
                }
             ?>
          </tbody>
       </table>
+      <?php else: ?>
+         <?php $users = $data['users']; ?>
+         <table class="table table-hover">
+         <thead>
+            <tr>
+               <th>Username</th>
+               <th>Date Registered</th>
+            </tr>
+         </thead>
+         <tbody>
+            <?php
+               foreach ($users as $user) 
+               {
+                  echo '<tr>';
+                  echo '<td>' . $user->username . '</td>';
+                  echo '<td>' . $user->registrationDate . '</td>';
+                  echo '</tr>';
+               }
+            ?>
+         </tbody>
+      </table>
+
+      <?php endif;?>
    </div>
 
    <?php

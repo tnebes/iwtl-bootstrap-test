@@ -17,14 +17,14 @@
          $data = [];
          if (isAdmin())
          {
-            echo 'admin';
+            $users = $this->model->getUsersPrivate();
+            $data['users'] = $users;
          }
          else
          {
-            echo 'not admin';
+            $users = $this->model->getUsersPublic();
+            $data['users'] = $users;
          }
-
-
          $this->view('users/index', $data);
       }
 

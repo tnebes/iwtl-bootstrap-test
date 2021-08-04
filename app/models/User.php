@@ -40,12 +40,12 @@
 
       public function getUsersPrivate() : array
       {
-         return [];
+         return $this->read($this->TABLE_NAME, [PRIVATE_SQL_DATA], null, null);
       }
 
       public function getUsersPublic() : array
       {
-         return [];
+         return $this->read($this->TABLE_NAME, [PUBLIC_SQL_DATA], null, null);
       }
 
       public function userByEmailExists(string $email) : bool

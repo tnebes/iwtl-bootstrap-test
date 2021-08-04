@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-   define('APP_NAME', 'IWTL Bootstrap');
+   define('APP_NAME', 'IWTL-B');
    define('APP_AUTHOR', 'tnebes');
 
    define('URL_ROOT', 'bootstrap.com');
