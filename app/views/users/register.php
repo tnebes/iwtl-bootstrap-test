@@ -7,7 +7,7 @@
    <link rel="stylesheet" type="text/css" href="login-register.css">
 
 </head>
-<body class="text-center">
+<body class="text-center h-100">
    <?php
       require_once(APP_ROOT . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'navigator.php');
    ?>

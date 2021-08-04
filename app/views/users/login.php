@@ -7,7 +7,7 @@
    <link rel="stylesheet" type="text/css" href="login-register.css">
 
 </head>
-<body class="text-center">
+<body class="text-center h-100">
    <?php
       require_once(APP_ROOT . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'navigator.php');
    ?>
@@ -25,7 +25,7 @@
                <label for="password">Password</label>
             </div>
                <?php if(isset($data['loginError']) && !empty($data['loginError'])): ?>
-               <div class="alert rk">
+               <div class="alert alert-warning">
                   <?php echo $data['loginError']?>
                </div>
                <?php endif; ?>
@@ -34,6 +34,12 @@
          <div class="container w-75">
             <h1 class="h5 mt-5 fw-normal">Not registered?</h1>
             <button class="w-100 btn btn-lg btn-outline-info mb-5" type="submit">Register</button>
+         </div>
+         <div class="alert alert-primary" role="alert">
+            <h1 class="h3 mt-2 fw-normal">Temporary login data</h1>
+            <span class="badge badge-primary">Administrator</span> <span class="text-primary">t@nebes.hr</span> <span class="text-secondary">letmeinside1</span>
+            <br/>
+            <span class="badge badge-info">User</span> <span class="text-primary">normal@person.com</span> <span class="text-secondary">letmeinside1</span>
          </div>
       </div>
    </main>
