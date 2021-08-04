@@ -30,12 +30,8 @@
          return password_verify($password, $hashedPassword) ? $user : null;
       }
 
-      public function register(array $data) : bool
+      public function register(string $username, string $email, string $password) : bool
       {
-         $username = $data['username'];
-         $email = $data['email'];
-         $password = $data['password'];
-
          return $this->create($this->TABLE_NAME,
             ['username', 'password', 'email'],
             [$username, $password, $email]

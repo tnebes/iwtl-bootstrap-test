@@ -15,17 +15,17 @@
       <div class="container w-25 h-75">
          <form class="from-inline" method="POST" action="/users/login">
             <img class="mb-4" src="/img/logo2.png" width="150">
-            <h1 class="h3 mb-3 fw-normal">Sign in</h1>
+            <h1 class="h2 mb-3 fw-normal">Sign in</h1>
             <div class="form-floating">
                <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com">
-               <label for="floatingInput">Email address</label>
+               <label for="email">Email address</label>
             </div>
             <div class="form-floating">
                <input type="password" class="form-control" id="password" name="password" placeholder="Password">
-               <label for="floatingPassword">Password</label>
+               <label for="password">Password</label>
             </div>
                <?php if(isset($data['loginError']) && !empty($data['loginError'])): ?>
-               <div class="alert alert-danger">
+               <div class="alert rk">
                   <?php echo $data['loginError']?>
                </div>
                <?php endif; ?>
