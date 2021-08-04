@@ -1,3 +1,6 @@
+<?php debugDisplay($_POST);
+debugDisplay($_SESSION);
+?>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <a class="navbar-brand" href="/">Navbar</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -34,14 +37,14 @@
       </li> -->
       <?php if(isLoggedIn()): ?>)
          <li class="nav-item">
-            <a class="nav-link disabled" href="users/register">My profile</a>
+            <a class="nav-link disabled" href="/users/register">My profile</a>
          </li>
       <?php else: ?>
          <li class="nav-item">
-            <a class="nav-link btn btn-outline-info mx-1" href="users/login">Login</a>
+            <a class="nav-link btn btn-outline-info mx-1" href="/users/login">Login</a>
          </li>
          <li class="nav-item">
-            <a class="nav-link btn btn-info mx-1" href="users/register">Register</a>
+            <a class="nav-link btn btn-info mx-1" href="/users/register">Register</a>
          </li>
       <?php endif; ?>
     </ul>

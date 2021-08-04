@@ -2,18 +2,21 @@
 
    Class User extends Model
    {
+      protected $TABLE_NAME;
 
       public function __construct()
       {
+         parent::__construct();
          $this->TABLE_NAME = 'user';
       }
 
-      public function login(string $username, string $password) : ?stdClass
+      public function login(string $email, string $password) : ?stdClass
       {
-         $user = $this->readSingle($this->TABLE_NAME,
+         $user = $this->readSingle(
+            $this->TABLE_NAME,
             ['*'],
-            ['username'],
-            [$username]
+            ['email'],
+            [$email]
          );
          if (!$user)
          {

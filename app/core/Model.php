@@ -8,6 +8,10 @@ abstract Class Model
    public function __construct()
    {
       $this->db = new Database();
+      if (empty($this->db))
+      {
+         die('Could not connect to database.');
+      }
    }
 
    /**
@@ -68,7 +72,7 @@ abstract Class Model
 
    /**
     * Protected read function
-    * @return bool
+    * @return array
     * @param tName table name
     * @param cols affected columns
     * @param criteria where criteria
@@ -103,11 +107,11 @@ abstract Class Model
          }
       }
 
-      $statement .= 'FROM';
+      $statement .= 'FROM ';
       $statement .= $tName;
       if (!empty($criteria) && !empty($criteriaVals))
       {
-         $statement .= ' WHERE';
+         $statement .= ' WHERE ';
          for ($i = 0; $i < count($criteria); $i++)
          {
             $statement .= $criteria[$i] . '=' . '?';
@@ -118,6 +122,7 @@ abstract Class Model
          }
       }
       $statement .= ';';
+      debugDisplay($this->db);
       $this->db->query($statement);
 
       for ($i = 1; $i <= count($criteriaVals); $i++)
@@ -130,7 +135,8 @@ abstract Class Model
 
    protected function readSingle(string $tName, array $cols, ?array $criteria, ?array $criteriaVals) : ?stdClass
    {
-      return $this->read($tName, $cols, $criteria, $criteriaVals)[0];
+      $single = $this->read($tName, $cols, $criteria, $criteriaVals)[0];
+      return $single ? $single : null;
    }
 
 
