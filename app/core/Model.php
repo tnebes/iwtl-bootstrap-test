@@ -134,8 +134,8 @@ abstract Class Model
 
    protected function readSingle(string $tName, array $cols, ?array $criteria, ?array $criteriaVals) : ?stdClass
    {
-      $single = $this->read($tName, $cols, $criteria, $criteriaVals)[0];
-      return $single ? $single : null;
+      $results = $this->read($tName, $cols, $criteria, $criteriaVals);
+      return !empty($results) ? $results[0] : null;
    }
 
 

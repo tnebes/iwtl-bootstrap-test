@@ -38,7 +38,7 @@
             {
                $data['loginError'] .= 'Email is required. ';
             }
-            if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL))
+            else if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL))
             {
                $data['loginError'] .= 'A valid email is required. ';
             }   
@@ -53,6 +53,10 @@
                if ($user)
                {
                   createUserSession($user);
+               }
+               else
+               {
+                  $data['loginError'] .= 'Invalid email or password.';
                }
             }
          }

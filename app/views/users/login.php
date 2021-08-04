@@ -24,6 +24,11 @@
                <input type="password" class="form-control" id="password" name="password" placeholder="Password">
                <label for="floatingPassword">Password</label>
             </div>
+               <?php if(isset($data['loginError']) && !empty($data['loginError'])): ?>
+               <div class="alert alert-danger">
+                  <?php echo $data['loginError']?>
+               </div>
+               <?php endif; ?>
             <button class="w-75 btn btn-lg btn-info" type="submit" id="submit" value="submit">Sign in</button>
          </form>
          <div class="container w-75">
