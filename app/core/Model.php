@@ -106,7 +106,7 @@ abstract Class Model
          }
       }
 
-      $statement .= 'FROM ';
+      $statement .= ' FROM ';
       $statement .= $tName;
       if (!empty($criteria) && !empty($criteriaVals))
       {

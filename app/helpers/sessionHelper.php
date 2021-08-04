@@ -11,7 +11,8 @@
    {
       if (isLoggedIn())
       {
-         new User();
+         $userModel = new User();
+         return $userModel->getIsAdmin($_SESSION['id']);
       }
       return false;
    }

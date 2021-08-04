@@ -15,3 +15,5 @@
    define('PUBLIC_SQL_DATA', 'id, username, registrationDate');
    define('PRIVATE_SQL_DATA', 'id, username, email, registrationDate, role, lastLogin, banned, dateBanned');
 
+   define('ADMIN_ROLE', 1);
+

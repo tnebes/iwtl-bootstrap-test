@@ -9,7 +9,23 @@
 
       public function index() : void
       {
-         $this->view('users/index');
+         if (!isLoggedIn())
+         {
+            $this->view('error/error/notAuthorised');
+            return;
+         }
+         $data = [];
+         if (isAdmin())
+         {
+            echo 'admin';
+         }
+         else
+         {
+            echo 'not admin';
+         }
+
+
+         $this->view('users/index', $data);
       }
 
       public function login() : void
@@ -53,6 +69,8 @@
                if (!empty($user))
                {
                   createUserSession($user);
+                  $this->view('pages/index');
+                  return;
                }
                else
                {

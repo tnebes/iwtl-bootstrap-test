@@ -88,6 +88,12 @@
          return null;
       }
 
+      public function getIsAdmin(string $id) : bool
+      {
+         // TODO: bad and messy.
+         return $this->read($this->TABLE_NAME, ['role'], ['id'], [$id])[0]->role == ADMIN_ROLE;
+      }
+
 
 
    }
