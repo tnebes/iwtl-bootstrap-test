@@ -14,6 +14,11 @@
 
       public function login() : void
       {
+         if (isLoggedIn())
+         {
+            $this->view('pages/index');
+            return;
+         }
          $data = 
          [
             'email' => '',
@@ -26,6 +31,8 @@
             $data['email'] = trim($_POST['email']);
             $data['email'] = filter_var($data['email'], FILTER_SANITIZE_EMAIL);
             $data['password'] = trim($_POST['password']);
+            unset($_POST['email']);
+            unset($_POST['password']);
 
             if (empty($data['email']))
             {
@@ -56,6 +63,17 @@
 
       public function register() : void
       {
+         if (isLoggedIn())
+         {
+            $this->view('pages/index');
+            return;
+         }
          
+      }
+
+      public function logout() : void
+      {
+         clearUserSession();
+         $this->view('/pages/index');
       }
    }

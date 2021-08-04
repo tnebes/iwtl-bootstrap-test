@@ -21,3 +21,9 @@
       $_SESSION['id'] = $user->id;
       $_SESSION['username'] = $user->username;
    }
+
+   function clearUserSession() : void
+   {
+      unset($_SESSION['id']);
+      unset($_SESSION['username']);
+   }

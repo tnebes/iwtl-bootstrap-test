@@ -21,23 +21,10 @@ debugDisplay($_SESSION);
       </li>
       <?php if(isLoggedIn()): ?>
          <li class="nav-item">
-            <a class="nav-link" href="/suggestions/index">Suggestions</a>
+            <a class="nav-link" href="/users/profile">My Profile</a>
          </li>
-      <?php endif; ?>
-      <!-- <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Dropdown
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Something else here</a>
-        </div>
-      </li> -->
-      <?php if(isLoggedIn()): ?>)
          <li class="nav-item">
-            <a class="nav-link disabled" href="/users/register">My profile</a>
+            <a class="nav-link btn btn-outline-info mx-1" href="/users/logout">Logout <?php echo($_SESSION['username']);?></a>
          </li>
       <?php else: ?>
          <li class="nav-item">

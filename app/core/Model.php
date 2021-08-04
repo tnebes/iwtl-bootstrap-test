@@ -122,7 +122,6 @@ abstract Class Model
          }
       }
       $statement .= ';';
-      debugDisplay($this->db);
       $this->db->query($statement);
 
       for ($i = 1; $i <= count($criteriaVals); $i++)
