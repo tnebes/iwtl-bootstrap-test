@@ -50,12 +50,12 @@
 
       public function userByEmailExists(string $email) : bool
       {
-         return true;
+         return $this->readSingle($this->TABLE_NAME, ['*'], ['email'], [$email]) ? true : false;
       }
 
       public function userByUsernameExists(string $username) : bool
       {
-         return true;
+         return $this->readSingle($this->TABLE_NAME, ['*'], ['username'], [$username]) ? true : false;
       }
 
       public function getUsersById(array $id) : array

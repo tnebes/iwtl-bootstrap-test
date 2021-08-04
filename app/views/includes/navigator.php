@@ -21,7 +21,13 @@ debugDisplay($_SESSION);
       </li>
       <?php if(isLoggedIn()): ?>
          <li class="nav-item">
+            <a class="nav-link" href="/users/index">Users</a>
+         </li>
+         <li class="nav-item">
             <a class="nav-link" href="/users/profile">My Profile</a>
+         </li>
+         <li class="nav-item">
+            <a class="nav-link" href="/er/index">ER diagram</a>
          </li>
          <li class="nav-item">
             <a class="nav-link btn btn-outline-info mx-1" href="/users/logout">Logout <?php echo($_SESSION['username']);?></a>

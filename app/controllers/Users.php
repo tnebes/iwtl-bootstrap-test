@@ -86,8 +86,8 @@
          if ($_SERVER['REQUEST_METHOD'] === 'POST')
          {
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-            $data['username'] = trim($_POST['username']);
-            $data['email'] = trim($_POST['email']);
+            $data['username'] = strtolower(trim($_POST['username']));
+            $data['email'] = strtolower(trim($_POST['email']));
             $data['password'] = trim($_POST['password']);
             $data['confirmPassword'] = trim($_POST['confirmPassword']);
             unset($_POST['username']);
@@ -97,24 +97,24 @@
             
             if (empty($data['username']))
             {
-               $data['usernameError'] .= 'Username is required. ';
+               $data['usernameError'] .= ' is required. ';
             }
             else if (strlen($data['username']) < 3)
             {
-               $data['usernameError'] .= 'Username must be at least 3 characters long. ';
+               $data['usernameError'] .= ' must be at least 3 characters long. ';
             }
             else if (strlen($data['username']) > 20)
             {
-               $data['usernameError'] .= 'Username must be no more than 20 characters long. ';
+               $data['usernameError'] .= ' must be no more than 20 characters long. ';
             }
             else if (!ctype_alnum($data['username']))
             {
-               $data['usernameError'] .= 'Username must be alphanumeric. ';
+               $data['usernameError'] .= ' must be alphanumeric. ';
             }
 
             if (empty($data['email']))
             {
-               $data['emailError'] .= 'Email is required. ';
+               $data['emailError'] .= ' is required. ';
             }
             else if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL))
             {
@@ -123,20 +123,29 @@
 
             if (empty($data['password']))
             {
-               $data['passwordError'] .= 'Password is required. ';
+               $data['passwordError'] .= ' is required. ';
             }
             else if (strlen($data['password']) < 6)
             {
-               $data['passwordError'] .= 'Password must be at least 6 characters long. ';
+               $data['passwordError'] .= ' must be at least 6 characters long. ';
             }
             else if (strlen($data['password']) > 20)
             {
-               $data['passwordError'] .= 'Password must be no more than 20 characters long. ';
+               $data['passwordError'] .= ' must be no more than 20 characters long. ';
             }
 
             if ($data['password'] !== $data['confirmPassword'])
             {
-               $data['confirmPasswordError'] .= 'Passwords do not match. ';
+               $data['confirmPasswordError'] .= ' do not match. ';
+            }
+            else if (empty($data['confirmPassword']))
+            {
+               $data['confirmPasswordError'] .= ' is required. ';
+            }
+
+            if($this->model->userByUsernameExists($data['username']) || $this->model->userByEmailExists($data['email']))
+            {
+               $data['usernameError'] .= ' or email already taken.';
             }
 
             if (empty($data['usernameError']) && empty($data['emailError']) && empty($data['passwordError']) && empty($data['confirmPasswordError']))
@@ -150,7 +159,7 @@
                }
                else
                {
-                  $data['usernameError'] .= 'Username is already taken. ';
+                  $data['usernameError'] .= ' is already taken. ';
                }
             }
          }

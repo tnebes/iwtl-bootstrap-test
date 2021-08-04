@@ -10,7 +10,7 @@ abstract Class Model
       $this->db = new Database();
       if (empty($this->db))
       {
-         die('Could not connect to database.');
+         die('Could not connect to database. Please check the connection data.');
       }
    }
 
@@ -38,8 +38,7 @@ abstract Class Model
       {
          die('Too few arguments for creation');
       }
-      //
-
+      
       $statement = 'INSERT INTO ';
       $statement .= $tName;
       $statement .= ' (';
