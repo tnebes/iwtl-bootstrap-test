@@ -11,7 +11,7 @@
       {
          if (!isLoggedIn())
          {
-            $this->view('error/error/notAuthorised');
+            $this->view('error/error/403');
             return;
          }
          $data = [];
@@ -44,7 +44,7 @@
          if ($_SERVER['REQUEST_METHOD'] === 'POST')
          {
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-            $data['email'] = trim($_POST['email']);
+            $data['email'] = strtolower(trim($_POST['email']));
             $data['email'] = filter_var($data['email'], FILTER_SANITIZE_EMAIL);
             $data['password'] = trim($_POST['password']);
             unset($_POST['email']);

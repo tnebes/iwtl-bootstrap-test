@@ -5,6 +5,7 @@
    require_once('core' . DIRECTORY_SEPARATOR . 'Controller.php');
    require_once('core' . DIRECTORY_SEPARATOR . 'Database.php');
    require_once('core' . DIRECTORY_SEPARATOR . 'Model.php');
+   require_once('core' . DIRECTORY_SEPARATOR . 'Image.php');
    require_once('helpers' . DIRECTORY_SEPARATOR . 'sessionHelper.php');
    require_once('helpers' . DIRECTORY_SEPARATOR . 'debugHelper.php');
 

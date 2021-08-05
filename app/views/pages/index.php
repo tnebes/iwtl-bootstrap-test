@@ -6,7 +6,7 @@
    ?>
 
 </head>
-<body class="d-flex flex-column h-100">
+<body class="d-flex flex-column">
    <main class="flex-shrink-0">
       <?php
          require_once(APP_ROOT . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'navigator.php');

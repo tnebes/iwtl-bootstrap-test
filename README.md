@@ -31,7 +31,7 @@ A web application for collecting information on how to learn anything.
 
 - [x] The application has metadata according to http://ogp.me/
 
-- [ ] The application has favicons created using http://www.favicon-generator.org/
+- [x] The application has favicons created using http://www.favicon-generator.org/
 
 - [x] To enter and change in the ~~a session~~ database, it is necessary to make controls of all entered data 
 

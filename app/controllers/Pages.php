@@ -15,7 +15,7 @@
       // TODO: implement this
       public function about() : void
       {
-         $this->view('error/error');
+         $this->view('error/error/404');
       }
 
    }

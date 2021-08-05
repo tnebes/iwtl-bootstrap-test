@@ -24,10 +24,10 @@
             <a class="nav-link" href="/users/profile">My Profile</a>
          </li>
          <li class="nav-item">
-            <a class="nav-link" href="/er/index">ER diagram</a>
+            <a class="nav-link btn btn-outline-success mx-1" href="/er/index">ER diagram</a>
          </li>
          <li class="nav-item">
-            <a class="nav-link btn btn-outline-info mx-1" href="/users/logout">Logout <?php echo($_SESSION['username']);?></a>
+            <a class="nav-link btn btn-outline-info mx-1" href="/users/logout">Logout <span style="font-weight: bold;"><?php echo($_SESSION['username']);?></span></a>
          </li>
       <?php else: ?>
          <li class="nav-item">
