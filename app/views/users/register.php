@@ -12,7 +12,7 @@
       require_once(APP_ROOT . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'navigator.php');
    ?>
    <main class="form-signin">
-      <div class="container w-25 h-75">
+      <div class="container w-75 mx-auto">
          <form class="from-inline" method="POST" action="/users/register">
             <img class="mb-4" src="/img/logo2.png" width="150">
             <h1 class="h2 mb-3 fw-normal">Register</h1>
@@ -47,9 +47,11 @@
             <button class="w-75 btn btn-lg btn-info mb-5" type="submit" id="submit" value="submit">Register</button>
          </form>
       </div>
-   </main>
    <?php
       require_once(APP_ROOT . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'footer.php');
+      ?>
+   </main>
+   <?php
       require_once(APP_ROOT . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'scripts.php');
    ?>
 </body>

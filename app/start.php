@@ -8,5 +8,6 @@
    require_once('core' . DIRECTORY_SEPARATOR . 'Image.php');
    require_once('helpers' . DIRECTORY_SEPARATOR . 'sessionHelper.php');
    require_once('helpers' . DIRECTORY_SEPARATOR . 'debugHelper.php');
+   require_once('helpers' . DIRECTORY_SEPARATOR . 'userHelper.php');
 
    $app = new App();

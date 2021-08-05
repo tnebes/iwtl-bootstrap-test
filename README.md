@@ -19,7 +19,7 @@ A web application for collecting information on how to learn anything.
 
 - [ ] The private part must allow CRUD - entry, reading, modification and deletion of all data to one entity of your final work that is not bound to some other table with a foreign key. The data is stored in the ~~Session~~ DB.
 
-- [ ] Upload to hosting application
+- [x] Upload to hosting application
 
 - [x] Upload to github code
 
@@ -27,7 +27,7 @@ A web application for collecting information on how to learn anything.
 
 - [x] In the public part of the application, place a link to the github code
 
-- [ ] On the private part of the application put a link to the ERA diagram
+- [x] On the private part of the application put a link to the ERA diagram
 
 - [x] The application has metadata according to http://ogp.me/
 
