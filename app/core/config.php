@@ -3,7 +3,7 @@
    define('APP_NAME', 'IWTL-B');
    define('APP_AUTHOR', 'tnebes');
 
-   define('URL_ROOT', 'bootstrap.com');
+   define('URL_ROOT', 'http://bootstrap.com');
    define('APP_ROOT', dirname(dirname(__FILE__)));
 
    define('DB_HOST', 'localhost');
