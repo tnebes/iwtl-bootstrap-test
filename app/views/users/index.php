@@ -14,7 +14,7 @@
       <div class="table-responsive">
          <?php if(isAdmin()): ?>
          <?php $users = $data['users']; ?>
-         <table class="table table-hover">
+         <table class="table table-hover table-list">
             <thead>
                <tr>
                   <th>ID</th>
@@ -41,7 +41,7 @@
                      echo '<td>' . $user->lastLogin . '</td>';
                      echo '<td>' . $user->banned . '</td>';
                      echo '<td>' . $user->dateBanned . '</td>';
-                     echo '<td>' . 'meh' . '</td>';
+                     echo '<td>' . getUserActions($user->id) . '</td>';
                      echo '</tr>';
                   }
                ?>

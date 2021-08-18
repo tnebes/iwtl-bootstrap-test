@@ -34,7 +34,6 @@ html, body
    color: var(--bs-white);
 }
 
-
 @media (min-width: 768px) 
 {
    li > a
@@ -42,6 +41,11 @@ html, body
       margin-top: 0.25rem;
       margin-bottom: 0.25rem;
    }
+}
+
+.table-list
+{
+   font-size: 0.8rem;
 }
 
 
