@@ -9,7 +9,7 @@
 
 </head>
 
-<body class="text-center h-100">
+<body class="flex-column mt-0 pt-0 text-center h-100 w-100">
    <?php
    require_once(APP_ROOT . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'navigator.php');
    ?>
