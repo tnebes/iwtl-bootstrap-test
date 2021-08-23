@@ -184,6 +184,41 @@
          $this->view('/users/register', $data);
       }
 
+      public function profile() : void
+      {
+         if (!isLoggedIn())
+         {
+            $this->view('pages/error/restricted');
+         }
+
+         $id = func_get_arg(0);
+         if (empty($id))
+         {
+            $id = $_SESSION['id'];
+         }
+         $user = $this->model->getUserById((int) $id);
+         if (empty($user))
+         {
+            $this->view('pages/error/notFound', ['User not found', '']);
+         }
+         $this->view('pages/users/profile' . $id, [$user]);
+      }
+
+      public function update() : void
+      {
+
+      }
+
+      public function delete() : void
+      {
+
+      }
+
+      public function ban() : void
+      {
+
+      }
+
       public function logout() : void
       {
          clearUserSession();

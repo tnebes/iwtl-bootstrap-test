@@ -63,22 +63,22 @@
          return [];
       }
 
-      public function getUserById(string $id) : ?stdClass
+      public function getUserById(int $id) : ?stdClass
       {
          return null;
       }
 
-      public function banUserById(string $id) : bool
+      public function banUserById(int $id) : bool
       {
          return true;
       }
 
-      public function unbanUserById(string $id) : bool
+      public function unbanUserById(int $id) : bool
       {
          return true;
       }
 
-      public function deleteUserById(string $id) : bool
+      public function deleteUserById(int $id) : bool
       {
          return true;
       }

@@ -21,7 +21,7 @@
             <a class="nav-link" href="/users/index">Users</a>
          </li>
          <li class="nav-item">
-            <a class="nav-link" href="/users/profile">My Profile</a>
+            <a class="nav-link" href="/users/profile/<?php echo $_SESSION['id']?>">My Profile</a>
          </li>
          <li class="nav-item">
             <a class="nav-link btn btn-outline-success mx-1" href="/er/index">ER diagram</a>

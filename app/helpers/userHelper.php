@@ -7,7 +7,7 @@
       $returnString = '';
       foreach ($methods as $method)
       {
-         $returnString .= '<a href=' . URL_ROOT . '/users/' . $method . '/' . $userId . '>ICON</a>';
+         $returnString .= '<a href=' . URL_ROOT . '/users/' . $method . '/' . $userId . '>' . $method . '</a>';
       }
       return $returnString;
    }
