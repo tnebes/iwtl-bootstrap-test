@@ -81,6 +81,8 @@
 
       public function deleteUserById(int $id) : bool
       {
+         // TODO: implement an admin check so that admins cannot be deleted by using getIsAdmin();
+         return $this->delete('user', ['id'], [$id]);
          return true;
       }
 

@@ -41,7 +41,7 @@
                      echo '<td>' . $user->lastLogin . '</td>';
                      echo '<td>' . $user->banned . '</td>';
                      echo '<td>' . $user->dateBanned . '</td>';
-                     echo '<td>' . getUserActions($user->id) . '</td>';
+                     echo '<td>' . getUserActionsAdmin((int) $user->id) . '</td>';
                      echo '</tr>';
                   }
                ?>
@@ -54,6 +54,7 @@
                <tr>
                   <th>Username</th>
                   <th>Date Registered</th>
+                  <th>Actions</th>
                </tr>
             </thead>
             <tbody>
@@ -63,6 +64,7 @@
                      echo '<tr>';
                      echo '<td>' . $user->username . '</td>';
                      echo '<td>' . $user->registrationDate . '</td>';
+                     echo '<td>' . getUserActions((int) $user->id) . '</td>';
                      echo '</tr>';
                   }
                ?>

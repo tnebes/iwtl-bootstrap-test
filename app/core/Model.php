@@ -144,10 +144,40 @@ abstract Class Model
    {
       return true;
    }
-   protected function delete() : bool
+   protected function delete(string $tName, ?array $criteria, ?array $criteriaVals) : bool
    {
-
-      return true;
+      if (empty($tName))
+      {
+         die('Table name not defined.');
+      }
+      if (empty($criteria) && empty($criteriaVals))
+      {
+         die('No criteria or values specified');
+      }
+      $statement = 'DELETE FROM ';
+      $statement .= $tName;
+      if (!empty($criteria) && !empty($criteriaVals))
+      {
+         $statement .= ' WHERE ';
+         for ($i = 0; $i < count($criteria); $i++)
+         {
+            $statement .= $criteria[$i] . '=' . '?';
+            if ($i < count($criteria) - 1)
+            {
+               $statement .= ' AND ';
+            }
+         }
+      }
+      $statement .= ';';
+      $this->db->query($statement);
+      if (!empty($criteria) && !empty($criteriaVals))
+      {
+         for ($i = 1; $i <= count($criteriaVals); $i++)
+         {
+            $this->db->bind($i, $criteriaVals[$i - 1]);
+         }
+      }
+      return $this->db->execute();
    }
    
 

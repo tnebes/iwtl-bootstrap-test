@@ -217,7 +217,31 @@
 
       public function delete() : void
       {
+         if (!isLoggedIn())
+         {
+            header('location: /errorpages/restricted');
+            return;
+         }
+         $id = func_get_args();
+         if (empty($id))
+         {
+            header('location: /errorpages/internalError');
+            return;
+         }
+         $id = (int) $id[0];
+         $user = $this->model->getUserById((int) $id);
+         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
+         if ($_SERVER['REQUEST_METHOD'] === 'POST')
+         {
+            if (isset($_POST['confirm']) && filter_var($_POST['confirm'], FILTER_VALIDATE_BOOLEAN))
+            {
+               $this->model->deleteUserById($id);
+               $this->index();
+               return;
+            }
+         }
+         $this->view('users/delete', [$user]);
       }
 
       public function ban() : void

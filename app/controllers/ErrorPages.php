@@ -22,4 +22,9 @@
       {
          $this->view('error/error/', ['Work in progress. Check back later.', "This feature is not implemented yet."]);
       }
+
+      public function internalError() : void
+      {
+         $this->view('error/error/', ['Internal server error.', "Something went wrong on our side."]);
+      }
    }
