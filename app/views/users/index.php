@@ -36,10 +36,10 @@
                      echo '<td>' . $user->id . '</td>';
                      echo '<td>' . $user->username . '</td>';
                      echo '<td>' . $user->email . '</td>';
-                     echo '<td>' . $user->role . '</td>';
+                     echo '<td>' . roleToString($user->role) . '</td>';
                      echo '<td>' . $user->registrationDate . '</td>';
                      echo '<td>' . $user->lastLogin . '</td>';
-                     echo '<td>' . $user->banned . '</td>';
+                     echo '<td>' . bannedToCheckbox($user->banned, true) . '</td>';
                      echo '<td>' . $user->dateBanned . '</td>';
                      echo '<td>' . getUserActionsAdmin((int) $user->id) . '</td>';
                      echo '</tr>';

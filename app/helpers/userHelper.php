@@ -24,3 +24,19 @@
       return $returnString;
 
    }
+
+   function roleToString(int $role) : string
+   {
+      $roles = ['user', 'admin'];
+      return $roles[$role];
+   }
+
+   function bannedToString(int $banned) : string
+   {
+      return $banned ? 'yes' : 'no';
+   }
+
+   function bannedToCheckbox(int $banned, bool $disabled = false) : string
+   {
+      return '<input class="form-check-input mx-auto" type="checkbox" name="banned" value="" ' . ($disabled ? 'disabled' : '') . ' ' . ($banned ? 'checked' : '') . '>';
+   }

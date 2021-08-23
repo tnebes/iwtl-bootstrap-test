@@ -46,7 +46,7 @@
                   </div>
                   <div class="col-md-6">
                      <label class="badge bg-info text-dark">Role</label>
-                     <p><?php echo $data->role ?></p>
+                     <p><?php echo roleToString($data->role); ?></p>
                   </div>
                </div>
                <div class="row">
@@ -58,7 +58,7 @@
                <div class="row">
                   <div class="col-md-6">
                      <label class="badge bg-info text-dark">Banned</label>
-                     <p><?php echo $data->banned ?></p>
+                     <p><?php echo bannedToCheckbox($data->banned, true) ?></p>
                   </div>
                   <div class="col-md-6">
                      <label class="badge bg-info text-dark">Date Banned</label>
