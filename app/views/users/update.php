@@ -20,11 +20,11 @@
             <div class="card-header">
                <h2 class="alert alert-primary">
                   <?php
-                  echo $data->username ?>'s Profile
+                  echo 'Edit ' . $data->username ?>'s Profile
                </h2>
                <?php
-               echo '<a class="button warning" href=' . URL_ROOT . '/users/delete/' . $data->id . '>Delete User</a>';
-               echo '<a class="button alert" href=' . URL_ROOT . '/users/ban/' . $data->id . '>Ban User</a>';
+               echo '<a class="btn btn-danger" href=' . URL_ROOT . '/users/delete/' . $data->id . '>Delete User</a>';
+               echo '<a class="btn btn-warning" href=' . URL_ROOT . '/users/ban/' . $data->id . '>Ban User</a>';
                ?>
             </div>
             <form class="card-body" method="POST" action="<?php echo URL_ROOT . '/users/update/' . $data->id; ?>">
@@ -53,6 +53,10 @@
                      <label class="badge bg-info text-dark">Registration Date</label>
                      <p><?php echo $data->registrationDate ?></p>
                   </div>
+                  <div class="col-md-6">
+                     <label class="badge bg-info text-dark">New Registration Date</label>
+                     <input type="date" name="registrationDate" class="form-control" value="<?php echo date("mm-dd-yyyy", strtotime($data->registrationDate)) // TODO: doesn't work ?>">
+                  </div>
                </div>
                <div class="row">
                   <div class="col-md-6">
@@ -72,60 +76,35 @@
                      <label class="badge bg-info text-dark">Last Login</label>
                      <p><?php echo $data->lastLogin ?></p>
                   </div>
+                  <div class="col-md-6">
+                     <label class="badge bg-info text-dark">New Last Login</label>
+                     <input type="date" name="lastLogin" class="form-control" value="<?php echo date("mm-dd-yyyy", strtotime($data->lastLogin)) // TODO: doesn't work ?>">
+                  </div>
                </div>
                <div class="row">
                   <div class="col-md-6">
                      <label class="badge bg-info text-dark">Banned</label>
-                     <p><?php echo $data->banned ?></p>
-                  </div>
-                  <div class="col-md-6">
-                     <label class="badge bg-info text-dark">New Banned</label>
-                     <br/>
-                     <input class="left" type="checkbox" name="banned" class="form-control" value="1" <?php echo $data->banned ? 'checked' : '' ?>>
+                     <p>
+                        <?php echo bannedToCheckbox($data->banned) ?>
+                     </p>
                   </div>
                </div>
                <div class="row">
                   <div class="col-md-6">
                      <label class="badge bg-info text-dark">Date Banned</label>
                      <p><?php echo $data->dateBanned ?></p>
+                  </div>
+                  <div class="col-md-6">
+                     <label class="badge bg-info text-dark">New Date Banned</label>
+                     <input type="date" name="dateBanned" class="form-control" value="<?php echo date("mm-dd-yyyy", strtotime($data->dateBanned)) // TODO: doesn't work ?>">
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="col-md-6">
+                     <input type="submit" class="btn btn-success" value="Update User">
                   </div>
                </div>
             </form>
-         </div>
-      <?php else : ?>
-         <div class="card bg-dark">
-            <div class="card-header">
-               <h2 class="alert alert-primary">
-                  <?php
-                  echo $data->username ?>'s Profile
-               </h2>
-            </div>
-            <div class="card-body">
-               <div class="row">
-                  <div class="col-md-6">
-                     <label class="badge bg-info text-dark">Username</label>
-                     <p><?php echo $data->username ?></p>
-                  </div>
-                  <div class="col-md-6">
-                     <label class="badge bg-info text-dark">Registration Date</label>
-                     <p><?php echo $data->registrationDate ?></p>
-                  </div>
-                  <div class="col-md-6">
-                     <label class="badge bg-info text-dark">Role</label>
-                     <p><?php echo $data->role ?></p>
-                  </div>
-               </div>
-               <div class="row">
-                  <div class="col-md-6">
-                     <label class="badge bg-info text-dark">Banned</label>
-                     <p><?php echo $data->banned ?></p>
-                  </div>
-                  <div class="col-md-6">
-                     <label class="badge bg-info text-dark">Date Banned</label>
-                     <p><?php echo $data->dateBanned ?></p>
-                  </div>
-               </div>
-            </div>
          </div>
       <?php endif; ?>
 

@@ -23,10 +23,10 @@
                   echo $data->username ?>'s Profile
                </h2>
                <?php
-                  echo '<a class="button" href=' . URL_ROOT . '/users/update/' . $data->id . '>Edit User</a>';
-                  echo '<a class="button warning" href=' . URL_ROOT . '/users/delete/' . $data->id . '>Delete User</a>';
-                  echo '<a class="button alert" href=' . URL_ROOT . '/users/ban/' . $data->id . '>Ban User</a>';
-               ?>
+                  echo '<a class="btn btn-info" href=' . URL_ROOT . '/users/update/' . $data->id . '>Edit User</a>';
+                  echo '<a class="btn btn-danger" href=' . URL_ROOT . '/users/delete/' . $data->id . '>Delete User</a>';
+                  echo '<a class="btn btn-warning" href=' . URL_ROOT . '/users/ban/' . $data->id . '>Ban User</a>';
+                  ?>
             </div>
             <div class="card-body">
                <div class="row">
