@@ -188,20 +188,24 @@
       {
          if (!isLoggedIn())
          {
-            $this->view('pages/error/restricted');
+            $this->view('error/restricted');
          }
 
-         $id = func_get_arg(0);
+         $id = func_get_args();
          if (empty($id))
          {
             $id = $_SESSION['id'];
          }
+         else // TODO: terrible way of doing this
+         {
+            $id = $id[0];
+         }
          $user = $this->model->getUserById((int) $id);
          if (empty($user))
          {
-            $this->view('pages/error/notFound', ['User not found', '']);
+            $this->view('error/notFound', ['User not found', '']);
          }
-         $this->view('pages/users/profile' . $id, [$user]);
+         $this->view('users/profile', [$user]);
       }
 
       public function update() : void

@@ -58,14 +58,14 @@
          return $this->readSingle($this->TABLE_NAME, ['*'], ['username'], [$username]) ? true : false;
       }
 
-      public function getUsersById(array $id) : array
-      {
-         return [];
-      }
+      // public function getUsersById(array $id) : array
+      // {
+      //    return $this->read('user', ['*'], ['id'], $id);
+      // }
 
       public function getUserById(int $id) : ?stdClass
       {
-         return null;
+         return $this->read('user', ['*'], ['id'], [$id])[0];
       }
 
       public function banUserById(int $id) : bool
