@@ -65,7 +65,8 @@
 
       public function getUserById(int $id) : ?stdClass
       {
-         return $this->read('user', ['*'], ['id'], [$id])[0];
+         $user = $this->read('user', ['*'], ['id'], [$id]);
+         return $user ? $user[0] : null;
       }
 
       public function banUserById(int $id) : bool

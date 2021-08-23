@@ -11,7 +11,7 @@
       {
          if (!isLoggedIn())
          {
-            $this->view('error/error/403');
+            header('location: error/error/restricted');
             return;
          }
          $data = [];
@@ -188,7 +188,8 @@
       {
          if (!isLoggedIn())
          {
-            $this->view('error/restricted');
+            header('location: /errorpages/restricted');
+            return;
          }
 
          $id = func_get_args();
@@ -203,7 +204,8 @@
          $user = $this->model->getUserById((int) $id);
          if (empty($user))
          {
-            $this->view('error/notFound', ['User not found', '']);
+            header('location: error/notFound');
+            return;
          }
          $this->view('users/profile', [$user]);
       }

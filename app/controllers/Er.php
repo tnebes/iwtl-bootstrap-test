@@ -11,7 +11,7 @@
       {
          if (!isLoggedIn())
          {
-            $this->view('error/error/403');
+            header('location: errorpages/restricted');
             return;
          }
          
