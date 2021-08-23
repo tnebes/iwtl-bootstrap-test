@@ -212,7 +212,85 @@
 
       public function update() : void
       {
+         if (!isLoggedIn())
+         {
+            header('location: /errorpages/restricted');
+            return;
+         }
+         $data = func_get_args();
+         if (empty($data))
+         {
+            header('location: /errorpages/internalError');
+            return;
+         }
+         $id = (int) $data[0];
+         $user = $this->model->getUserById($id);
+         if (empty($user))
+         {
+            header('location: /errorpages/notFound');
+            return;
+         }
+         $data = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+         // TODO: make a method or function that handles the checking of valid and correct information.
+         if ($_SERVER['REQUEST_METHOD'] === 'POST')
+         {
+            return; // TODO: fix this.
+            if (empty($data['username']))
+            {
+               $data['usernameError'] = ' is required. ';
+            }
+            else if (strlen($data['username']) < 3)
+            {
+               $data['usernameError'] = ' must be at least 3 characters long. ';
+            }
+            else if (strlen($data['username']) > 20)
+            {
+               $data['usernameError'] = ' must be no more than 20 characters long. ';
+            }
+            else if (!ctype_alnum($data['username']))
+            {
+               $data['usernameError'] = ' must be alphanumeric. ';
+            }
+            else if ($this->model->userByUsernameExists($data['username'], $id))
+            {
+               $data['usernameError'] = ' is already taken. ';
+            }
+            else if (empty($data['email']))
+            {
+               $data['emailError'] = ' is required. ';
+            }
+            else if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL))
+            {
+               $data['emailError'] = 'A valid email is required. ';
+            }
+            else if ($this->model->userByEmailExists($data['email'], $id))
+            {
+               $data['emailError'] = ' is already taken. ';
+            }
+            else if (empty($data['password']))
+            {
+               $data['passwordError'] = ' is required. ';
+            }
+            else if (strlen($data['password']) < 6)
+            {
+               $data['passwordError'] = ' must be at least 6 characters long. ';
+            }
+            else if (strlen($data['password']) > 20)
+            {
+               $data['passwordError'] = ' must be no more than 20 characters long. ';
+            }
+            else if ($data['password'] !== $data['confirmPassword'])
+            {
+               $data['confirmPasswordError'] = ' do not match. ';
+            }
+            else if (empty($data['confirmPassword']))
+            {
+               $data['confirmPasswordError'] = ' is required. ';
+            }
+         }
+            
 
+         $this->view('users/update', [$user, $data]);
       }
 
       public function delete() : void
@@ -240,6 +318,9 @@
                $this->index();
                return;
             }
+            /// TODO: this should be a proper redirect.
+            $this->index();
+            return;
          }
          $this->view('users/delete', [$user]);
       }

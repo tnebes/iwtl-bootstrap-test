@@ -140,9 +140,48 @@ abstract Class Model
    }
 
 
-   protected function update() : bool
+   protected function update(string $tName, array $cols, array $criteria, array $criteriaVals) : bool
    {
-      return true;
+      if (empty($tName))
+      {
+         die('Table name not defined.');
+      }
+      if (empty($cols))
+      {
+         die('Columns not defined.');
+      }
+      if (count($cols) != count($criteriaVals))
+      {
+         die('Too few arguments for update');
+      }
+      $statement = 'UPDATE ';
+      $statement .= $tName;
+      $statement .= ' SET ';
+      for ($i = 0; $i < count($cols); $i++)
+      {
+         $statement .= $cols[$i] . '=?';
+         if ($i < count($cols) - 1)
+         {
+            $statement .= ',';
+         }
+      }
+      $statement .= ' WHERE ';
+      for ($i = 0; $i < count($criteria); $i++)
+      {
+         $statement .= $criteria[$i] . '=' . '?';
+         if ($i < count($cols) - 1)
+         {
+            // TODO: check if we need to add an AND or OR
+            $statement .= ' AND ';
+         }
+      }
+      $statement .= ';';
+      $this->db->query($statement);
+      for ($i = 1; $i <= count($criteriaVals); $i++)
+      {
+         $this->db->bind($i, $criteriaVals[$i - 1]);
+      }
+      return $this->db->execute();
    }
    protected function delete(string $tName, ?array $criteria, ?array $criteriaVals) : bool
    {
@@ -164,6 +203,7 @@ abstract Class Model
             $statement .= $criteria[$i] . '=' . '?';
             if ($i < count($criteria) - 1)
             {
+               // TODO: check if AND should be used or or.
                $statement .= ' AND ';
             }
          }
