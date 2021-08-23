@@ -12,60 +12,77 @@
    <main>
       <?php
       require_once(APP_ROOT . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'navigator.php');
-      $data = $data[0];
       ?>
 
       <?php if (isAdmin()) : ?>
+         <?php // TODO: this is bad.
+         $user = $data[0];
+         $data = $data[1];
+         ?>
          <div class="card bg-dark">
             <div class="card-header">
                <h2 class="alert alert-primary">
                   <?php
-                  echo 'Edit ' . $data->username ?>'s Profile
+                  echo 'Edit ' . $user->username ?>'s Profile
                </h2>
                <?php
-               echo '<a class="btn btn-danger" href=' . URL_ROOT . '/users/delete/' . $data->id . '>Delete User</a>';
-               echo '<a class="btn btn-warning" href=' . URL_ROOT . '/users/ban/' . $data->id . '>Ban User</a>';
+               echo '<a class="btn btn-danger" href=' . URL_ROOT . '/users/delete/' . $user->id . '>Delete User</a>';
+               echo '<a class="btn btn-warning" href=' . URL_ROOT . '/users/ban/' . $user->id . '>Ban User</a>';
                ?>
             </div>
-            <form class="card-body" method="POST" action="<?php echo URL_ROOT . '/users/update/' . $data->id; ?>">
+            <form class="card-body" method="POST" action="<?php echo URL_ROOT . '/users/update/' . $user->id; ?>">
                <div class="row">
                   <div class="col-md-6">
-                     <label class="badge bg-info text-dark">Username</label>
-                     <p><?php echo $data->username ?></p>
+                     <label class="badge bg-primary text-dark">Username</label>
+                     <p><?php echo $user->username ?></p>
                   </div>
                   <div class="col-md-6">
                      <label class="badge bg-info text-dark">New Username</label>
-                     <input type="text" name="username" class="form-control" value="<?php echo $data->username ?>">
+                     <span class="text-danger"><?php echo $data['usernameError'] ?></span>
+                     <input type="text" name="username" class="form-control" value="<?php echo $user->username ?>">
                   </div>
                </div>
                <div class="row">
                   <div class="col-md-6">
-                     <label class="badge bg-info text-dark">Email</label>
-                     <p><?php echo $data->email ?></p>
+                     <label class="badge bg-primary text-dark">Email</label>
+                     <p><?php echo $user->email ?></p>
                   </div>
                   <div class="col-md-6">
                      <label class="badge bg-info text-dark">New Email</label>
-                     <input type="text" name="email" class="form-control" value="<?php echo $data->email ?>">
+                     <span class="text-danger"><?php echo $data['emailError'] ?></span>
+                     <input type="email" name="email" class="form-control" value="<?php echo $user->email ?>">
                   </div>
                </div>
                <div class="row">
                   <div class="col-md-6">
-                     <label class="badge bg-info text-dark">Registration Date</label>
-                     <p><?php echo $data->registrationDate ?></p>
+                  </div>
+                  <div class="col-md-6">
+                     <label class="badge bg-info text-dark">New Password</label>
+                     <span class="text-danger"><?php echo $data['passwordError'] ?></span>
+                     <input type="password" name="password" class="form-control" value="">
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="col-md-6">
+                     <label class="badge bg-primary text-dark">Registration Date</label>
+                     <p><?php echo $user->registrationDate ?></p>
                   </div>
                   <div class="col-md-6">
                      <label class="badge bg-info text-dark">New Registration Date</label>
-                     <input type="date" name="registrationDate" class="form-control" value="<?php echo date("mm-dd-yyyy", strtotime($data->registrationDate)) // TODO: doesn't work ?>">
+                     <span class="text-danger"><?php echo $data['registrationDateError'] ?></span>
+                     <input type="date" name="registrationDate" class="form-control" value="<?php echo date("mm-dd-yyyy", strtotime($user->registrationDate)) // TODO: doesn't work?>">
                   </div>
                </div>
                <div class="row">
                   <div class="col-md-6">
-                     <label class="badge bg-info text-dark">Role</label>
-                     <p><?php echo $data->role ?></p>
+                     <label class="badge bg-primary text-dark">Role</label>
+                     <p><?php echo roleToString($user->role)?></p>
                   </div>
                   <div class="col-md-6">
                      <label class="badge bg-info text-dark">New Role</label>
+                     <span class="text-danger"><?php echo $data['roleError'] ?></span>
                      <select name="role" class="form-control">
+                        <option selected value="<?php echo $user->role?>"><?php echo roleToString($user->role)?></option>
                         <option value="0">User</option>
                         <option value="1">Admin</option>
                      </select>
@@ -73,30 +90,36 @@
                </div>
                <div class="row">
                   <div class="col-md-6">
-                     <label class="badge bg-info text-dark">Last Login</label>
-                     <p><?php echo $data->lastLogin ?></p>
+                     <label class="badge bg-primary text-dark">Last Login</label>
+                     <p><?php echo $user->lastLogin ?></p>
                   </div>
                   <div class="col-md-6">
                      <label class="badge bg-info text-dark">New Last Login</label>
-                     <input type="date" name="lastLogin" class="form-control" value="<?php echo date("mm-dd-yyyy", strtotime($data->lastLogin)) // TODO: doesn't work ?>">
+                     <span class="text-danger"><?php echo $data['lastLoginError'] ?></span>
+                     <input type="date" name="lastLogin" class="form-control" value="<?php echo date("mm-dd-yyyy", strtotime($user->lastLogin)) // TODO: doesn't work 
+                                                                                       ?>">
                   </div>
                </div>
                <div class="row">
                   <div class="col-md-6">
+                  </div>
+                  <div class="col-md-6">
                      <label class="badge bg-info text-dark">Banned</label>
                      <p>
-                        <?php echo bannedToCheckbox($data->banned) ?>
+                        <?php echo bannedToCheckbox($user->banned) ?>
                      </p>
                   </div>
                </div>
                <div class="row">
                   <div class="col-md-6">
-                     <label class="badge bg-info text-dark">Date Banned</label>
-                     <p><?php echo $data->dateBanned ?></p>
+                     <label class="badge bg-primary text-dark">Date Banned</label>
+                     <p><?php echo $user->dateBanned ?></p>
                   </div>
                   <div class="col-md-6">
                      <label class="badge bg-info text-dark">New Date Banned</label>
-                     <input type="date" name="dateBanned" class="form-control" value="<?php echo date("mm-dd-yyyy", strtotime($data->dateBanned)) // TODO: doesn't work ?>">
+                     <span class="text-danger"><?php echo $data['dateBannedError'] ?></span>
+                     <input type="date" name="dateBanned" class="form-control" value="<?php echo date("mm-dd-yyyy", strtotime($user->dateBanned)) // TODO: doesn't work 
+                                                                                       ?>">
                   </div>
                </div>
                <div class="row">

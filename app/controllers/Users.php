@@ -217,24 +217,54 @@
             header('location: /errorpages/restricted');
             return;
          }
-         $data = func_get_args();
-         if (empty($data))
+         $id = func_get_args();
+         if (empty($id))
          {
             header('location: /errorpages/internalError');
             return;
          }
-         $id = (int) $data[0];
+         $id = (int) $id[0];
+         $data =
+         [
+            'usernameError' => '',
+            'emailError' => '',
+            'passwordError' => '',
+            'registrationDateError' => '',
+            'roleError' => '',
+            'lastLoginError' => '',
+            'dateBannedError' => ''
+         ];
          $user = $this->model->getUserById($id);
          if (empty($user))
          {
             header('location: /errorpages/notFound');
             return;
          }
-         $data = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
          // TODO: make a method or function that handles the checking of valid and correct information.
          if ($_SERVER['REQUEST_METHOD'] === 'POST')
          {
-            return; // TODO: fix this.
+            debugDisplay($_POST);
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+            $data['username'] = strtolower(trim($_POST['username']));
+            $data['email'] = strtolower(trim($_POST['email']));
+            $data['password'] = trim($_POST['password']);
+            // $data['confirmPassword'] = trim($_POST['confirmPassword']);
+            $data['registrationDate'] = trim($_POST['registrationDate']);
+            $data['role'] = trim($_POST['role']);
+            $data['lastLogin'] = trim($_POST['lastLogin']);
+            $data['banned'] = $_POST['banned'];
+            $data['dateBanned'] = trim($_POST['dateBanned']);
+            debugDisplay($data);
+            exit;
+            unset($_POST['username']);
+            unset($_POST['email']);
+            unset($_POST['password']);
+            // unset($_POST['confirmPassword']);
+            unset($_POST['registrationDate']);
+            unset($_POST['role']);
+            unset($_POST['lastLogin']);
+            unset($_POST['dateBanned']);
+
             if (empty($data['username']))
             {
                $data['usernameError'] = ' is required. ';
@@ -279,17 +309,33 @@
             {
                $data['passwordError'] = ' must be no more than 20 characters long. ';
             }
+            else if (!ctype_alnum($data['password']))
+            {
+               $data['passwordError'] = ' must be alphanumeric. ';
+            }
             else if ($data['password'] !== $data['confirmPassword'])
             {
-               $data['confirmPasswordError'] = ' do not match. ';
+               $data['passwordError'] = ' must match password. ';
             }
-            else if (empty($data['confirmPassword']))
+            else if (empty($data['registrationDate']))
             {
-               $data['confirmPasswordError'] = ' is required. ';
+               $data['registrationDateError'] = ' is required. ';
             }
-         }
-            
+            else if (strlen($data['registrationDate']) !== 10)
+            {
+               $data['registrationDateError'] = ' must be in the format YYYY-MM-DD. ';
+            }
+            else if (empty($data['role']))
+            {
+               $data['roleError'] = ' is required. ';
+            }
+            else if (strlen($data['role']) > 20)
+            {
+               $data['roleError'] = ' must be no more than 20 characters long. ';
+            }
 
+
+         }
          $this->view('users/update', [$user, $data]);
       }
 

@@ -38,5 +38,5 @@
 
    function bannedToCheckbox(int $banned, bool $disabled = false) : string
    {
-      return '<input class="form-check-input mx-auto" type="checkbox" name="banned" value="" ' . ($disabled ? 'disabled' : '') . ' ' . ($banned ? 'checked' : '') . '>';
+      return '<input class="form-check-input mx-auto" type="checkbox" id="banned" name="banned" value="" ' . ($disabled ? 'disabled' : '') . ' ' . ($banned ? 'checked' : '') . '>';
    }
