@@ -168,7 +168,6 @@
       }
 
       public function update() : void
-      // TODO: update this update method as it is bad.
       {
          if (!isLoggedIn())
          {
@@ -292,7 +291,7 @@
                {
                   $updatedUser->dateBanned = $data['dateBanned'];
                }
-               
+
                $updatedUser->username = $data['username'];
                $updatedUser->email = $data['email'];
                $updatedUser->role = $data['role'];
@@ -340,7 +339,34 @@
 
       public function ban() : void
       {
-
+         if (!isLoggedIn())
+         {
+            header('location: /errorpages/restricted');
+            return;
+         }
+         $id = func_get_args();
+         if (empty($id))
+         {
+            header('location: /errorpages/internalError');
+            return;
+         }
+         $id = (int) $id[0];
+         $user = $this->model->getUserById((int) $id);
+         if (empty($user))
+         {
+            header('location: /errorpages/internalError');
+            return;
+         }
+         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm']) && filter_var($_POST['confirm'], FILTER_VALIDATE_BOOLEAN))
+         {
+            $user->banned = $user->banned ? 0 : 1;
+            $user->dateBanned = date('Y-m-d H:i:s');
+            $this->model->updateUser($user);
+            header('location: /users/profile/' . $user->id);
+            return;
+         }
+         $this->view('users/ban', [$user]);
       }
 
       public function logout() : void
