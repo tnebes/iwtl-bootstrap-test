@@ -12,10 +12,9 @@
          $this->view('pages/index');
       }
 
-      // TODO: implement this
       public function about() : void
       {
-         header('location: error/notFound');
+         header('location: https://www.github.com/tnebes');
       }
 
    }
