@@ -87,7 +87,7 @@
          $user = (array) $user;
          $userId = (int) $user['id'];
          unset($user['id']); // to prevent the id from being updated
-         return $this->update($this->TABLE_NAME, $user, ['id'], [$userId]);
+         return $this->update($this->TABLE_NAME, $updateTableNames, $user, ['id'], [$userId]);
       }
 
       public function getIsAdmin(string $id) : bool

@@ -140,7 +140,7 @@ abstract Class Model
    }
 
 
-   protected function update(string $tName, array $cols, array $criteria, array $criteriaVals) : bool
+   protected function update(string $tName, array $cols, array $vals, array $criteria, array $criteriaVals) : bool
    {
       if (empty($tName))
       {
@@ -150,16 +150,21 @@ abstract Class Model
       {
          die('Columns not defined.');
       }
-      if (count($cols) != count($criteriaVals))
+      if (count($cols) != count($vals))
       {
-         die('Too few arguments for update');
+         die('Too few values or columns for update');
       }
+      if (count($criteria) != count($criteriaVals))
+      {
+         die('Too few criteria or criteria values for update');
+      }
+
       $statement = 'UPDATE ';
       $statement .= $tName;
       $statement .= ' SET ';
       for ($i = 0; $i < count($cols); $i++)
       {
-         $statement .= $cols[$i] . '=?';
+         $statement .= $cols[$i] . '=' . '?';
          if ($i < count($cols) - 1)
          {
             $statement .= ',';
@@ -169,20 +174,26 @@ abstract Class Model
       for ($i = 0; $i < count($criteria); $i++)
       {
          $statement .= $criteria[$i] . '=' . '?';
-         if ($i < count($cols) - 1)
+         if ($i < count($criteria) - 1)
          {
-            // TODO: check if we need to add an AND or OR
+            // TODO: check whether to use AND or OR
             $statement .= ' AND ';
          }
       }
       $statement .= ';';
       $this->db->query($statement);
+      // bind
+      for ($i = 1; $i <= count($vals); $i++)
+      {
+         $this->db->bind($i, $vals[$i - 1]);
+      }
       for ($i = 1; $i <= count($criteriaVals); $i++)
       {
-         $this->db->bind($i, $criteriaVals[$i - 1]);
+         $this->db->bind($i + count($vals), $criteriaVals[$i - 1]);
       }
       return $this->db->execute();
    }
+
    protected function delete(string $tName, ?array $criteria, ?array $criteriaVals) : bool
    {
       if (empty($tName))
@@ -220,5 +231,4 @@ abstract Class Model
       return $this->db->execute();
    }
    
-
 }
