@@ -70,7 +70,7 @@
                   <div class="col-md-6">
                      <label class="badge bg-info text-dark">New Registration Date</label>
                      <span class="text-danger"><?php echo $data['registrationDateError'] ?></span>
-                     <input type="date" name="registrationDate" class="form-control" value="<?php echo date("mm-dd-yyyy", strtotime($user->registrationDate)) // TODO: doesn't work?>">
+                     <input type="date" name="registrationDate" class="form-control" value="<?php echo date("Y-m-d", strtotime($user->registrationDate));?>">
                   </div>
                </div>
                <div class="row">
@@ -96,8 +96,7 @@
                   <div class="col-md-6">
                      <label class="badge bg-info text-dark">New Last Login</label>
                      <span class="text-danger"><?php echo $data['lastLoginError'] ?></span>
-                     <input type="date" name="lastLogin" class="form-control" value="<?php echo date("mm-dd-yyyy", strtotime($user->lastLogin)) // TODO: doesn't work 
-                                                                                       ?>">
+                     <input type="date" name="lastLogin" class="form-control" value="<?php echo date("Y-m-d", strtotime($user->lastLogin))?>">
                   </div>
                </div>
                <div class="row">
@@ -118,8 +117,7 @@
                   <div class="col-md-6">
                      <label class="badge bg-info text-dark">New Date Banned</label>
                      <span class="text-danger"><?php echo $data['dateBannedError'] ?></span>
-                     <input type="date" name="dateBanned" class="form-control" value="<?php echo date("mm-dd-yyyy", strtotime($user->dateBanned)) // TODO: doesn't work 
-                                                                                       ?>">
+                     <input type="date" name="dateBanned" class="form-control" value="<?php echo date("Y-m-d", strtotime($user->dateBanned)); ?>">
                   </div>
                </div>
                <div class="row">

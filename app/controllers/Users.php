@@ -168,6 +168,7 @@
       }
 
       public function update() : void
+      // TODO: update this update method as it is bad.
       {
          if (!isLoggedIn())
          {
@@ -197,10 +198,14 @@
             header('location: /errorpages/notFound');
             return;
          }
-         // TODO: make a method or function that handles the checking of valid and correct information.
+
          if ($_SERVER['REQUEST_METHOD'] === 'POST')
          {
             $passwordChange = false;
+            $registrationDateChange = false;
+            $lastLoginChange = false;
+            $dateBannedChange = false;
+
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
             $data['username'] = strtolower(trim($_POST['username']));
             $data['email'] = strtolower(trim($_POST['email']));
@@ -225,7 +230,19 @@
             {
                $passwordChange = true;
             }
-
+            if (!empty($data['registrationDate']))
+            {
+               $registrationDateChange = true;
+            }
+            if (!empty($data['lastLogin']))
+            {
+               $lastLoginChange = true;
+            }
+            if (!empty($data['dateBanned']))
+            {
+               $dateBannedChange = true;
+            }
+            
             $data['usernameError'] = validateUsername($data['username']);
             if (checkDuplicateUsername($data['username'], $this->model) && $data['username'] !== $user->username)
             {
@@ -263,13 +280,23 @@
                   $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
                   $updatedUser->password = $data['password'];
                }
+               if ($registrationDateChange)
+               {
+                  $updatedUser->registrationDate = $data['registrationDate'];
+               }
+               if ($lastLoginChange)
+               {
+                  $updatedUser->lastLogin = $data['lastLogin'];
+               }
+               if ($dateBannedChange)
+               {
+                  $updatedUser->dateBanned = $data['dateBanned'];
+               }
+               
                $updatedUser->username = $data['username'];
                $updatedUser->email = $data['email'];
-               $updatedUser->registrationDate = $data['registrationDate'];
                $updatedUser->role = $data['role'];
-               $updatedUser->lastLogin = $data['lastLogin'];
                $updatedUser->banned = $data['banned'];
-               $updatedUser->dateBanned = $data['dateBanned'];
 
                $this->model->updateUser($updatedUser);
                header('location: /users/profile/' . $updatedUser->id);
