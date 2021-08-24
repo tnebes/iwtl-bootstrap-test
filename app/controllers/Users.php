@@ -113,53 +113,10 @@
             unset($_POST['password']);
             unset($_POST['confirmPassword']);
             
-            if (empty($data['username']))
-            {
-               $data['usernameError'] .= ' is required. ';
-            }
-            else if (strlen($data['username']) < 3)
-            {
-               $data['usernameError'] .= ' must be at least 3 characters long. ';
-            }
-            else if (strlen($data['username']) > 20)
-            {
-               $data['usernameError'] .= ' must be no more than 20 characters long. ';
-            }
-            else if (!ctype_alnum($data['username']))
-            {
-               $data['usernameError'] .= ' must be alphanumeric. ';
-            }
-
-            if (empty($data['email']))
-            {
-               $data['emailError'] .= ' is required. ';
-            }
-            else if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL))
-            {
-               $data['emailError'] .= 'A valid email is required. ';
-            }
-
-            if (empty($data['password']))
-            {
-               $data['passwordError'] .= ' is required. ';
-            }
-            else if (strlen($data['password']) < 6)
-            {
-               $data['passwordError'] .= ' must be at least 6 characters long. ';
-            }
-            else if (strlen($data['password']) > 20)
-            {
-               $data['passwordError'] .= ' must be no more than 20 characters long. ';
-            }
-
-            if ($data['password'] !== $data['confirmPassword'])
-            {
-               $data['confirmPasswordError'] .= ' do not match. ';
-            }
-            else if (empty($data['confirmPassword']))
-            {
-               $data['confirmPasswordError'] .= ' is required. ';
-            }
+            $data['usernameError'] = validateUsername($data['username']);
+            $data['emailError'] = validateEmail($data['email']);
+            $data['passwordError'] = validatePassword($data['password']);
+            $data['confirmPasswordError'] = validateConfirmPassword($data['password'], $data['confirmPassword']);
 
             if($this->model->userByUsernameExists($data['username']) || $this->model->userByEmailExists($data['email']))
             {
@@ -243,98 +200,81 @@
          // TODO: make a method or function that handles the checking of valid and correct information.
          if ($_SERVER['REQUEST_METHOD'] === 'POST')
          {
-            debugDisplay($_POST);
+            $passwordChange = false;
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
             $data['username'] = strtolower(trim($_POST['username']));
             $data['email'] = strtolower(trim($_POST['email']));
             $data['password'] = trim($_POST['password']);
-            // $data['confirmPassword'] = trim($_POST['confirmPassword']);
             $data['registrationDate'] = trim($_POST['registrationDate']);
             $data['role'] = trim($_POST['role']);
             $data['lastLogin'] = trim($_POST['lastLogin']);
-            $data['banned'] = $_POST['banned'];
+            $data['banned'] = isset($_POST['banned']) ? 1 : 0; // TODO: bad workaround for when banned doesn't exist
             $data['dateBanned'] = trim($_POST['dateBanned']);
-            debugDisplay($data);
-            exit;
+
             unset($_POST['username']);
             unset($_POST['email']);
             unset($_POST['password']);
-            // unset($_POST['confirmPassword']);
             unset($_POST['registrationDate']);
             unset($_POST['role']);
             unset($_POST['lastLogin']);
             unset($_POST['dateBanned']);
+            unset($_POST['banned']);
 
-            if (empty($data['username']))
+            // case when the user wishes to change the password
+            if (!empty($data['password']))
             {
-               $data['usernameError'] = ' is required. ';
-            }
-            else if (strlen($data['username']) < 3)
-            {
-               $data['usernameError'] = ' must be at least 3 characters long. ';
-            }
-            else if (strlen($data['username']) > 20)
-            {
-               $data['usernameError'] = ' must be no more than 20 characters long. ';
-            }
-            else if (!ctype_alnum($data['username']))
-            {
-               $data['usernameError'] = ' must be alphanumeric. ';
-            }
-            else if ($this->model->userByUsernameExists($data['username'], $id))
-            {
-               $data['usernameError'] = ' is already taken. ';
-            }
-            else if (empty($data['email']))
-            {
-               $data['emailError'] = ' is required. ';
-            }
-            else if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL))
-            {
-               $data['emailError'] = 'A valid email is required. ';
-            }
-            else if ($this->model->userByEmailExists($data['email'], $id))
-            {
-               $data['emailError'] = ' is already taken. ';
-            }
-            else if (empty($data['password']))
-            {
-               $data['passwordError'] = ' is required. ';
-            }
-            else if (strlen($data['password']) < 6)
-            {
-               $data['passwordError'] = ' must be at least 6 characters long. ';
-            }
-            else if (strlen($data['password']) > 20)
-            {
-               $data['passwordError'] = ' must be no more than 20 characters long. ';
-            }
-            else if (!ctype_alnum($data['password']))
-            {
-               $data['passwordError'] = ' must be alphanumeric. ';
-            }
-            else if ($data['password'] !== $data['confirmPassword'])
-            {
-               $data['passwordError'] = ' must match password. ';
-            }
-            else if (empty($data['registrationDate']))
-            {
-               $data['registrationDateError'] = ' is required. ';
-            }
-            else if (strlen($data['registrationDate']) !== 10)
-            {
-               $data['registrationDateError'] = ' must be in the format YYYY-MM-DD. ';
-            }
-            else if (empty($data['role']))
-            {
-               $data['roleError'] = ' is required. ';
-            }
-            else if (strlen($data['role']) > 20)
-            {
-               $data['roleError'] = ' must be no more than 20 characters long. ';
+               $passwordChange = true;
             }
 
+            $data['usernameError'] = validateUsername($data['username']);
+            if (checkDuplicateUsername($data['username'], $this->model) && $data['username'] !== $user->username)
+            {
+               $data['usernameError'] .= ' is already taken. ';
+            }
 
+            $data['emailError'] = validateEmail($data['email']);
+            if (checkDuplicateEmail($data['email'], $this->model) && $data['email'] !== $user->email)
+            {
+               $data['emailError'] .= ' is already taken. ';
+            }
+
+            // if the user wishes to change the password
+            if ($passwordChange)
+            {
+               $data['passwordError'] = validatePassword($data['password']);
+            }            
+            $data['registrationDateError'] = validateDate($data['registrationDate']);
+            $data['roleError'] = validateRole($data['role']);
+            $data['lastLoginError'] = validateDate($data['lastLogin']);
+            $data['dateBannedError'] = validateDate($data['dateBanned']);
+            
+            if (empty($data['usernameError'])
+            && empty($data['emailError'])
+            && empty($data['passwordError'])
+            && empty($data['registrationDateError'])
+            && empty($data['roleError'])
+            && empty($data['lastLoginError'])
+            && empty($data['dateBannedError']))
+            {
+               $updatedUser = clone $user;
+
+               if ($passwordChange)
+               {
+                  $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
+                  $updatedUser->password = $data['password'];
+               }
+               $updatedUser->username = $data['username'];
+               $updatedUser->email = $data['email'];
+               $updatedUser->registrationDate = $data['registrationDate'];
+               $updatedUser->role = $data['role'];
+               $updatedUser->lastLogin = $data['lastLogin'];
+               $updatedUser->banned = $data['banned'];
+               $updatedUser->dateBanned = $data['dateBanned'];
+
+               $this->model->updateUser($updatedUser);
+               header('location: /users/profile/' . $updatedUser->id);
+               return;
+            }
          }
          $this->view('users/update', [$user, $data]);
       }

@@ -58,14 +58,9 @@
          return $this->readSingle($this->TABLE_NAME, ['*'], ['username'], [$username]) ? true : false;
       }
 
-      // public function getUsersById(array $id) : array
-      // {
-      //    return $this->read('user', ['*'], ['id'], $id);
-      // }
-
       public function getUserById(int $id) : ?stdClass
       {
-         $user = $this->read('user', ['*'], ['id'], [$id]);
+         $user = $this->read($this->TABLE_NAME, ['*'], ['id'], [$id]);
          return $user ? $user[0] : null;
       }
 
@@ -82,13 +77,17 @@
       public function deleteUserById(int $id) : bool
       {
          // TODO: implement an admin check so that admins cannot be deleted by using getIsAdmin();
-         return $this->delete('user', ['id'], [$id]);
+         return $this->delete($this->TABLE_NAME, ['id'], [$id]);
          return true;
       }
 
-      public function updateUser(stdClass $user) : ?stdClass
+      public function updateUser(stdClass $user) : bool
       {
-         return null;
+         $updateTableNames = ['username', 'password', 'email', 'registrationDate', 'role', 'lastLogin', 'banned', 'dateBanned'];
+         $user = (array) $user;
+         $userId = (int) $user['id'];
+         unset($user['id']); // to prevent the id from being updated
+         return $this->update($this->TABLE_NAME, $user, ['id'], [$userId]);
       }
 
       public function getIsAdmin(string $id) : bool
