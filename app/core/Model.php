@@ -140,36 +140,31 @@ abstract Class Model
    }
 
 
-   protected function update(string $tName, array $cols, array $vals, array $criteria, array $criteriaVals) : bool
+   protected function update(string $tName, array $vals, array $criteria, array $criteriaVals) : bool
    {
       if (empty($tName))
       {
          die('Table name not defined.');
-      }
-      if (empty($cols))
-      {
-         die('Columns not defined.');
-      }
-      if (count($cols) != count($vals))
-      {
-         die('Too few values or columns for update');
       }
       if (count($criteria) != count($criteriaVals))
       {
          die('Too few criteria or criteria values for update');
       }
 
+      $index = 1;
       $statement = 'UPDATE ';
       $statement .= $tName;
       $statement .= ' SET ';
-      for ($i = 0; $i < count($cols); $i++)
+      foreach ($vals as $key => $value)
       {
-         $statement .= $cols[$i] . '=' . '?';
-         if ($i < count($cols) - 1)
+         $statement .= $key . '=' . '?';
+         if ($index++ <= count($vals) - 1)
          {
             $statement .= ',';
          }
       }
+      $index = 1;
+
       $statement .= ' WHERE ';
       for ($i = 0; $i < count($criteria); $i++)
       {
@@ -182,11 +177,13 @@ abstract Class Model
       }
       $statement .= ';';
       $this->db->query($statement);
-      // bind
-      for ($i = 1; $i <= count($vals); $i++)
+
+      // TODO: check whether this is good.
+      foreach ($vals as $value)
       {
-         $this->db->bind($i, $vals[$i - 1]);
+         $this->db->bind($index++, $value);
       }
+      unset($index);
       for ($i = 1; $i <= count($criteriaVals); $i++)
       {
          $this->db->bind($i + count($vals), $criteriaVals[$i - 1]);

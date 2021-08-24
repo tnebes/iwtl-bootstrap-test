@@ -83,11 +83,10 @@
 
       public function updateUser(stdClass $user) : bool
       {
-         $updateTableNames = ['username', 'password', 'email', 'registrationDate', 'role', 'lastLogin', 'banned', 'dateBanned'];
          $user = (array) $user;
          $userId = (int) $user['id'];
          unset($user['id']); // to prevent the id from being updated
-         return $this->update($this->TABLE_NAME, $updateTableNames, $user, ['id'], [$userId]);
+         return $this->update($this->TABLE_NAME, $user, ['id'], [$userId]);
       }
 
       public function getIsAdmin(string $id) : bool
