@@ -112,7 +112,7 @@
                <div class="row">
                   <div class="col-md-6">
                      <label class="badge bg-primary text-dark">Date Banned</label>
-                     <p><?php echo $user->dateBanned ?></p>
+                     <p><?php echo $user->banned ? $user->dateBanned : ''; ?></p>
                   </div>
                   <div class="col-md-6">
                      <label class="badge bg-info text-dark">New Date Banned</label>

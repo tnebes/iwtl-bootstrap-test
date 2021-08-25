@@ -62,7 +62,7 @@
                   </div>
                   <div class="col-md-6">
                      <label class="badge bg-info text-dark">Date Banned</label>
-                     <p><?php echo $data->dateBanned ?></p>
+                     <p><?php echo $data->banned ? $data->dateBanned : ''; ?></p>
                   </div>
                </div>
             </div>

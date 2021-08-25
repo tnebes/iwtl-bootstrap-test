@@ -40,7 +40,15 @@
                      echo '<td>' . $user->registrationDate . '</td>';
                      echo '<td>' . $user->lastLogin . '</td>';
                      echo '<td>' . bannedToCheckbox($user->banned, true) . '</td>';
-                     echo '<td>' . $user->dateBanned . '</td>';
+                     // TODO: bad workaround.
+                     if ($user->banned)
+                     {
+                        echo '<td>' . $user->dateBanned . '</td>';
+                     }
+                     else
+                     {
+                        echo '<td></td>';
+                     }                     
                      echo '<td>' . getUserActionsAdmin((int) $user->id) . '</td>';
                      echo '</tr>';
                   }

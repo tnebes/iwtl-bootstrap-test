@@ -243,13 +243,13 @@
             }
             
             $data['usernameError'] = validateUsername($data['username']);
-            if (checkDuplicateUsername($data['username'], $this->model) && $data['username'] !== $user->username)
+            if (checkDuplicateUsername($data['username'], $this->model) && $data['username'] !== strtolower($user->username))
             {
                $data['usernameError'] .= ' is already taken. ';
             }
 
             $data['emailError'] = validateEmail($data['email']);
-            if (checkDuplicateEmail($data['email'], $this->model) && $data['email'] !== $user->email)
+            if (checkDuplicateEmail($data['email'], $this->model) && $data['email'] !== strtolower($user->email))
             {
                $data['emailError'] .= ' is already taken. ';
             }
