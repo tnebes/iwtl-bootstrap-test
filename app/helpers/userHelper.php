@@ -3,11 +3,12 @@
    function getUserActionsAdmin(int $userId) : string
    {
       $methods = ['profile', 'update', 'delete', 'ban'];
-      $icons = [];
+      $iconLocation = URL_ROOT . '/img/icons/';
+      $icons = ['file-person.svg', 'wrench.svg', 'x-lg.svg', 'mic-mute.svg'];
       $returnString = '';
-      foreach ($methods as $method)
+      for ($i = 0; $i < count($methods); $i++)
       {
-         $returnString .= '<a href=' . URL_ROOT . '/users/' . $method . '/' . $userId . '>' . $method . '</a>';
+         $returnString .= '<a href=' . URL_ROOT . '/users/' . $methods[$i] . '/' . $userId . '><img data-toggle="tooltip" data-placement="bottom" title="' . $methods[$i] . '" src="' . $iconLocation . $icons[$i] . '" alt="' . $methods[$i] . '" /></a> ';
       }
       return $returnString;
    }
@@ -15,6 +16,7 @@
    function getUserActions(string $userId) : string
    {
       $methods = ['profile'];
+      $iconLocation = '';
       $icons = [];
       $returnString = '';
       foreach ($methods as $method)
