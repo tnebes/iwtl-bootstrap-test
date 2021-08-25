@@ -8,23 +8,22 @@
       $returnString = '';
       for ($i = 0; $i < count($methods); $i++)
       {
-         $returnString .= '<a href=' . URL_ROOT . '/users/' . $methods[$i] . '/' . $userId . '><img data-toggle="tooltip" data-placement="bottom" title="' . $methods[$i] . '" src="' . $iconLocation . $icons[$i] . '" alt="' . $methods[$i] . '" /></a> ';
+         $returnString .= '<a href=' . URL_ROOT . '/users/' . $methods[$i] . '/' . $userId . '><img data-toggle="tooltip" data-placement="bottom" title="' . $methods[$i] . '" width=20px src="' . $iconLocation . $icons[$i] . '" alt="' . $methods[$i] . '" /></a> ';
       }
       return $returnString;
    }
 
-   function getUserActions(string $userId) : string
+   function getUserActions(int $userId) : string
    {
       $methods = ['profile'];
-      $iconLocation = '';
-      $icons = [];
+      $iconLocation = URL_ROOT . '/img/icons/';
+      $icons = ['file-person.svg'];
       $returnString = '';
-      foreach ($methods as $method)
+      for ($i = 0; $i < count($methods); $i++)
       {
-         $returnString .= '<a href=' . URL_ROOT . '/users/' . $method . '/' . $userId . '>' . $method . '</a>';
+         $returnString .= '<a href=' . URL_ROOT . '/users/' . $methods[$i] . '/' . $userId . '><img data-toggle="tooltip" data-placement="bottom" title="' . $methods[$i] . '" width=20px src="' . $iconLocation . $icons[$i] . '" alt="' . $methods[$i] . '" /></a> ';
       }
       return $returnString;
-
    }
 
    function roleToString(int $role) : string
