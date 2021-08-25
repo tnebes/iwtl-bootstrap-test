@@ -4,8 +4,12 @@
    {
       public function getModel(string $model)
       {
-         require_once APP_ROOT . DIRECTORY_SEPARATOR . 'models' . DIRECTORY_SEPARATOR . $model . '.php';
-         return new $model();
+         if (file_exists(APP_ROOT . DIRECTORY_SEPARATOR . 'models' . DIRECTORY_SEPARATOR . $model . '.php'))
+         {
+            require_once APP_ROOT . DIRECTORY_SEPARATOR . 'models' . DIRECTORY_SEPARATOR . $model . '.php';
+            return new $model();
+         }
+         die('Model not found.');
       }
 
       public function view(string $view, array $data = []) : void

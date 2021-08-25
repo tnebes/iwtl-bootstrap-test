@@ -330,7 +330,7 @@
                $this->index();
                return;
             }
-            /// TODO: this should be a proper redirect.
+            // TODO: this should be a proper redirect.
             $this->index();
             return;
          }
