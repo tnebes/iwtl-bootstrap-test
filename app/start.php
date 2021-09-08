@@ -1,13 +1,30 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
-   require_once('core' . DIRECTORY_SEPARATOR . 'config.php');
-   require_once('core' . DIRECTORY_SEPARATOR . 'App.php');
-   require_once('core' . DIRECTORY_SEPARATOR . 'Controller.php');
-   require_once('core' . DIRECTORY_SEPARATOR . 'Database.php');
-   require_once('core' . DIRECTORY_SEPARATOR . 'Model.php');
-   require_once('core' . DIRECTORY_SEPARATOR . 'Image.php');
-   require_once('helpers' . DIRECTORY_SEPARATOR . 'sessionHelper.php');
-   require_once('helpers' . DIRECTORY_SEPARATOR . 'debugHelper.php');
-   require_once('helpers' . DIRECTORY_SEPARATOR . 'userHelper.php');
+require_once('core' . DIRECTORY_SEPARATOR . 'config.php');
 
-   $app = new App();
+$path = implode(
+   PATH_SEPARATOR ,
+   [
+      APP_ROOT . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'controllers',
+      APP_ROOT . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'models',
+      APP_ROOT . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'core'
+   ]
+);
+
+set_include_path($path);
+
+spl_autoload_register(function($class){
+   $paths = explode(PATH_SEPARATOR, get_include_path());
+   foreach($paths as $path)
+   {
+      $classPath = $path . DIRECTORY_SEPARATOR . $class . '.php';
+      if (file_exists($classPath))
+      {
+         require($classPath);
+         break;
+      }
+   }
+});
+
+
+$app = new App();

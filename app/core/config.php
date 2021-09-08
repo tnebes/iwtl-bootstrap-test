@@ -4,7 +4,7 @@
    define('APP_AUTHOR', 'tnebes');
 
    define('URL_ROOT', 'http://bootstrap.com');
-   define('APP_ROOT', dirname(dirname(__FILE__)));
+   define('APP_ROOT', dirname(dirname(__DIR__)));
 
    define('DB_HOST', 'localhost');
    define('DB_NAME', 'iwtl');
