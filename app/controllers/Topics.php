@@ -9,7 +9,8 @@
 
       public function index() : void
       {
-         $this->view('topics/index');
+         $topics = $this->model->getTopics();
+         $this->view('topics/index', ['topics' => $topics]);
       }
 
       public function topic() : void

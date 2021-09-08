@@ -2,8 +2,6 @@
 
    Class User extends Model
    {
-      protected $TABLE_NAME;
-
       public function __construct()
       {
          parent::__construct();
@@ -66,6 +64,7 @@
 
       public function banUserById(int $id) : bool
       {
+         // TODO: ban and unban methods.
          return true;
       }
 
@@ -91,7 +90,7 @@
 
       public function getIsAdmin(string $id) : bool
       {
-         // TODO: bad and messy.
+         // TODO: bad and cursed.
          return $this->read($this->TABLE_NAME, ['role'], ['id'], [$id])[0]->role == ADMIN_ROLE;
       }
 

@@ -145,6 +145,7 @@
       {
          if (!isLoggedIn())
          {
+            //TODO: proper redirect required
             header('location: /errorpages/restricted');
             return;
          }
@@ -161,6 +162,7 @@
          $user = $this->model->getUserById((int) $id);
          if (empty($user))
          {
+            //TODO: proper redirect required
             header('location: error/notFound');
             return;
          }
@@ -171,12 +173,14 @@
       {
          if (!isLoggedIn())
          {
+            //TODO: proper redirect required
             header('location: /errorpages/restricted');
             return;
          }
          $id = func_get_args();
          if (empty($id))
          {
+            //TODO: proper redirect required
             header('location: /errorpages/internalError');
             return;
          }
@@ -194,6 +198,7 @@
          $user = $this->model->getUserById($id);
          if (empty($user))
          {
+            //TODO: proper redirect required
             header('location: /errorpages/notFound');
             return;
          }
@@ -298,6 +303,7 @@
                $updatedUser->banned = $data['banned'];
 
                $this->model->updateUser($updatedUser);
+               //TODO: proper redirect requred
                header('location: /users/profile/' . $updatedUser->id);
                return;
             }

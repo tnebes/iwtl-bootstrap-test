@@ -6,6 +6,9 @@
       protected $currentMethod = 'index';
       protected $currentParams = [];
 
+      /**
+       * Public constructor
+       */
       public function __construct()
       {
          $skipMethod = false;
@@ -16,6 +19,9 @@
             $url[1] = $this->currentMethod;
          }
 
+         /**
+          * Checks whether the URL is correct and actually leads to something
+          */
          if (file_exists(APP_ROOT . '/controllers/' . ucwords($url[0]) . '.php'))
          {
             $this->currentController = ucwords($url[0]);
@@ -28,6 +34,9 @@
             $skipMethod = true;
          }
 
+         /**
+          * Gets the appropriate controller PHP file
+          */
          require_once '..' . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'controllers' . DIRECTORY_SEPARATOR . $this->currentController . '.php';
          $this->currentController = new $this->currentController();
 
@@ -46,6 +55,9 @@
             }
          }
 
+         /**
+          * Calls the appropriate method within the controller object and sends the parameters.
+          */
          $this->currentParams = $url ? array_values($url) : [];
          call_user_func_array([$this->currentController, $this->currentMethod], $this->currentParams);
       }

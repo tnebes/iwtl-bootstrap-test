@@ -13,6 +13,11 @@
          return false;
       }
 
+      public function getTopics() : array
+      {
+         return $this->read($this->TABLE_NAME, ['*'], null, null,);
+      }
+
       public function getTopicsByUser(int $userId) : array
       {
          return [];
