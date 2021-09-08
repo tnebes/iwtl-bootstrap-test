@@ -4,27 +4,27 @@
    {
       public function __construct()
       {
-         // TODO:
+         parent::__construct();
       }
 
       // TODO: implement data for these pages instead of using three different pages!
       public function notFound() : void
       {
-         $this->view('error/error/', ['Page not found.', "The page you're looking for doesn't exist."]);
+         $this->view->render('error' . DIRECTORY_SEPARATOR .'error', ['Page not found.', "The page you're looking for doesn't exist."]);
       }
 
       public function restricted() : void
       {
-         $this->view('error/error/', ['You are not allowed to do this.', "You don't have the permission to do this."]);
+         $this->view('error' . DIRECTORY_SEPARATOR .'error', ['You are not allowed to do this.', "You don't have the permission to do this."]);
       }
 
       public function notImplemented() : void
       {
-         $this->view('error/error/', ['Work in progress. Check back later.', "This feature is not implemented yet."]);
+         $this->view('error' . DIRECTORY_SEPARATOR .'error', ['Work in progress. Check back later.', "This feature is not implemented yet."]);
       }
 
       public function internalError() : void
       {
-         $this->view('error/error/', ['Internal server error.', "Something went wrong on our side."]);
+         $this->view('error' . DIRECTORY_SEPARATOR .'error', ['Internal server error.', "Something went wrong on our side."]);
       }
    }

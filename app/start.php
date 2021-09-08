@@ -18,6 +18,7 @@ spl_autoload_register(function($class){
    foreach($paths as $path)
    {
       $classPath = $path . DIRECTORY_SEPARATOR . $class . '.php';
+      // echo $classPath . '<br/>';
       if (file_exists($classPath))
       {
          require($classPath);
@@ -27,4 +28,4 @@ spl_autoload_register(function($class){
 });
 
 
-$app = new App();
+App::start();

@@ -4,12 +4,12 @@
    {
       public function __construct()
       {
-         // TODO:
+         parent::__construct();
       }
 
       public function index() : void
       {
-         $this->view('pages/index');
+         $this->view->render('pages/index');
       }
 
       public function about() : void
