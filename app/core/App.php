@@ -31,7 +31,7 @@ class App
       if (class_exists($class) && method_exists($class, $method))
       {
          $instance = new $class;
-         $instance->$method();
+         $instance->$method((isset($path[3]) && !empty($path[3])) ? $path[3] : null);
       }
       else
       {

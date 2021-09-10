@@ -8,7 +8,8 @@
    <div class="p-2 mx-auto my-5 bg-light">
       <h1 class="h1 text-dark px-5 mt-4">SQL code</h1>
       <?php
-         $file = fopen(APP_ROOT . '/content/er/i_want_to_learn.sql', 'r');
+         //TODO: make this a constant
+         $file = fopen(APP_ROOT . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . '/content/er/i_want_to_learn.sql', 'r');
          // read and echo file line by line
          echo '<pre class="my-5 mx-5">';
          $counter = 0;

@@ -309,7 +309,7 @@
                return;
             }
          }
-         $this->view->render('users/update', [$user, $data]);
+         $this->view->render('users/update', ['user'=>$user, 'data'=>$data]);
       }
 
       public function delete() : void
@@ -341,7 +341,7 @@
             $this->index();
             return;
          }
-         $this->view->render('users/delete', [$user]);
+         $this->view->render('users/delete', ['user'=>$user]);
       }
 
       public function ban() : void
@@ -373,17 +373,12 @@
             header('location: /users/profile/' . $user->id);
             return;
          }
-         $this->view->render('users/ban', [$user]);
+         $this->view->render('users/ban', ['user'=>$user]);
       }
 
       public function logout() : void
       {
          clearUserSession();
          $this->view->render('/pages/index');
-      }
-
-      private function loginView() : void
-      {
-         
       }
    }
