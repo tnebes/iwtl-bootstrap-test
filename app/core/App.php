@@ -35,7 +35,7 @@ class App
       }
       else
       {
-         $class = 'ErrorPages';
+         $class = 'ControllerErrorPages';
          $method = 'notFound';
          $instance = new $class;
          $instance->$method();

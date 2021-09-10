@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-   Class Pages extends Controller
+   Class ControllerPages extends Controller
    {
       public function __construct()
       {

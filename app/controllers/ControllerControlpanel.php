@@ -2,7 +2,7 @@
 
 require_once '../app/controllers/Authorisation.php';
 
-class Controlpanel extends Authorisation
+class ControllerControlpanel extends ControllerAuthorisation
 {
    public function index()
    {

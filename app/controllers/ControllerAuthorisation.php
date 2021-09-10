@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-class Authorisation extends Controller
+class ControllerAuthorisation extends Controller
 {
    public function __construct()
    {

@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-   Class Er extends Controller
+   Class ControllerEr extends Controller
    {
       public function __controller()
       {

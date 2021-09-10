@@ -4,14 +4,15 @@
    {
       protected $view;
 
-      public function getModel(string $model)
+      public function getModel(string $model) : Model
       {
-         if (file_exists(APP_ROOT . DIRECTORY_SEPARATOR . 'models' . DIRECTORY_SEPARATOR . $model . '.php'))
-         {
-            require_once APP_ROOT . DIRECTORY_SEPARATOR . 'models' . DIRECTORY_SEPARATOR . $model . '.php';
-            return new $model();
-         }
-         die('Model not found.');
+         // if (file_exists(APP_ROOT . 'app' . DIRECTORY_SEPARATOR . 'models' . DIRECTORY_SEPARATOR . $model . '.php'))
+         // {
+         //    require_once APP_ROOT . 'app' . DIRECTORY_SEPARATOR . 'models' . DIRECTORY_SEPARATOR . $model . '.php';
+         //    return new $model();
+         // }
+         // die('Model not found.');
+         return new $model();
       }
 
       public function __construct()

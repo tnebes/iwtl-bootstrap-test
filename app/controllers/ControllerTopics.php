@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-   class Topics extends Controller
+   class ControllerTopics extends Controller
    {
       public function __construct()
       {

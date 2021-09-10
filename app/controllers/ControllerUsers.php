@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-   Class Users extends Controller
+   Class ControllerUsers extends Controller
    {
       public function __construct()
       {

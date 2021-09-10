@@ -1,6 +1,6 @@
 <?php declare(strict_types =1);
 
-   class ErrorPages extends Controller
+   class ControllerErrorPages extends Controller
    {
       public function __construct()
       {
