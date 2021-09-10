@@ -2,12 +2,21 @@
 
 require_once('core' . DIRECTORY_SEPARATOR . 'config.php');
 
+/**
+ * Require the helpers
+ */
+// exit(APP_ROOT . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'helpers' . DIRECTORY_SEPARATOR . '*.php');
+foreach (glob(APP_ROOT . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'helpers'. DIRECTORY_SEPARATOR . '*.php') as $filename)
+{
+   require_once($filename);
+}
+
 $path = implode(
    PATH_SEPARATOR ,
    [
       APP_ROOT . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'controllers',
       APP_ROOT . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'models',
-      APP_ROOT . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'core'
+      APP_ROOT . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'core',
    ]
 );
 
