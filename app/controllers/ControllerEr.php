@@ -15,6 +15,6 @@
             return;
          }
          
-         $this->view('er/index');
+         $this->view->render('er/index');
       }
    }

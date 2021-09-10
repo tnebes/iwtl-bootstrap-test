@@ -4,6 +4,9 @@ class View
 {
    private $template;
 
+   /**
+    * 'formTemplate' can also be used
+    */
    public function __construct(string $template = 'defaultTemplate')
    {
       $this->template = $template;
@@ -16,6 +19,5 @@ class View
       require APP_ROOT . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . $page . '.phtml';
       $content = ob_get_clean();
       require APP_ROOT . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . $this->template . '.phtml';
-      $this->template . '.phtml';
    }
 }

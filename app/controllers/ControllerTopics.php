@@ -10,26 +10,26 @@
       public function index() : void
       {
          $topics = $this->model->getTopics();
-         $this->view('topics/index', ['topics' => $topics]);
+         $this->view->render('topics/index', ['topics' => $topics]);
       }
 
       public function topic() : void
       {
-         $this->view('topics/topic');
+         $this->view->render('topics/topic');
       }
 
       public function create() : void
       {
-         $this->view('topics/create');
+         $this->view->render('topics/create');
       }
 
       public function edit() : void
       {
-         $this->view('topics/edit');
+         $this->view->render('topics/edit');
       }
 
       public function delete() : void
       {
-         $this->view('topics/delete');
+         $this->view->render('topics/delete');
       }
    }

@@ -9,7 +9,7 @@
 
       public function index() : void
       {
-         $this->view->render('pages/index');
+         $this->view->render->render('pages/index');
       }
 
       public function about() : void

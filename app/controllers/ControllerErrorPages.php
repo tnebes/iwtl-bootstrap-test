@@ -15,16 +15,16 @@
 
       public function restricted() : void
       {
-         $this->view('error' . DIRECTORY_SEPARATOR .'error', ['You are not allowed to do this.', "You don't have the permission to do this."]);
+         $this->view->render('error' . DIRECTORY_SEPARATOR .'error', ['You are not allowed to do this.', "You don't have the permission to do this."]);
       }
 
       public function notImplemented() : void
       {
-         $this->view('error' . DIRECTORY_SEPARATOR .'error', ['Work in progress. Check back later.', "This feature is not implemented yet."]);
+         $this->view->render('error' . DIRECTORY_SEPARATOR .'error', ['Work in progress. Check back later.', "This feature is not implemented yet."]);
       }
 
       public function internalError() : void
       {
-         $this->view('error' . DIRECTORY_SEPARATOR .'error', ['Internal server error.', "Something went wrong on our side."]);
+         $this->view->render('error' . DIRECTORY_SEPARATOR .'error', ['Internal server error.', "Something went wrong on our side."]);
       }
    }

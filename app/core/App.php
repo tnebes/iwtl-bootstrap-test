@@ -7,16 +7,16 @@ class App
       $route = isset($_SERVER['REDIRECTION_PATH_INFO']) ? $_SERVER['REDIRECTION_PATH_INFO'] : $_SERVER['REQUEST_URI'];
       $path = explode('/', $route);
 
-      $class = '';
+      $class = 'Controller';
       if (!isset($path[1]) || empty($path[1]))
       {
-         $class = 'Pages';
+         $class .= 'Pages';
       }
       else
       {
-         $class = ucwords($path[1]);
+         $class .= ucwords($path[1]);
       }
-      // $class .= 'Controller';
+      
 
       $method = '';
       if (!isset($path[2]) || empty($path[2]))

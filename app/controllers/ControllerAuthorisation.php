@@ -6,7 +6,7 @@ class ControllerAuthorisation extends Controller
    {
       if (!isAdmin())
       {
-         $this->view('/error/restricted');
+         $this->view->render('/error/restricted');
          exit();
       }
    }
