@@ -9,5 +9,6 @@ class ControllerAuthorisation extends Controller
          $this->view->render('/error/restricted');
          exit();
       }
+      parent::__construct();
    }
 }

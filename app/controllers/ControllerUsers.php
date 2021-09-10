@@ -4,6 +4,7 @@
    {
       public function __construct()
       {
+         parent::__construct();
          $this->model = $this->getModel('User');
       }
 
@@ -166,7 +167,7 @@
             header('location: error/notFound');
             return;
          }
-         $this->view->render('users/profile', [$user]);
+         $this->view->render('users/profile', ['user'=>$user]);
       }
 
       public function update() : void
@@ -379,5 +380,10 @@
       {
          clearUserSession();
          $this->view->render('/pages/index');
+      }
+
+      private function loginView() : void
+      {
+         
       }
    }
