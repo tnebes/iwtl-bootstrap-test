@@ -1,10 +1,9 @@
 <?php declare(strict_types = 1);
 
 if (!isset($topics) && !is_array($topics) && !count($topics) > 0)
-// if (true)
 {
-   $cep = new ControllerErrorPages();
-   $cep->internalError();
+   // nice and shiny
+   (new ControllerErrorPages)->internalError();
    return;
 }
 echo '<ul class="list-group">';
