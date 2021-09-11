@@ -136,4 +136,10 @@
       return $role < 0 || $role > 1 ? ' must be a valid role. ' : '';
    }
 
+   function getUserFromTopic(stdClass $topic) : ?stdClass
+   {
+      $m = new User();
+      return $m->getUserById((int) $topic->user);
+   }
+
 
