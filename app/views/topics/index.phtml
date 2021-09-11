@@ -2,28 +2,35 @@
 
 if (!isset($topics) && !is_array($topics) && !count($topics) > 0)
 {
-   // nice and shiny
+   // Class member access on instantiation
    (new ControllerErrorPages)->internalError();
    return;
 }
 echo '<ul class="list-group">';
-echo '<li class="list-group-item text-dark">';
 foreach ($topics as $topic)
 {
+   echo '<li class="list-group-item text-dark mx-auto my-2 w-50">';
    ?>
-   <div class="row">
-      <div class="col-sm-6 col-md-4">
-         <div class="thumbnail">
-            <img src="...image..." alt="...img...">
-            <div class="caption">
-               <h3><?php echo $topic->name?></h3>
-               <span class="label label-success"><?php echo getUserFromTopic($topic)->username ?></span>
-               <p><?php echo $topic->description?></p>      
-               <p class="center"><p><?php echo date('d-m-Y', strtotime($topic->datePosted))?></p></p>
-               <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
-            </div>
+   <div class="thumbnail">
+      <div class="caption">
+         <img src="...image..." alt="...img...">
+         <div class="form-control">
+            <h1><span class="badge bg-dark text-light"><?php echo $topic->name?></span></h1>
+            <h6><span class="badge bg-info text-dark"><?php echo getUserFromTopic($topic)->username ?></span></h6>
+            <p><?php echo $topic->description?></p>      
+            <p class="center"><p><?php echo date('d-m-Y', strtotime($topic->datePosted))?></p></p>
          </div>
+
+         <p>
+            <a href="#" class="btn btn-primary mt-1" role="button">&#128077;</a>
+            <a href="#" class="btn btn-primary mt-1" role="button">&#128078;</a>
+            <a href="#" class="btn btn-primary mt-1" role="button">Suggest</a>
+            <!-- TODO: only if registered -->
+            <a href="#" class="btn btn-primary mt-1" role="button">Subscribe</a>
+         <p>
       </div>
+      <!-- TODO: Top 5 rated comments go here -->
+      <!-- foreach(getSuggestions($topic) as $suggestion) ... -->
    </div>
 
    <?php
