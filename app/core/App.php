@@ -12,6 +12,10 @@ class App
       {
          $class .= 'Pages';
       }
+      else if (isset($path[1]) && $path[1] === 'public')
+      {
+         $class .= 'Pages';
+      }
       else
       {
          $class .= ucwords($path[1]);
