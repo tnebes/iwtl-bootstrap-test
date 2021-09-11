@@ -5,12 +5,11 @@
       public function __construct()
       {
          parent::__construct();
-         parent::__construct();
       }
 
       public function index() : void
       {
-         $this->view->render->render('pages/index');
+         $this->view->render('pages/index');
       }
 
       public function about() : void

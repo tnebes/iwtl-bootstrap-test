@@ -36,6 +36,9 @@
             $this->view->render('pages/index');
             return;
          }
+
+         $this->view = new View('formTemplate');
+         
          $data = 
          [
             'email' => '',
@@ -70,7 +73,10 @@
                if (!empty($user))
                {
                   createUserSession($user);
-                  $this->view->render('pages/index');
+                  // TODO: cursed workaround
+                  $c = new ControllerPages();
+                  $c->index();
+                  unset($c);
                   return;
                }
                else
@@ -91,6 +97,9 @@
             $this->view->render('pages/index');
             return;
          }
+
+         $this->view = new View('formTemplate');
+
          $data =
          [
             'username' => '',
