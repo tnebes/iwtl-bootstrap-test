@@ -12,7 +12,20 @@
          //    return new $model();
          // }
          // die('Model not found.');
-         return new $model();
+         try
+         {
+            $returnModel = new $model();
+            if ($returnModel instanceof Model)
+            {
+               return $returnModel;
+            }
+         }
+         catch (Exception $e)
+         {
+            //TODO: could be handled better.
+            die($model . ' model not found.');
+         }
+         return $returnModel;
       }
 
       public function __construct()
