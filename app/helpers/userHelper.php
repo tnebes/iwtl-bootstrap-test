@@ -142,4 +142,9 @@
       return $m->getUserById((int) $topic->user);
    }
 
+   function getLinkToUser(stdClass $user) : string
+   {
+      return URL_ROOT . '/users/profile/' . $user->id;
+   }
+
 
