@@ -16,21 +16,47 @@
 
       public function topic() : void
       {
+         if($this->redirectIfNotLoggedIn())
+         {
+            return;
+         }
          $this->view->render('topics/topic');
       }
 
       public function create() : void
       {
+         if($this->redirectIfNotLoggedIn())
+         {
+            return;
+         }
          $this->view->render('topics/create');
       }
 
       public function edit() : void
       {
+         if($this->redirectIfNotLoggedIn())
+         {
+            return;
+         }
          $this->view->render('topics/edit');
       }
 
       public function delete() : void
       {
+         if($this->redirectIfNotLoggedIn())
+         {
+            return;
+         }
          $this->view->render('topics/delete');
+      }
+
+      private function redirectIfNotLoggedIn() : bool
+      {
+         if (!isLoggedIn())
+         {
+            (new ControllerErrorPages())->restricted();
+            return true;
+         }
+         return false;
       }
    }
