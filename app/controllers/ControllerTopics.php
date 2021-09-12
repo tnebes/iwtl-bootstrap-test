@@ -29,6 +29,23 @@
          {
             return;
          }
+         $data = [
+            'nameError' => '',
+            'descriptionError' => '',
+            'datePostedError' => '',
+            'imageError' => '',
+            'name' => '',
+            'description' => '',
+            'datePosted' => '',
+            'user' => '',
+            'image' => ''
+         ];
+
+         if($_SERVER['REQUEST_METHOD'] === 'POST')
+         {
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+         }
+
          $this->view->render('topics/create');
       }
 

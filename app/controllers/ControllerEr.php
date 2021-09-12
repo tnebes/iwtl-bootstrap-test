@@ -11,7 +11,7 @@
       {
          if (!isLoggedIn())
          {
-            header('location: errorpages/restricted');
+            (new ControllerErrorPages())->restricted();
             return;
          }
          

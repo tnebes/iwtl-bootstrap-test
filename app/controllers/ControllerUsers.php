@@ -12,7 +12,7 @@
       {
          if (!isLoggedIn())
          {
-            header('location: error/error/restricted');
+            (new ControllerErrorPages())->restricted();
             return;
          }
          $data = [];
@@ -33,7 +33,7 @@
       {
          if (isLoggedIn())
          {
-            $this->view->render('pages/index');
+            $this->index();
             return;
          }
 
@@ -94,7 +94,7 @@
       {
          if (isLoggedIn())
          {
-            $this->view->render('pages/index');
+            $this->index();
             return;
          }
 
@@ -155,8 +155,7 @@
       {
          if (!isLoggedIn())
          {
-            //TODO: proper redirect required
-            header('location: /errorpages/restricted');
+            (new ControllerErrorPages())->restricted();
             return;
          }
 
@@ -172,8 +171,7 @@
          $user = $this->model->getUserById((int) $id);
          if (empty($user))
          {
-            //TODO: proper redirect required
-            header('location: error/notFound');
+            (new ControllerErrorPages())->notFound();
             return;
          }
          $this->view->render('users/profile', ['user'=>$user]);
@@ -183,15 +181,13 @@
       {
          if (!isLoggedIn())
          {
-            //TODO: proper redirect required
-            header('location: /errorpages/restricted');
+            (new ControllerErrorPages())->restricted();
             return;
          }
          $id = func_get_args();
          if (empty($id))
          {
-            //TODO: proper redirect required
-            header('location: /errorpages/internalError');
+            (new ControllerErrorPages())->internalError();
             return;
          }
          $id = (int) $id[0];
@@ -208,8 +204,7 @@
          $user = $this->model->getUserById($id);
          if (empty($user))
          {
-            //TODO: proper redirect required
-            header('location: /errorpages/notFound');
+            (new ControllerErrorPages())->notFound();
             return;
          }
 
@@ -313,8 +308,8 @@
                $updatedUser->banned = $data['banned'];
 
                $this->model->updateUser($updatedUser);
-               //TODO: proper redirect requred
-               header('location: /users/profile/' . $updatedUser->id);
+
+               $this->profile($updatedUser->id);
                return;
             }
          }
@@ -325,13 +320,13 @@
       {
          if (!isLoggedIn())
          {
-            header('location: /errorpages/restricted');
+            (new ControllerErrorPages())->restricted();
             return;
          }
          $id = func_get_args();
          if (empty($id))
          {
-            header('location: /errorpages/internalError');
+            (new ControllerErrorPages())->internalError();
             return;
          }
          $id = (int) $id[0];
@@ -346,7 +341,6 @@
                $this->index();
                return;
             }
-            // TODO: this should be a proper redirect.
             $this->index();
             return;
          }
@@ -357,20 +351,20 @@
       {
          if (!isLoggedIn())
          {
-            header('location: /errorpages/restricted');
+            (new ControllerErrorPages())->restricted();
             return;
          }
          $id = func_get_args();
          if (empty($id))
          {
-            header('location: /errorpages/internalError');
+            (new ControllerErrorPages())->internalError();
             return;
          }
          $id = (int) $id[0];
          $user = $this->model->getUserById((int) $id);
          if (empty($user))
          {
-            header('location: /errorpages/internalError');
+            (new ControllerErrorPages())->internalError();
             return;
          }
          $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
@@ -379,7 +373,7 @@
             $user->banned = $user->banned ? 0 : 1;
             $user->dateBanned = date('Y-m-d H:i:s');
             $this->model->updateUser($user);
-            header('location: /users/profile/' . $user->id);
+            $this->profile($user->id);
             return;
          }
          $this->view->render('users/ban', ['user'=>$user]);
@@ -388,6 +382,6 @@
       public function logout() : void
       {
          clearUserSession();
-         $this->view->render('/pages/index');
+         (new ControllerPages())->index();
       }
    }
