@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 require_once '../app/controllers/ControllerAuthorisation.php';
 
@@ -9,4 +11,3 @@ class ControllerControlpanel extends ControllerAuthorisation
       echo 'test';
    }
 }
-

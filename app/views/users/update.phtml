@@ -1,4 +1,4 @@
-<?php if (isAdmin()) : ?>
+<?php if (Helper::getInstance()->isAdmin()) : ?>
    <div class="card bg-dark">
       <div class="card-header">
          <h2 class="alert alert-primary">
@@ -50,19 +50,19 @@
             <div class="col-md-6">
                <label class="badge bg-info text-dark">New Registration Date</label>
                <span class="text-danger"><?php echo $data['registrationDateError'] ?></span>
-               <input type="date" name="registrationDate" class="form-control" value="<?php echo date("Y-m-d", strtotime($user->registrationDate));?>">
+               <input type="date" name="registrationDate" class="form-control" value="<?php echo date("Y-m-d", strtotime($user->registrationDate)); ?>">
             </div>
          </div>
          <div class="row">
             <div class="col-md-6">
                <label class="badge bg-primary text-dark">Role</label>
-               <p><?php echo roleToString($user->role)?></p>
+               <p><?php echo Helper::getInstance()->roleToString($user->role) ?></p>
             </div>
             <div class="col-md-6">
                <label class="badge bg-info text-dark">New Role</label>
                <span class="text-danger"><?php echo $data['roleError'] ?></span>
                <select name="role" class="form-control">
-                  <option selected value="<?php echo $user->role?>"><?php echo roleToString($user->role)?></option>
+                  <option selected value="<?php echo $user->role ?>"><?php echo Helper::getInstance()->roleToString($user->role) ?></option>
                   <option value="0">User</option>
                   <option value="1">Admin</option>
                </select>
@@ -76,7 +76,7 @@
             <div class="col-md-6">
                <label class="badge bg-info text-dark">New Last Login</label>
                <span class="text-danger"><?php echo $data['lastLoginError'] ?></span>
-               <input type="date" name="lastLogin" class="form-control" value="<?php echo date("Y-m-d", strtotime($user->lastLogin))?>">
+               <input type="date" name="lastLogin" class="form-control" value="<?php echo date("Y-m-d", strtotime($user->lastLogin)) ?>">
             </div>
          </div>
          <div class="row">
@@ -85,7 +85,7 @@
             <div class="col-md-6">
                <label class="badge bg-info text-dark">Banned</label>
                <p>
-                  <?php echo bannedToCheckbox($user->banned) ?>
+                  <?php echo Helper::getInstance()->bannedToCheckbox($user->banned) ?>
                </p>
             </div>
          </div>

@@ -1,15 +1,15 @@
-<?php if (isAdmin()) : ?>
+<?php if (Helper::getInstance()->isAdmin()) : ?>
    <div class="card bg-dark">
       <div class="card-header">
          <h2 class="alert alert-primary">
-            <?php 
+            <?php
             echo $user->username ?>'s Profile
          </h2>
          <?php
-            echo '<a class="btn btn-info" href=' . URL_ROOT . '/users/update/' . $user->id . '>Edit User</a>';
-            echo '<a class="btn btn-danger" href=' . URL_ROOT . '/users/delete/' . $user->id . '>Delete User</a>';
-            echo '<a class="btn btn-warning" href=' . URL_ROOT . '/users/ban/' . $user->id . '>Ban User</a>';
-            ?>
+         echo '<a class="btn btn-info" href=' . URL_ROOT . '/users/update/' . $user->id . '>Edit User</a>';
+         echo '<a class="btn btn-danger" href=' . URL_ROOT . '/users/delete/' . $user->id . '>Delete User</a>';
+         echo '<a class="btn btn-warning" href=' . URL_ROOT . '/users/ban/' . $user->id . '>Ban User</a>';
+         ?>
       </div>
       <div class="card-body">
          <div class="row">
@@ -29,7 +29,7 @@
             </div>
             <div class="col-md-6">
                <label class="badge bg-info text-dark">Role</label>
-               <p><?php echo roleToString($user->role); ?></p>
+               <p><?php echo Helper::getInstance()->roleToString($user->role); ?></p>
             </div>
          </div>
          <div class="row">
@@ -41,7 +41,7 @@
          <div class="row">
             <div class="col-md-6">
                <label class="badge bg-info text-dark">Banned</label>
-               <p><?php echo bannedToCheckbox($user->banned, true) ?></p>
+               <p><?php echo Helper::getInstance()->bannedToCheckbox($user->banned, true) ?></p>
             </div>
             <div class="col-md-6">
                <label class="badge bg-info text-dark">Date Banned</label>
@@ -54,7 +54,7 @@
    <div class="card bg-dark">
       <div class="card-header">
          <h2 class="alert alert-primary">
-            <?php 
+            <?php
             echo $user->username ?>'s Profile
          </h2>
       </div>

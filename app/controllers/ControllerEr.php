@@ -1,20 +1,21 @@
-<?php declare(strict_types = 1);
+<?php
 
-   Class ControllerEr extends Controller
+declare(strict_types=1);
+
+class ControllerEr extends Controller
+{
+   public function __construct()
    {
-      public function __construct()
-      {
-         parent::__construct();  
+      parent::__construct();
+   }
+
+   public function index(): void
+   {
+      if (!Helper::getInstance()->isLoggedIn()) {
+         (new ControllerErrorPages())->restricted();
+         return;
       }
 
-      public function index() : void
-      {
-         if (!isLoggedIn())
-         {
-            (new ControllerErrorPages())->restricted();
-            return;
-         }
-         
-         $this->view->render('er/index');
-      }
+      $this->view->render('er/index');
    }
+}

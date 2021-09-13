@@ -1,68 +1,63 @@
 <div class="table-responsive">
-   <?php if(isAdmin()): ?>
-   <table class="table table-hover table-list">
-      <thead>
-         <tr>
-            <th>ID</th>
-            <th>Username</th>
-            <th>Email</th>
-            <th>Role</th>
-            <th>Date Registered</th>
-            <th>Last Login</th>
-            <th>Banned</th>
-            <th>Date Banned</th>
-            <th>Actions</th>
-         </tr>
-      </thead>
-      <tbody>
-         <?php
-            foreach ($users as $user) 
-            {
+   <?php if (Helper::getInstance()->isAdmin()) : ?>
+      <table class="table table-hover table-list">
+         <thead>
+            <tr>
+               <th>ID</th>
+               <th>Username</th>
+               <th>Email</th>
+               <th>Role</th>
+               <th>Date Registered</th>
+               <th>Last Login</th>
+               <th>Banned</th>
+               <th>Date Banned</th>
+               <th>Actions</th>
+            </tr>
+         </thead>
+         <tbody>
+            <?php
+            foreach ($users as $user) {
                echo '<tr>';
                echo '<td>' . $user->id . '</td>';
                echo '<td>' . $user->username . '</td>';
                echo '<td>' . $user->email . '</td>';
-               echo '<td>' . roleToString($user->role) . '</td>';
+               echo '<td>' . Helper::getInstance()->roleToString($user->role) . '</td>';
                echo '<td>' . $user->registrationDate . '</td>';
                echo '<td>' . $user->lastLogin . '</td>';
-               echo '<td>' . bannedToCheckbox($user->banned, true) . '</td>';
+               echo '<td>' . Helper::getInstance()->bannedToCheckbox($user->banned, true) . '</td>';
                // TODO: bad workaround.
-               if ($user->banned)
-               {
+               if ($user->banned) {
                   echo '<td>' . $user->dateBanned . '</td>';
-               }
-               else
-               {
+               } else {
                   echo '<td></td>';
-               }                     
-               echo '<td>' . getUserActionsAdmin((int) $user->id) . '</td>';
+               }
+               echo '<td>' . Helper::getInstance()->getUserActionsAdmin((int) $user->id) . '</td>';
                echo '</tr>';
             }
-         ?>
-      </tbody>
-   </table>
-   <?php else: ?>
+            ?>
+         </tbody>
+      </table>
+   <?php else : ?>
       <table class="table table-hover">
-      <thead>
-         <tr>
-            <th>Username</th>
-            <th>Date Registered</th>
-            <th>Actions</th>
-         </tr>
-      </thead>
-      <tbody>
-         <?php
-            foreach ($users as $user) 
-            {
+         <thead>
+            <tr>
+               <th>Username</th>
+               <th>Date Registered</th>
+               <th>Actions</th>
+            </tr>
+         </thead>
+         <tbody>
+            <?php
+            foreach ($users as $user) {
                echo '<tr>';
                echo '<td>' . $user->username . '</td>';
                echo '<td>' . $user->registrationDate . '</td>';
-               echo '<td>' . getUserActions((int) $user->id) . '</td>';
+               echo '<td>' . Helper::getInstance()->getUserActions((int) $user->id) . '</td>';
                echo '</tr>';
             }
-         ?>
-      </tbody>
-   </table>
+            ?>
+         </tbody>
+      </table>
 
-   <?php endif;?>
+   <?php endif; ?>
 </div>

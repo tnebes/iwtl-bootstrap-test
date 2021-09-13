@@ -1,15 +1,16 @@
-<?php declare(strict_types = 1); 
+<?php
 
-abstract Class Model
+declare(strict_types=1);
+
+abstract class Model
 {
    protected $db;
    protected $TABLE_NAME;
 
    public function __construct()
    {
-      $this->db = new Database();
-      if (empty($this->db))
-      {
+      $this->db = Database::getInstance();
+      if (empty($this->db)) {
          die('Could not connect to database. Please check the connection data.');
       }
    }
@@ -21,49 +22,41 @@ abstract Class Model
     * @param cols is the column(s) to be created
     * @param vals is the values to be inserted into the columns
     */
-   protected function create(string $tName, array $cols, array $vals) : bool
+   protected function create(string $tName, array $cols, array $vals): bool
    {
       // TODO: proper exception required.
-      if (empty($tName))
-      {
+      if (empty($tName)) {
          die('Table name not defined.');
       }
 
-      if (empty($cols) || empty($vals))
-      {
+      if (empty($cols) || empty($vals)) {
          die('No columns or values specified');
       }
 
-      if (count($cols) != count($vals))
-      {
+      if (count($cols) != count($vals)) {
          die('Too few arguments for creation');
       }
-      
+
       $statement = 'INSERT INTO ';
       $statement .= $tName;
       $statement .= ' (';
-      for ($i = 0; $i < count($cols); $i++)
-      {
+      for ($i = 0; $i < count($cols); $i++) {
          $statement .= $cols[$i];
-         if ($i < count($cols) - 1)
-         {
+         if ($i < count($cols) - 1) {
             $statement .= ',';
          }
       }
       $statement .= ') ';
       $statement .= 'VALUES (';
-      for ($i = 0; $i < count($vals); $i++)
-      {
+      for ($i = 0; $i < count($vals); $i++) {
          $statement .= '?';
-         if ($i < count($vals) - 1)
-         {
+         if ($i < count($vals) - 1) {
             $statement .= ',';
          }
       }
       $statement .= ');';
       $this->db->query($statement);
-      for ($i = 1; $i <= count($vals); $i++)
-      {
+      for ($i = 1; $i <= count($vals); $i++) {
          $this->db->bind($i, $vals[$i - 1]);
       }
       return $this->db->execute();
@@ -78,76 +71,62 @@ abstract Class Model
     * @param criteriaVals where criteria values
     * SELECT cols FROM tName WHERE criterion0 = criteriaVal0 OR criterion1 = criterionVal1...
     */
-   protected function read(string $tName, array $cols, ?array $criteria, ?array $criteriaVals) : array
+   protected function read(string $tName, array $cols, ?array $criteria, ?array $criteriaVals): array
    {
-      if (empty($tName))
-      {
+      if (empty($tName)) {
          die('Table name not defined.');
       }
-      if (empty($cols))
-      {
+      if (empty($cols)) {
          die('Columns not defined.');
       }
 
       $statement = 'SELECT ';
-      if (count($cols) === 1 && $cols[0] == '*')
-      {
+      if (count($cols) === 1 && $cols[0] == '*') {
          $statement .= $cols[0] . ' ';
-      }
-      else
-      {
-         for ($i = 0; $i < count($cols); $i++)
-         {
+      } else {
+         for ($i = 0; $i < count($cols); $i++) {
             $statement .= $cols[$i];
-            if ($i < count($cols) - 1)
-            {
+            if ($i < count($cols) - 1) {
                $statement .= ',';
-            }   
+            }
          }
       }
 
       $statement .= ' FROM ';
       $statement .= $tName;
-      if (!empty($criteria) && !empty($criteriaVals))
-      {
+      if (!empty($criteria) && !empty($criteriaVals)) {
          $statement .= ' WHERE ';
-         for ($i = 0; $i < count($criteria); $i++)
-         {
+         for ($i = 0; $i < count($criteria); $i++) {
             $statement .= $criteria[$i] . '=' . '?';
-            if ($i < count($cols) - 1)
-            {
+            if ($i < count($cols) - 1) {
                $statement .= ' OR ';
-            }   
+            }
          }
       }
       $statement .= ';';
       $this->db->query($statement);
 
-      if (!empty($criteria) && !empty($criteriaVals))
-      {
-         for ($i = 1; $i <= count($criteriaVals); $i++)
-         {
+      if (!empty($criteria) && !empty($criteriaVals)) {
+         for ($i = 1; $i <= count($criteriaVals); $i++) {
             $this->db->bind($i, $criteriaVals[$i - 1]);
          }
       }
       return $this->db->resultSet();
    }
 
-   protected function readSingle(string $tName, array $cols, ?array $criteria, ?array $criteriaVals) : ?stdClass
+   protected function readSingle(string $tName, array $cols, ?array $criteria, ?array $criteriaVals): ?stdClass
    {
       $results = $this->read($tName, $cols, $criteria, $criteriaVals);
       return !empty($results) ? $results[0] : null;
    }
 
 
-   protected function update(string $tName, array $vals, array $criteria, array $criteriaVals) : bool
+   protected function update(string $tName, array $vals, array $criteria, array $criteriaVals): bool
    {
-      if (empty($tName))
-      {
+      if (empty($tName)) {
          die('Table name not defined.');
       }
-      if (count($criteria) != count($criteriaVals))
-      {
+      if (count($criteria) != count($criteriaVals)) {
          die('Too few criteria or criteria values for update');
       }
 
@@ -155,22 +134,18 @@ abstract Class Model
       $statement = 'UPDATE ';
       $statement .= $tName;
       $statement .= ' SET ';
-      foreach ($vals as $key => $value)
-      {
+      foreach ($vals as $key => $value) {
          $statement .= $key . '=' . '?';
-         if ($index++ <= count($vals) - 1)
-         {
+         if ($index++ <= count($vals) - 1) {
             $statement .= ',';
          }
       }
       $index = 1;
 
       $statement .= ' WHERE ';
-      for ($i = 0; $i < count($criteria); $i++)
-      {
+      for ($i = 0; $i < count($criteria); $i++) {
          $statement .= $criteria[$i] . '=' . '?';
-         if ($i < count($criteria) - 1)
-         {
+         if ($i < count($criteria) - 1) {
             // TODO: check whether to use AND or OR
             $statement .= ' AND ';
          }
@@ -179,38 +154,31 @@ abstract Class Model
       $this->db->query($statement);
 
       // TODO: check whether this is good.
-      foreach ($vals as $value)
-      {
+      foreach ($vals as $value) {
          $this->db->bind($index++, $value);
       }
       unset($index);
-      for ($i = 1; $i <= count($criteriaVals); $i++)
-      {
+      for ($i = 1; $i <= count($criteriaVals); $i++) {
          $this->db->bind($i + count($vals), $criteriaVals[$i - 1]);
       }
       return $this->db->execute();
    }
 
-   protected function delete(string $tName, ?array $criteria, ?array $criteriaVals) : bool
+   protected function delete(string $tName, ?array $criteria, ?array $criteriaVals): bool
    {
-      if (empty($tName))
-      {
+      if (empty($tName)) {
          die('Table name not defined.');
       }
-      if (empty($criteria) && empty($criteriaVals))
-      {
+      if (empty($criteria) && empty($criteriaVals)) {
          die('No criteria or values specified');
       }
       $statement = 'DELETE FROM ';
       $statement .= $tName;
-      if (!empty($criteria) && !empty($criteriaVals))
-      {
+      if (!empty($criteria) && !empty($criteriaVals)) {
          $statement .= ' WHERE ';
-         for ($i = 0; $i < count($criteria); $i++)
-         {
+         for ($i = 0; $i < count($criteria); $i++) {
             $statement .= $criteria[$i] . '=' . '?';
-            if ($i < count($criteria) - 1)
-            {
+            if ($i < count($criteria) - 1) {
                // TODO: check if AND should be used or or.
                $statement .= ' AND ';
             }
@@ -218,14 +186,11 @@ abstract Class Model
       }
       $statement .= ';';
       $this->db->query($statement);
-      if (!empty($criteria) && !empty($criteriaVals))
-      {
-         for ($i = 1; $i <= count($criteriaVals); $i++)
-         {
+      if (!empty($criteria) && !empty($criteriaVals)) {
+         for ($i = 1; $i <= count($criteriaVals); $i++) {
             $this->db->bind($i, $criteriaVals[$i - 1]);
          }
       }
       return $this->db->execute();
    }
-   
 }

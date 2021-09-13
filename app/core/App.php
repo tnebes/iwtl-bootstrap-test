@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 class App
 {
@@ -8,41 +10,30 @@ class App
       $path = explode('/', $route);
 
       $class = 'Controller';
-      if (!isset($path[1]) || empty($path[1]))
-      {
+      if (!isset($path[1]) || empty($path[1])) {
          $class .= 'Pages';
-      }
-      else if (isset($path[1]) && $path[1] === 'public')
-      {
+      } else if (isset($path[1]) && $path[1] === 'public') {
          $class .= 'Pages';
-      }
-      else
-      {
+      } else {
          $class .= ucwords($path[1]);
       }
-      
+
 
       $method = '';
-      if (!isset($path[2]) || empty($path[2]))
-      {
+      if (!isset($path[2]) || empty($path[2])) {
          $method = 'index';
-      }
-      else
-      {
+      } else {
          $method = ucwords($path[2]);
       }
 
-      if (class_exists($class) && method_exists($class, $method))
-      {
+      if (class_exists($class) && method_exists($class, $method)) {
          $instance = new $class;
          $instance->$method((isset($path[3]) && !empty($path[3])) ? $path[3] : null);
-      }
-      else
-      {
+      } else {
          $class = 'ControllerErrorPages';
          $method = 'notFound';
          $instance = new $class;
          $instance->$method();
-      }     
-   }   
+      }
+   }
 }

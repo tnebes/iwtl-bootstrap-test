@@ -1,6 +1,7 @@
-<?php declare(strict_types = 1);
+<?php
 
-Class ControllerLegal extends Controller
+declare(strict_types=1);
+
+class ControllerLegal extends Controller
 {
-   
 }

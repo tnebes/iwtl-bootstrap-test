@@ -1,20 +1,21 @@
-<?php declare(strict_types = 1);
+<?php
 
-   Class ControllerPages extends Controller
+declare(strict_types=1);
+
+class ControllerPages extends Controller
+{
+   public function __construct()
    {
-      public function __construct()
-      {
-         parent::__construct();
-      }
-
-      public function index() : void
-      {
-         $this->view->render('pages/index');
-      }
-
-      public function about() : void
-      {
-         header('location: https://www.github.com/tnebes');
-      }
-
+      parent::__construct();
    }
+
+   public function index(): void
+   {
+      $this->view->render('pages/index');
+   }
+
+   public function about(): void
+   {
+      header('location: https://www.github.com/tnebes');
+   }
+}
