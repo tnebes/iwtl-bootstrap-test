@@ -171,6 +171,23 @@ class Helper
       return $role < 0 || $role > 1 ? ' must be a valid role. ' : '';
    }
 
+   /*
+   Topics
+   */
+
+   function getRandomTopicTitle(): string
+   {
+      $topicTitles =
+      [
+         'How to learn PHP OOP',
+         'Where to learn Java inheritance',
+         'How can I create MVC app',
+         'How to use databases?',
+         'How does an PHP autoloader work?'
+      ];
+      return $topicTitles[array_rand($topicTitles)];
+   }
+
    function getUserFromTopic(stdClass $topic): ?stdClass
    {
       $m = new User();

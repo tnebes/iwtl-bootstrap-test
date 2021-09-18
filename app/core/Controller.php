@@ -8,12 +8,6 @@ class Controller
 
    public function getModel(string $model): Model
    {
-      // if (file_exists(APP_ROOT . 'app' . DIRECTORY_SEPARATOR . 'models' . DIRECTORY_SEPARATOR . $model . '.php'))
-      // {
-      //    require_once APP_ROOT . 'app' . DIRECTORY_SEPARATOR . 'models' . DIRECTORY_SEPARATOR . $model . '.php';
-      //    return new $model();
-      // }
-      // die('Model not found.');
       try {
          $returnModel = new $model();
          if ($returnModel instanceof Model) {
@@ -24,6 +18,15 @@ class Controller
          die($model . ' model not found.');
       }
       return $returnModel;
+   }
+
+   protected function redirectIfNotLoggedIn(): bool
+   {
+      if (!Helper::getInstance()->isLoggedIn()) {
+         (new ControllerErrorPages())->restricted();
+         return true;
+      }
+      return false;
    }
 
    public function __construct()

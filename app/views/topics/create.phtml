@@ -1,1 +1,16 @@
-<?php echo $topics;
+<div class="row w-75">
+   <form>
+   <!-- Title input -->
+   <div class="form-outline mb-4">
+      <input type="text" id="form4Example1" class="form-control" placeholder="<?php Helper::getInstance()->getRandomTopicTitle();?>"/>
+   </div>
+
+   <!-- Description input -->
+   <div class="form-outline mb-4">
+      <textarea class="form-control" id="form4Example3" rows="10" placeholder="Short description goes here."></textarea>
+   </div>
+
+   <!-- Submit button -->
+   <button type="submit" class="btn btn-primary btn-block mb-4">Send</button>
+   </form>
+</div>

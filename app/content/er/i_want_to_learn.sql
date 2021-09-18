@@ -1,14 +1,13 @@
 drop database if exists iwtl;
 create database iwtl;
 use iwtl;
-create table user(
+create table `user`(
    id int primary key not null auto_increment,
    username varchar(50) not null,
    `password` varchar(255) not null,
    email varchar(255) not null,
    registrationDate datetime not null default current_timestamp,
-   `role` tinyint not null default 0,
-   -- 0 - user, 1 - admin
+   `role` tinyint not null default 0,   -- 0 - user, 1 - admin
    lastLogin datetime default current_timestamp,
    banned bit not null default 0,
    dateBanned datetime default current_timestamp

@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 class ControllerTopics extends Controller
 {
+   private $helper = null;
+
    public function __construct()
    {
       parent::__construct();
       $this->model = $this->getModel('Topic');
+      $this->helper = Helper::getInstance();
    }
 
    public function index(): void
@@ -43,6 +46,12 @@ class ControllerTopics extends Controller
 
       if ($_SERVER['REQUEST_METHOD'] === 'POST') {
          $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+         $data['name'] = $_POST['name'];
+         $data['description'] = $_POST['description'];
+         $data['datePosted'] = $_POST['datePosted'];
+         $data['user'] = $_SESSION['user']['id'];
+         $data['image'] = $_POST['image']; // TODO:
+         unset($_POST);
       }
 
       $this->view->render('topics/create');
@@ -64,12 +73,4 @@ class ControllerTopics extends Controller
       $this->view->render('topics/delete');
    }
 
-   private function redirectIfNotLoggedIn(): bool
-   {
-      if (!Helper::getInstance()->isLoggedIn()) {
-         (new ControllerErrorPages())->restricted();
-         return true;
-      }
-      return false;
-   }
 }

@@ -6,7 +6,7 @@ class App
 {
    public static function start()
    {
-      $route = isset($_SERVER['REDIRECTION_PATH_INFO']) ? $_SERVER['REDIRECTION_PATH_INFO'] : $_SERVER['REQUEST_URI'];
+      $route = isset($_SERVER['REDIRECT_PATH_INFO']) ? $_SERVER['REDIRECT_PATH_INFO'] : $_SERVER['REQUEST_URI'];
       $path = explode('/', $route);
 
       $class = 'Controller';
@@ -17,7 +17,6 @@ class App
       } else {
          $class .= ucwords($path[1]);
       }
-
 
       $method = '';
       if (!isset($path[2]) || empty($path[2])) {
