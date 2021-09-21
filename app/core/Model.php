@@ -98,8 +98,8 @@ abstract class Model
          $statement .= ' WHERE ';
          for ($i = 0; $i < count($criteria); $i++) {
             $statement .= $criteria[$i] . '=' . '?';
-            if ($i < count($cols) - 1) {
-               $statement .= ' OR ';
+            if ($i != count($criteria) - 1) {
+               $statement .= ' AND ';
             }
          }
       }

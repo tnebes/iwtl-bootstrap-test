@@ -10,9 +10,15 @@ class Topic extends Model
       $this->TABLE_NAME = 'topic';
    }
 
-   public function createTopic(stdClass $topic): bool
+   // TODO: add image.
+   /**
+    * Unlike similar methods in the parent class, this method returns the int id of the created row.
+    */
+   public function createTopic(string $name, string $description, string $datePosted, int $user): int
    {
-      return false;
+      $this->create($this->TABLE_NAME, ['name', 'description', 'datePosted', 'user'], [$name, $description, $datePosted, $user]);
+      // cursed
+      return (int) $this->read($this->TABLE_NAME, ['id'], ['name', 'description', 'datePosted', 'user'], [$name, $description, $datePosted, $user])[0]->id;
    }
 
    public function getTopics(): array
