@@ -24,7 +24,17 @@ class ControllerTopics extends Controller
       if ($this->redirectIfNotLoggedIn()) {
          return;
       }
-      $this->view->render('topics/topic');
+      $topicId = (int) func_get_arg(0);
+      if ($topicId !== null && is_int($topicId))
+      {
+         $this->view->render('topics/topic', ['topic' => $this->model->getTopicById($topicId)]);
+         return;
+      }
+      else
+      {
+         (new ControllerErrorPages())->notFound();
+         return;
+      }
    }
 
    public function create(): void
@@ -62,9 +72,9 @@ class ControllerTopics extends Controller
             $this->view->render('topics/create', $data);
             return;
          }
-         $this->model->createTopic($data['name'], $data['description'], $data['datePosted'], $data['user']);
+         $topicId = $this->model->createTopic($data['name'], $data['description'], $data['datePosted'], $data['user']);
          // TODO: redirect to created topic.
-         $this->index();
+         $this->topic($topicId);
          return;
       }
 
