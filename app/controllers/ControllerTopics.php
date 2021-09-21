@@ -27,7 +27,8 @@ class ControllerTopics extends Controller
       $topicId = (int) func_get_arg(0);
       if ($topicId !== null && is_int($topicId))
       {
-         $this->view->render('topics/topic', ['topic' => $this->model->getTopicById($topicId)]);
+         $this->model->getTopicById($topicId) ? $this->view->render('topics/topic', ['topic' => $this->model->getTopicById($topicId)]) : (new ControllerErrorPages())->notFound();
+         ;
          return;
       }
       else

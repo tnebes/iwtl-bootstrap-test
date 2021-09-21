@@ -33,7 +33,7 @@ class Topic extends Model
 
    public function getTopicById(int $id): ?stdClass
    {
-      return null;
+      return $this->read($this->TABLE_NAME, ['*'], ['id'], [$id])[0] ?? null;
    }
 
    public function getTopicsBySubscription(int $subscriptionId): array
