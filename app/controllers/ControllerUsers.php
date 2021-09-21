@@ -323,7 +323,7 @@ class ControllerUsers extends Controller
       $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
       if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm']) && filter_var($_POST['confirm'], FILTER_VALIDATE_BOOLEAN)) {
          $user->banned = $user->banned ? 0 : 1;
-         $user->dateBanned = date('Y-m-d H:i:s');
+         $user->dateBanned = (new DateTime())->format('Y-m-d H:i:s');
          $this->model->updateUser($user);
          $this->profile($user->id);
          return;

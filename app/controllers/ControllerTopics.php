@@ -48,7 +48,7 @@ class ControllerTopics extends Controller
          $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
          $data['name'] = $_POST['name'];
          $data['description'] = $_POST['description'];
-         $data['datePosted'] = $_POST['datePosted'];
+         $data['datePosted'] = (new DateTime())->format('Y-m-d H:i:s');
          $data['user'] = $_SESSION['user']['id'];
          $data['image'] = $_POST['image']; // TODO:
          unset($_POST);
