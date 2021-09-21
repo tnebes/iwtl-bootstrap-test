@@ -102,7 +102,7 @@ class ControllerTopics extends Controller
    {
       if (empty($name))
       {
-         return 'Name cannot be empty';
+         return 'Title cannot be empty';
       }
       if (strlen($name) < 12)
       {
@@ -117,7 +117,18 @@ class ControllerTopics extends Controller
 
    private function validateDescription(string $description): string
    {
-
+      if (empty($description))
+      {
+         return 'Description cannot be empty';
+      }
+      if (strlen($description) < 12)
+      {
+         return 'Description must be at least 32 characters';
+      }
+      if (strlen($description) > 3000)
+      {
+         return 'Description must be less than 3000 characters';
+      }
       return '';
    }
 
