@@ -3,7 +3,7 @@
    <!-- Title input -->
    <div class="form-outline mx-auto mb-4">
       <h1>Title of your question</h1>
-      <input type="text" name="name" class="form-control" placeholder="<?php echo Helper::getInstance()->getRandomTopicTitle();?>" value="<?php echo $name?>"/>
+      <input type="text" name="name" class="form-control" placeholder="<?php echo Helper::getInstance()->getRandomTopicTitle();?>" value="<?php echo $name ?? ''?>"/>
       <?php if (!empty($nameError)) : ?>
          <span class="text-warning" role="alert"><?php echo $nameError ?></span>
       <?php endif; ?>
@@ -12,7 +12,7 @@
    <!-- Description input -->
    <div class="form-outline mb-4">
       <h2>Description of your question</h2>
-      <textarea class="form-control" name="description" rows="10" placeholder="Short description goes here."><?php echo $description?></textarea>
+      <textarea class="form-control" name="description" rows="10" placeholder="Short description goes here."><?php echo $description ?? ''?></textarea>
       <?php if (!empty($descriptionError)) : ?>
          <span class="text-warning" role="alert"><?php echo $descriptionError ?></span>
       <?php endif; ?>
