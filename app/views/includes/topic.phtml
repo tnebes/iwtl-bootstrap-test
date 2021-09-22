@@ -1,0 +1,38 @@
+<?php 
+// TODO: this is not responsive
+   echo '<li class="list-group-item text-dark mx-auto my-2" style="max-wdith: 50%">';
+?>
+   <div class="thumbnail">
+      <div class="caption">
+         <img src="...image..." alt="...img...">
+         <div class="form-control">
+            <h1><a href="<?php echo $helper->getLinkToTopic($topic); ?>"><div class="col-lg-4 badge bg-dark text-light w-100"><?php echo $topic->name ?></div></a></h1>
+            <h6><a href="<?php echo $helper->getLinkToUser($helper->getUserFromTopic($topic)); ?>"><span class="badge bg-info text-dark"><?php echo $helper->getUserFromTopic($topic)->username ?></span></a></h6>
+            <p><?php echo $topic->description ?></p>
+            <small class="text-muted" class="center">Date asked: <p><?php echo date('d-m-Y', strtotime($topic->datePosted)) ?></p></small>
+         </div>
+
+         <p>
+            <?php if ($helper->isLoggedIn()) : ?>
+               <a href="#" class="btn btn-primary mt-1" role="button">&#128077;</a>
+               <a href="#" class="btn btn-primary mt-1" role="button">&#128078;</a>
+               <a href="#" class="btn btn-primary mt-1" role="button">Suggest</a>
+               <a href="#" class="btn btn-primary mt-1" role="button">Subscribe</a>
+            <?php else : ?>
+               <a href="#" class="btn btn-outline-primary mt-1 disabled" disabled role="button">&#128077;</a>
+               <a href="#" class="btn btn-outline-primary mt-1 disabled" disabled role="button">&#128078;</a>
+               <a href="#" class="btn btn-outline-primary mt-1 disabled" disabled role="button">Suggest</a>
+               <a href="<?php echo URL_ROOT . '/users/login' ?>">
+                  <p>Log in to rate, comment, and subscribe to this question.</p>
+               </a>
+
+            <?php endif; ?>
+         </p>
+      </div>
+      <!-- TODO: Top 5 rated comments go here -->
+      <!-- foreach(getSuggestions($topic) as $suggestion) ... -->
+   </div>
+
+<?php
+   echo '</li>';
+?>

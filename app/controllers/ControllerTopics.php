@@ -21,9 +21,9 @@ class ControllerTopics extends Controller
 
    public function topic(): void
    {
-      if ($this->redirectIfNotLoggedIn()) {
-         return;
-      }
+      // if ($this->redirectIfNotLoggedIn()) {
+      //    return;
+      // }
       $topicId = (int) func_get_arg(0);
       if ($topicId !== null && is_int($topicId))
       {
