@@ -73,12 +73,16 @@ class ControllerTopics extends Controller
             $this->view->render('topics/create', $data);
             return;
          }
+         else
+         {
+            (new ControllerErrorPages())->notFound();
+            return;
+         }
          $topicId = $this->model->createTopic($data['name'], $data['description'], $data['datePosted'], $data['user']);
          // TODO: redirect to created topic.
          $this->topic($topicId);
          return;
       }
-
       $this->view->render('topics/create');
    }
 
