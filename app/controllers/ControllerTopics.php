@@ -66,9 +66,9 @@ class ControllerTopics extends Controller
 
          $data['nameError'] = $this->validateName($data['name']);
          $data['descriptionError'] = $this->validateDescription($data['description']);        
-         $data['imageError'] = null; // TODO: $this->validateImage($data['image']);
+         $data['imageError'] = ''; // TODO: $this->validateImage($data['image']);
 
-         if ($data['nameError'] !== '' && $data['descriptionError'] !== '' && $data['imageError'] !== '')
+         if ($data['nameError'] !== '' || $data['descriptionError'] !== '' || $data['imageError'] !== '')
          {
             $this->view->render('topics/create', $data);
             return;
@@ -78,8 +78,7 @@ class ControllerTopics extends Controller
          $this->topic($topicId);
          return;
       }
-
-      $this->view->render('topics/create');
+      $this->view->render('topics/create', $data);
    }
 
    public function edit(): void
