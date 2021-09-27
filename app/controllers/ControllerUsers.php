@@ -67,6 +67,7 @@ class ControllerUsers extends Controller
                return;
             } else {
                $data['loginError'] .= 'Invalid email or password.';
+               $data['password'] = '';
             }
          }
       }
@@ -110,7 +111,11 @@ class ControllerUsers extends Controller
          $data['emailError'] = Helper::getInstance()->validateEmail($data['email']);
          $data['passwordError'] = Helper::getInstance()->validatePassword($data['password']);
          $data['confirmPasswordError'] = Helper::getInstance()->validateConfirmPassword($data['password'], $data['confirmPassword']);
-
+         if ($data['passwordError'] || $data['confirmPasswordError'])
+         {
+            $data['password'] = '';
+            $data['confirmPassword'] = '';
+         }
          if ($this->model->userByUsernameExists($data['username']) || $this->model->userByEmailExists($data['email'])) {
             $data['usernameError'] .= ' or email already taken.';
          }
