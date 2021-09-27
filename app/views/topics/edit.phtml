@@ -1,1 +1,27 @@
-<?php echo $topics;
+<div class="col">
+   <div class="container mt-5">
+      <form method="POST" action="/topics/edit/<?php echo $topic->id?>">
+      <!-- Title input -->
+      <div class="form-outline mx-auto mb-4">
+         <h1>Edit your question</h1>
+         <input type="text" name="name" class="form-control" value="<?php echo $name?>"/>
+         <?php if (!empty($nameError)) : ?>
+            <span class="text-warning" role="alert"><?php echo $nameError ?></span>
+         <?php endif; ?>
+      </div>
+
+      <!-- Description input -->
+      <div class="form-outline mb-4">
+         <h2>Edit the description</h2>
+         <textarea class="form-control" name="description" rows="10" placeholder="Short description goes here."><?php echo $description?></textarea>
+         <?php if (!empty($descriptionError)) : ?>
+            <span class="text-warning" role="alert"><?php echo $descriptionError ?></span>
+         <?php endif; ?>
+
+      </div>
+
+      <!-- Submit button -->
+      <button type="submit" id="submit" class="btn btn-primary btn-block mb-4">Edit</button>
+      </form>
+   </div>
+</div>

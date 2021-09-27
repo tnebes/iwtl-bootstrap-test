@@ -78,10 +78,59 @@ class ControllerTopics extends Controller
 
    public function edit(): void
    {
-      if ($this->redirectIfNotLoggedIn()) {
+      $userId = (int) $_SESSION['id'];
+      $topicId = (int) func_get_arg(0);
+      $topic = null;
+      if ($topicId !== null && is_int($topicId))
+      {
+         $topic = $this->model->getTopicById($topicId);
+      }
+      if ($topic === null)
+      {
+         (new ControllerErrorPages())->notFound();
          return;
       }
-      $this->view->render('topics/edit');
+      if ($userId !== $topic->user && !$this->helper->isAdmin())
+      {
+         (new ControllerErrorPages())->restricted();
+         return;
+      }
+      $data = [
+         'topic' => $topic,
+         'nameError' => '',
+         'descriptionError' => '',
+         'imageError' => '',
+         'name' => $topic->name,
+         'description' => $topic->description,
+         'user' => $topic->user,
+         'image' => $topic->image
+      ];
+      if ($_SERVER['REQUEST_METHOD'] === 'POST')
+      {
+         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+         $data['name'] = trim($_POST['name']);
+         $data['description'] = trim($_POST['description']);
+         $data['image'] = null; // TODO: add the image path or something
+         $data['user'] = (int) $_SESSION['id'];
+         $data['datePosted'] = $topic->datePosted;
+         unset($_POST);
+
+         $data['nameError'] = $this->validateName($data['name']);
+         $data['descriptionError'] = $this->validateDescription($data['description']);        
+         $data['imageError'] = ''; // TODO: $this->validateImage($data['image']);
+         if ($data['nameError'] !== '' || $data['descriptionError'] !== '' || $data['imageError'] !== '')
+         {
+            $this->view->render('topics/edit', $data);
+            return;
+         }
+         // $topicId = $this->model->createTopic($data['name'], $data['description'], $data['datePosted'], $data['user']); TODO: make it actually edit the thing
+         $this->view->render('topics/edit', $data);
+         return;
+      }
+      else
+      {
+         $this->view->render('topics/edit', $data);
+      }
    }
 
    public function delete(): void
