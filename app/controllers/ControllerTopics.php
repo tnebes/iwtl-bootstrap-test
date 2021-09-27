@@ -123,8 +123,13 @@ class ControllerTopics extends Controller
             $this->view->render('topics/edit', $data);
             return;
          }
-         // $topicId = $this->model->createTopic($data['name'], $data['description'], $data['datePosted'], $data['user']); TODO: make it actually edit the thing
-         $this->view->render('topics/edit', $data);
+         // $topicId = $this->model->createTopic($data['name'], $data['description'], $data['datePosted'], $data['user']); 
+         // TODO: make it actually edit the thing
+
+         $topic->name = $data['name'];
+         $topic->description = $data['description'];
+         $topic->image = $data['image'];
+         $this->view->render('topics/edit/' . $this->model->updateTopic($topic) , $data);
          return;
       }
       else

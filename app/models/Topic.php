@@ -41,10 +41,10 @@ class Topic extends Model
       return [];
    }
 
-   public function editTopicById(stdClass $topic): bool
+   public function updateTopic(stdClass $topic): int
    {
-
-      return false;
+      $this->update($this->TABLE_NAME, ['name', 'description', 'datePosted', 'user'], [$topic->name, $topic->description, $topic->datePosted, $topic->user], ['id'], [$topic->id]);
+      return $topic->id;
    }
 
    public function deleteTopicById(int $id): bool
