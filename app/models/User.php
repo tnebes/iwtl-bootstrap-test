@@ -78,7 +78,6 @@ class User extends Model
    {
       // TODO: implement an admin check so that admins cannot be deleted by using getIsAdmin();
       return $this->delete($this->TABLE_NAME, ['id'], [$id]);
-      return true;
    }
 
    public function updateUser(stdClass $user): bool
@@ -86,6 +85,7 @@ class User extends Model
       $user = (array) $user;
       $userId = (int) $user['id'];
       unset($user['id']); // to prevent the id from being updated
+      // TODO: this is broken.
       return $this->update($this->TABLE_NAME, $user, ['id'], [$userId]);
    }
 

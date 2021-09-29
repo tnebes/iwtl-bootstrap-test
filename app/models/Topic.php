@@ -49,7 +49,7 @@ class Topic extends Model
 
    public function deleteTopicById(int $id): bool
    {
-      echo 'deleted!';
-      return false;
+      // TODO: implement an admin check so that admins cannot be deleted by using getIsAdmin();
+      return $this->delete($this->TABLE_NAME, ['id'], [$id]);
    }
 }
