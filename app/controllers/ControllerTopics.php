@@ -129,7 +129,7 @@ class ControllerTopics extends Controller
          $topic->name = $data['name'];
          $topic->description = $data['description'];
          $topic->image = $data['image'];
-         $this->view->render('topics/edit/' . $this->model->updateTopic($topic) , $data);
+         $this->topic($this->model->updateTopic($topic));
          return;
       }
       else

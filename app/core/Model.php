@@ -121,7 +121,7 @@ abstract class Model
    }
 
 
-   protected function update(string $tName, array $vals, array $criteria, array $criteriaVals): bool
+   protected function update(string $tName, array $cols, array $vals, array $criteria, array $criteriaVals): bool
    {
       if (empty($tName)) {
          die('Table name not defined.');
@@ -129,14 +129,17 @@ abstract class Model
       if (count($criteria) != count($criteriaVals)) {
          die('Too few criteria or criteria values for update');
       }
-
+      if (count($cols) != count($vals))
+      {
+         die('Too few columns or values for update');
+      }
       $index = 1;
       $statement = 'UPDATE ';
       $statement .= $tName;
       $statement .= ' SET ';
-      foreach ($vals as $key => $value) {
-         $statement .= $key . '=' . '?';
-         if ($index++ <= count($vals) - 1) {
+      foreach ($cols as $col) {
+         $statement .= $col . '=' . '?';
+         if ($index++ <= count($cols) - 1) {
             $statement .= ',';
          }
       }
