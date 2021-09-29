@@ -90,7 +90,7 @@ class ControllerTopics extends Controller
          (new ControllerErrorPages())->notFound();
          return;
       }
-      if ($userId !== $topic->user && !$this->helper->isAdmin())
+      if ($userId !== (int) $topic->user && !$this->helper->isAdmin())
       {
          (new ControllerErrorPages())->restricted();
          return;
