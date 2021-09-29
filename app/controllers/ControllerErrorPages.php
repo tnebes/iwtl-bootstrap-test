@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 class ControllerErrorPages extends Controller
 {
-   public function __construct(array $data = ['title' => '', 'desciption' => ''])
+   public function __construct()
    {
       parent::__construct();
    }

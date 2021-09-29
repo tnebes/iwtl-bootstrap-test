@@ -1,1 +1,15 @@
-<?php echo $topics;
+<div class="p-4 bg-dark">
+   <div class="card bg-dark">
+      <div class="card-body">
+         <h4 class="card-title">Delete Topic</h4>
+         <p class="card-text">
+         <form action="<?php echo URL_ROOT . '/topics/delete/' . $topic->id; ?>" method="POST">
+            <input type="hidden" name="topic_id" value="<?php echo $topic->id; ?>">
+            <p>Are you sure you want to delete <span class="font-weight-light"><?php echo $topic->name; ?></span>? This action cannot be undone.</p>
+            <button type="submit" name="confirm" value="true" class="btn btn-danger">Delete Topic</button>
+            <button type="submit" name="confirm" value="false" class="btn btn-success">Cancel</button>
+         </form>
+         </p>
+      </div>
+   </div>
+</div>

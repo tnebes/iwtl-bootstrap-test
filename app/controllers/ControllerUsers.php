@@ -298,6 +298,7 @@ class ControllerUsers extends Controller
 
       if ($_SERVER['REQUEST_METHOD'] === 'POST') {
          if (isset($_POST['confirm']) && filter_var($_POST['confirm'], FILTER_VALIDATE_BOOLEAN)) {
+            // TODO: add a check to see whether anything is tied to the user
             $this->model->deleteUserById($id);
             $this->index();
             return;

@@ -143,7 +143,32 @@ class ControllerTopics extends Controller
       if ($this->redirectIfNotLoggedIn()) {
          return;
       }
-      $this->view->render('topics/delete');
+      $userId = (int) $_SESSION['id'];
+      $topicId = (int) func_get_arg(0);
+      $topic = null;
+      if ($topicId !== null && is_int($topicId))
+      {
+         $topic = $this->model->getTopicById($topicId);
+      }
+      if ($topic === null)
+      {
+         (new ControllerErrorPages())->notFound();
+         return;
+      }
+      if ($userId !== (int) $topic->user && !$this->helper->isAdmin())
+      {
+         (new ControllerErrorPages())->restricted();
+         return;
+      }
+      if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+         if (isset($_POST['confirm']) && filter_var($_POST['confirm'], FILTER_VALIDATE_BOOLEAN)) {
+            // TODO: add a check to see whether anything is tied to the topic
+            $this->model->deleteTopicById($topicId);
+         }
+         $this->index();
+         return;
+      }
+      $this->view->render('topics/delete', ['topic' => $topic]);
    }
 
    private function validateName(string $name): string

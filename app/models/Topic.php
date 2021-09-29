@@ -49,6 +49,7 @@ class Topic extends Model
 
    public function deleteTopicById(int $id): bool
    {
+      echo 'deleted!';
       return false;
    }
 }
