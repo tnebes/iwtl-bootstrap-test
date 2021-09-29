@@ -91,7 +91,6 @@ class User extends Model
 
    public function getIsAdmin(string $id): bool
    {
-      // TODO: bad and cursed.
       return $this->read($this->TABLE_NAME, ['role'], ['id'], [$id])[0]->role == ADMIN_ROLE;
    }
 }

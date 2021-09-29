@@ -67,7 +67,6 @@ class Database
       return $this->statement->execute();
    }
 
-   // TODO: do something here so that the object gets cast into its respective object
    public function resultSet(): array
    {
       $this->execute();

@@ -24,7 +24,6 @@ abstract class Model
     */
    protected function create(string $tName, array $cols, array $vals): bool
    {
-      // TODO: proper exception required.
       if (empty($tName)) {
          die('Table name not defined.');
       }
@@ -149,14 +148,12 @@ abstract class Model
       for ($i = 0; $i < count($criteria); $i++) {
          $statement .= $criteria[$i] . '=' . '?';
          if ($i < count($criteria) - 1) {
-            // TODO: check whether to use AND or OR
             $statement .= ' AND ';
          }
       }
       $statement .= ';';
       $this->db->query($statement);
 
-      // TODO: check whether this is good.
       foreach ($vals as $value) {
          $this->db->bind($index++, $value);
       }
@@ -182,7 +179,6 @@ abstract class Model
          for ($i = 0; $i < count($criteria); $i++) {
             $statement .= $criteria[$i] . '=' . '?';
             if ($i < count($criteria) - 1) {
-               // TODO: check if AND should be used or or.
                $statement .= ' AND ';
             }
          }
