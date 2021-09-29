@@ -127,6 +127,7 @@ class ControllerTopics extends Controller
          $topic->name = $data['name'];
          $topic->description = $data['description'];
          $topic->image = $data['image'];
+         // TODO: redirect in header so that the user can go back.
          $this->topic($this->model->updateTopic($topic));
          return;
       }
