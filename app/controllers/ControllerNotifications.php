@@ -11,7 +11,7 @@ class ControllerNotifications extends Controller
 
    public function index()
    {
-      (new ControllerErrorPages)->restricted();
+      header('Location: ' . URL_ROOT . '/errorPages/restricted');
    }
 
    public function message(): void

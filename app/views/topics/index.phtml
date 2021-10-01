@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 $helper = Helper::getInstance();
 
-if (!isset($topics) && !is_array($topics) && !count($topics) > 0) {
+if (!isset($topics) && !is_array($topics) && count($topics) < 1) {
    // Class member access on instantiation
-   (new ControllerErrorPages)->internalError();
+   header('Location: ' . URL_ROOT . '/errorPages/internalError');
    return;
 }
 echo '<ul class="list-group">';

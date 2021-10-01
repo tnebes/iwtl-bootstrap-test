@@ -13,7 +13,7 @@ class ControllerUsers extends Controller
    public function index(): void
    {
       if (!Helper::getInstance()->isLoggedIn()) {
-         (new ControllerErrorPages())->restricted();
+         header('location: ' . URL_ROOT . '/errorPages/restricted');
          return;
       }
       $data = [];
@@ -63,7 +63,7 @@ class ControllerUsers extends Controller
             $user = $this->model->login($data['email'], $data['password']);
             if (!empty($user)) {
                Helper::getInstance()->createUserSession($user);
-               (new ControllerPages)->index();
+               header('Location: ' . URL_ROOT . '/users/index');
                return;
             } else {
                $data['loginError'] .= 'Invalid email or password.';
@@ -137,7 +137,7 @@ class ControllerUsers extends Controller
    public function profile(): void
    {
       if (!Helper::getInstance()->isLoggedIn()) {
-         (new ControllerErrorPages())->restricted();
+         header('location: ' . URL_ROOT . '/errorPages/restricted');
          return;
       }
 
@@ -150,7 +150,7 @@ class ControllerUsers extends Controller
       }
       $user = $this->model->getUserById((int) $id);
       if (empty($user)) {
-         (new ControllerErrorPages())->notFound();
+         header('location: ' . URL_ROOT . '/errorPages/notFound');
          return;
       }
       $this->view->render('users/profile', ['user' => $user]);
@@ -159,12 +159,12 @@ class ControllerUsers extends Controller
    public function update(): void
    {
       if (!Helper::getInstance()->isLoggedIn()) {
-         (new ControllerErrorPages())->restricted();
+         header('location: ' . URL_ROOT . '/errorPages/restricted');
          return;
       }
       $id = func_get_args();
       if (empty($id)) {
-         (new ControllerErrorPages())->internalError();
+         header('location: ' . URL_ROOT . '/errorPages/internalError');
          return;
       }
       $id = (int) $id[0];
@@ -180,7 +180,7 @@ class ControllerUsers extends Controller
          ];
       $user = $this->model->getUserById($id);
       if (empty($user)) {
-         (new ControllerErrorPages())->notFound();
+         header('location: ' . URL_ROOT . '/errorPages/notFound');
          return;
       }
 
@@ -284,12 +284,12 @@ class ControllerUsers extends Controller
    public function delete(): void
    {
       if (!Helper::getInstance()->isLoggedIn()) {
-         (new ControllerErrorPages())->restricted();
+         header('location: ' . URL_ROOT . '/errorPages/restricted');
          return;
       }
       $id = func_get_args();
       if (empty($id)) {
-         (new ControllerErrorPages())->internalError();
+         header('location: ' . URL_ROOT . '/errorPages/internalError');
          return;
       }
       $id = (int) $id[0];
@@ -312,18 +312,18 @@ class ControllerUsers extends Controller
    public function ban(): void
    {
       if (!Helper::getInstance()->isLoggedIn()) {
-         (new ControllerErrorPages())->restricted();
+         header('location: ' . URL_ROOT . '/errorPages/restricted');
          return;
       }
       $id = func_get_args();
       if (empty($id)) {
-         (new ControllerErrorPages())->internalError();
+         header('location: ' . URL_ROOT . '/errorPages/internalError');
          return;
       }
       $id = (int) $id[0];
       $user = $this->model->getUserById((int) $id);
       if (empty($user)) {
-         (new ControllerErrorPages())->internalError();
+         header('location: ' . URL_ROOT . '/errorPages/internalError');
          return;
       }
       $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
@@ -340,6 +340,6 @@ class ControllerUsers extends Controller
    public function logout(): void
    {
       Helper::getInstance()->clearUserSession();
-      (new ControllerPages())->index();
+      header('Location: ' . URL_ROOT . '/pages/index');
    }
 }

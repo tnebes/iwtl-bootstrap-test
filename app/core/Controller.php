@@ -23,7 +23,7 @@ class Controller
    protected function redirectIfNotLoggedIn(): bool
    {
       if (!Helper::getInstance()->isLoggedIn()) {
-         (new ControllerErrorPages())->restricted();
+         header('location: ' . URL_ROOT . '/errorPages/restricted');
          return true;
       }
       return false;

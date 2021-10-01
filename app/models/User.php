@@ -85,8 +85,8 @@ class User extends Model
       $user = (array) $user;
       $userId = (int) $user['id'];
       unset($user['id']); // to prevent the id from being updated
-      // TODO: this is broken.
-      return $this->update($this->TABLE_NAME, $user, ['id'], [$userId]);
+      $userCols = array_keys($user);
+      return $this->update($this->TABLE_NAME, $userCols, $user, ['id'], [$userId]);
    }
 
    public function getIsAdmin(string $id): bool

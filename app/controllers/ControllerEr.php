@@ -12,7 +12,7 @@ class ControllerEr extends Controller
    public function index(): void
    {
       if (!Helper::getInstance()->isLoggedIn()) {
-         (new ControllerErrorPages())->restricted();
+         header('location: ' . URL_ROOT . '/errorPages/restricted');
          return;
       }
 
