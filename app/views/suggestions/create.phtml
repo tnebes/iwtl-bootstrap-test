@@ -1,0 +1,41 @@
+<?php declare(strict_types = 1);
+
+echo '<ul class="list-group">';
+include APP_ROOT . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'topic.phtml';
+echo '</ul>';
+
+?>
+
+<div class="container mt-5">
+   <form method="POST" action="/suggestions/create/<?php echo $topic->id?>">
+   <!-- Title input -->
+   <div class="form-outline mx-auto mb-4">
+      <h1>Title of your answer</h1>
+      <input type="text" name="title" class="form-control" value="<?php echo $topicTitle?>" placeholder="Title of your answer."/>
+      <?php if (!empty($topicTitleError)) : ?>
+         <span class="text-warning" role="alert"><?php echo $topicTitleError ?></span>
+      <?php endif; ?>
+   </div>
+
+   <!-- Description input -->
+   <div class="form-outline mb-4">
+      <h2>Description of your question (optional)</h2>
+      <textarea class="form-control" name="longDescription" rows="10" placeholder="Long answer goes here."><?php echo $topicLongDescription?></textarea>
+      <?php if (!empty($descriptionError)) : ?>
+         <span class="text-warning" role="alert"><?php echo $topicLongDescriptionError ?></span>
+      <?php endif; ?>
+
+   </div>
+   <div class="form-outline mb-4">
+      <h2>tl;dr (too long didn't read)</h2>
+      <textarea class="form-control" name="shortDescription" rows="5" placeholder="Short answer goes here."><?php echo $topicShortDescription?></textarea>
+      <?php if (!empty($topicDescriptionError)) : ?>
+         <span class="text-warning" role="alert"><?php echo $shortDescriptionError ?></span>
+      <?php endif; ?>
+   </div>
+
+   <!-- Submit button -->
+   <button type="submit" id="submit" name="submit"class="btn btn-primary btn-block mb-4" value="true">Suggest</button>
+   </form>
+</div>
+

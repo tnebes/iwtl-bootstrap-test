@@ -9,7 +9,7 @@ class ControllerNotifications extends Controller
       parent::__construct();
    }
 
-   public function index()
+   public function index() : void
    {
       header('Location: ' . URL_ROOT . '/errorPages/restricted');
    }
