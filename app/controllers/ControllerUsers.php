@@ -8,16 +8,17 @@ class ControllerUsers extends Controller
    {
       parent::__construct();
       $this->model = $this->getModel('User');
+      $helper = Helper::getInstance();
    }
 
    public function index(): void
    {
-      if (!Helper::getInstance()->isLoggedIn()) {
+      if (!$this->helper->isLoggedIn()) {
          header('location: ' . URL_ROOT . '/errorPages/restricted');
          return;
       }
       $data = [];
-      if (Helper::getInstance()->isLoggedIn()) {
+      if ($this->helper->isLoggedIn()) {
          $users = $this->model->getUsersPrivate();
          $data['users'] = $users;
       } else {
@@ -29,7 +30,7 @@ class ControllerUsers extends Controller
 
    public function login(): void
    {
-      if (Helper::getInstance()->isLoggedIn()) {
+      if ($this->helper->isLoggedIn()) {
          $this->index();
          return;
       }
@@ -62,7 +63,7 @@ class ControllerUsers extends Controller
          if (empty($data['loginError'])) {
             $user = $this->model->login($data['email'], $data['password']);
             if (!empty($user)) {
-               Helper::getInstance()->createUserSession($user);
+               $this->helper->createUserSession($user);
                header('Location: ' . URL_ROOT . '/users/index');
                return;
             } else {
@@ -78,7 +79,7 @@ class ControllerUsers extends Controller
 
    public function register(): void
    {
-      if (Helper::getInstance()->isLoggedIn()) {
+      if ($this->helper->isLoggedIn()) {
          $this->index();
          return;
       }
@@ -107,10 +108,10 @@ class ControllerUsers extends Controller
          unset($_POST['password']);
          unset($_POST['confirmPassword']);
 
-         $data['usernameError'] = Helper::getInstance()->validateUsername($data['username']);
-         $data['emailError'] = Helper::getInstance()->validateEmail($data['email']);
-         $data['passwordError'] = Helper::getInstance()->validatePassword($data['password']);
-         $data['confirmPasswordError'] = Helper::getInstance()->validateConfirmPassword($data['password'], $data['confirmPassword']);
+         $data['usernameError'] = $this->helper->validateUsername($data['username']);
+         $data['emailError'] = $this->helper->validateEmail($data['email']);
+         $data['passwordError'] = $this->helper->validatePassword($data['password']);
+         $data['confirmPasswordError'] = $this->helper->validateConfirmPassword($data['password'], $data['confirmPassword']);
          if ($data['passwordError'] || $data['confirmPasswordError'])
          {
             $data['password'] = '';
@@ -136,7 +137,7 @@ class ControllerUsers extends Controller
 
    public function profile(): void
    {
-      if (!Helper::getInstance()->isLoggedIn()) {
+      if (!$this->helper->isLoggedIn()) {
          header('location: ' . URL_ROOT . '/errorPages/restricted');
          return;
       }
@@ -158,7 +159,7 @@ class ControllerUsers extends Controller
 
    public function update(): void
    {
-      if (!Helper::getInstance()->isLoggedIn()) {
+      if (!$this->helper->isLoggedIn()) {
          header('location: ' . URL_ROOT . '/errorPages/restricted');
          return;
       }
@@ -223,24 +224,24 @@ class ControllerUsers extends Controller
             $dateBannedChange = true;
          }
 
-         $data['usernameError'] = Helper::getInstance()->validateUsername($data['username']);
-         if (Helper::getInstance()->checkDuplicateUsername($data['username'], $this->model) && $data['username'] !== strtolower($user->username)) {
+         $data['usernameError'] = $this->helper->validateUsername($data['username']);
+         if ($this->helper->checkDuplicateUsername($data['username'], $this->model) && $data['username'] !== strtolower($user->username)) {
             $data['usernameError'] .= ' is already taken. ';
          }
 
-         $data['emailError'] = Helper::getInstance()->validateEmail($data['email']);
-         if (Helper::getInstance()->checkDuplicateEmail($data['email'], $this->model) && $data['email'] !== strtolower($user->email)) {
+         $data['emailError'] = $this->helper->validateEmail($data['email']);
+         if ($this->helper->checkDuplicateEmail($data['email'], $this->model) && $data['email'] !== strtolower($user->email)) {
             $data['emailError'] .= ' is already taken. ';
          }
 
          // if the user wishes to change the password
          if ($passwordChange) {
-            $data['passwordError'] = Helper::getInstance()->validatePassword($data['password']);
+            $data['passwordError'] = $this->helper->validatePassword($data['password']);
          }
-         $data['registrationDateError'] = Helper::getInstance()->validateDate($data['registrationDate']);
-         $data['roleError'] = Helper::getInstance()->validateRole($data['role']);
-         $data['lastLoginError'] = Helper::getInstance()->validateDate($data['lastLogin']);
-         $data['dateBannedError'] = Helper::getInstance()->validateDate($data['dateBanned']);
+         $data['registrationDateError'] = $this->helper->validateDate($data['registrationDate']);
+         $data['roleError'] = $this->helper->validateRole($data['role']);
+         $data['lastLoginError'] = $this->helper->validateDate($data['lastLogin']);
+         $data['dateBannedError'] = $this->helper->validateDate($data['dateBanned']);
 
          if (
             empty($data['usernameError'])
@@ -283,7 +284,7 @@ class ControllerUsers extends Controller
 
    public function delete(): void
    {
-      if (!Helper::getInstance()->isLoggedIn()) {
+      if (!$this->helper->isLoggedIn()) {
          header('location: ' . URL_ROOT . '/errorPages/restricted');
          return;
       }
@@ -311,7 +312,7 @@ class ControllerUsers extends Controller
 
    public function ban(): void
    {
-      if (!Helper::getInstance()->isLoggedIn()) {
+      if (!$this->helper->isLoggedIn()) {
          header('location: ' . URL_ROOT . '/errorPages/restricted');
          return;
       }
@@ -339,7 +340,7 @@ class ControllerUsers extends Controller
 
    public function logout(): void
    {
-      Helper::getInstance()->clearUserSession();
+      $this->helper->clearUserSession();
       header('Location: ' . URL_ROOT . '/pages/index');
    }
 }
