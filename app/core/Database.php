@@ -10,7 +10,8 @@ class Database
    private $dbName = DB_NAME;
 
    private $statement;
-   private $dbHandler;
+   // changed to protected so that inheritable classes can still access it.
+   protected $dbHandler;
    private $error;
 
    private static $instance;

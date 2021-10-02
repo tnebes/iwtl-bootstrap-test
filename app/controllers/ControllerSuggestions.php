@@ -48,15 +48,22 @@ class ControllerSuggestions extends Controller
          $data['topicTitle'] = trim($_POST['topicTitle']);
          $data['topicShortDescription'] = trim($_POST['topicShortDescription']);
          $data['topicLongDescription'] = trim($_POST['topicLongDescription']);
-         $data['topicSuggesterId'] = $_SESSION['id'];
+         $data['topicSuggesterId'] = (int) $_SESSION['id'];
          
          $data['topicTitleError'] = $this->validateTopicTitle($data['topicTitle']);
          $data['topicShortDescriptionError'] = $this->validateTopicShortDescription($data['topicShortDescription']);
          $data['topicLongDescriptionError'] = $this->validateTopicLongDescription($data['topicLongDescription']);
 
          if ($_POST['topicTitle'] !== '' && $_POST['topicShortDescription'] !== '' && $_POST['topicLongDescription'] !== '') {
-            $this->model->create($_POST['topicTitle'], $_POST['topicShortDescription'], $_POST['topicLongDescription'], $topicId);
-            header('location:' . URL_ROOT . '/topics/view/' . $topicId);
+            $suggestion = new stdClass;
+            $suggestion->user = $data['topicSuggesterId'];
+            $suggestion->title = $data['topicTitle'];
+            $suggestion->topic = $data['topicId'];
+            $suggestion->datePosted = (new DateTime())->format('Y-m-d H:i:s');
+            $suggestion->shortDescription = $data['topicShortDescription'];
+            $suggestion->longDescription = $data['topicLongDescription'];
+
+            $this->model->insert($suggestion);
          }
          $this->view->render('createSuggestion', $data);
          return;
@@ -97,6 +104,7 @@ class ControllerSuggestions extends Controller
 
    private function validateTopicLongDescription(string $topicTitle) : string
    {
+      // no further checking required if the long description is valid
       if (empty($topicTitle)) {
          return '';
       }
@@ -110,57 +118,4 @@ class ControllerSuggestions extends Controller
       return '';
    }
 
-   // public function store()
-   // {
-   //    $topicId = func_get_arg(0);
-   //    if ($topicId === null)
-   //    {
-   //       header('location:' . URL_ROOT . '/errorPages/notFound');
-   //       return;
-   //    }
-   //    $topic = (new Topic())->getTopicById($topicId);
-   //    if ($topic === null)
-   //    {
-   //       header('location:' . URL_ROOT . '/errorPages/notFound');
-   //       return;
-   //    }
-   //    $data = [
-   //       'topic_id' => $topicId,
-   //       'user_id' => $_SESSION['user_id'],
-   //       'title' => $_POST['title'],
-   //       'description' => $_POST['description']
-   //    ];
-   //    $suggestion = new Suggestion($data);
-   //    $suggestion->save();
-   //    header('location:' . URL_ROOT . '/topics/show/' . $topicId);
-   // }
-
-   // public function show()
-   // {
-   //    $suggestionId = func_get_arg(0);
-   //    if ($suggestionId === null)
-   //    {
-   //       header('location:' . URL_ROOT . '/errorPages/notFound');
-   //       return;
-   //    }
-   //    $suggestion = (new Suggestion())->getSuggestionById($suggestionId);
-   //    if ($suggestion === null)
-   //    {
-   //       header('location:' . URL_ROOT . '/errorPages/notFound');
-   //       return;
-   //    }
-   //    $this->view->render('suggestions/show', ['suggestion' => $suggestion]);
-   // }
-
-   // public function edit()
-   // {
-   //    $suggestionId = func_get_arg(0);
-   //    if ($suggestionId === null)
-   //    {
-   //       header('location:' . URL_ROOT . '/errorPages/notFound');
-   //       return;
-   //    }
-   //    $suggestion = (new Suggestion())->getSuggestionById($suggestionId);
-
-   // }
 }
