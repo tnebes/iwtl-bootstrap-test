@@ -17,7 +17,7 @@
             <?php if ($helper->isLoggedIn()) : ?>
                <a href="#" class="btn btn-primary mt-1" role="button">&#128077;</a>
                <a href="#" class="btn btn-primary mt-1" role="button">&#128078;</a>
-               <a href="#" class="btn btn-primary mt-1" role="button">Suggest</a>
+               <a href="<?php echo URL_ROOT . '/suggestions/create/' . $topic->id ;?>" class="btn btn-primary mt-1" role="button">Suggest</a>
                <a href="#" class="btn btn-primary mt-1" role="button">Subscribe</a>
                <?php if ($helper->isAdmin() || $_SESSION['id'] == $topic->user) : ?>
                   <a href="<?php echo URL_ROOT . '/topics/edit/' . $topic->id ;?>" class="btn btn-success mt-1" role="button">Edit</a>

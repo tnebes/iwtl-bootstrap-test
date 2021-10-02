@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 class ControllerUsers extends Controller
 {
+   private $helper = null;
+
    public function __construct()
    {
       parent::__construct();
       $this->model = $this->getModel('User');
-      $helper = Helper::getInstance();
+      $this->helper = Helper::getInstance();
    }
 
    public function index(): void
@@ -31,7 +33,7 @@ class ControllerUsers extends Controller
    public function login(): void
    {
       if ($this->helper->isLoggedIn()) {
-         $this->index();
+         header('location: ' . URL_ROOT . '/users/index');
          return;
       }
 
@@ -80,7 +82,7 @@ class ControllerUsers extends Controller
    public function register(): void
    {
       if ($this->helper->isLoggedIn()) {
-         $this->index();
+         header('location: ' . URL_ROOT . '/users/index');
          return;
       }
 
@@ -301,10 +303,10 @@ class ControllerUsers extends Controller
          if (isset($_POST['confirm']) && filter_var($_POST['confirm'], FILTER_VALIDATE_BOOLEAN)) {
             // TODO: add a check to see whether anything is tied to the user
             $this->model->deleteUserById($id);
-            $this->index();
+            header('location: ' . URL_ROOT . '/users/index');
             return;
          }
-         $this->index();
+         header('location: ' . URL_ROOT . '/users/index');
          return;
       }
       $this->view->render('users/delete', ['user' => $user]);

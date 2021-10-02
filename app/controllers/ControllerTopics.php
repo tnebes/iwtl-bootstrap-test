@@ -70,7 +70,8 @@ class ControllerTopics extends Controller
             return;
          }
          $topicId = $this->model->createTopic($data['name'], $data['description'], $data['datePosted'], $data['user']);
-         $this->topic($topicId);
+         header('location:' . URL_ROOT . '/topics/topic/' . $topicId);
+         // $this->topic($topicId);
          return;
       }
       $this->view->render('topics/create', $data);
@@ -128,7 +129,8 @@ class ControllerTopics extends Controller
          $topic->description = $data['description'];
          $topic->image = $data['image'];
          // TODO: redirect in header so that the user can go back.
-         $this->topic($this->model->updateTopic($topic));
+         header('location: ' . URL_ROOT . '/topics/topic/' . $this->model->updateTopic($topic));
+         // $this->topic($this->model->updateTopic($topic));
          return;
       }
       else
@@ -164,7 +166,8 @@ class ControllerTopics extends Controller
             // TODO: add a check to see whether anything is tied to the topic
             $this->model->deleteTopicById($topicId);
          }
-         $this->index();
+         header('location: ' . URL_ROOT . '/topics/index');
+         // $this->index();
          return;
       }
       $this->view->render('topics/delete', ['topic' => $topic]);
