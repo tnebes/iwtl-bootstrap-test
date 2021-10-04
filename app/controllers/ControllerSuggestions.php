@@ -62,7 +62,7 @@ class ControllerSuggestions extends Controller
             $suggestion->datePosted = (new DateTime())->format('Y-m-d H:i:s');
             $suggestion->shortDescription = $data['topicShortDescription'];
             $suggestion->longDescription = $data['topicLongDescription'];
-
+            
             $this->model->insert($suggestion);
          }
          header('location: ' . URL_ROOT . '/topics/topic/' . $topicId);

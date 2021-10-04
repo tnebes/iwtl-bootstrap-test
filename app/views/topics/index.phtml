@@ -5,10 +5,22 @@ declare(strict_types=1);
 $helper = Helper::getInstance();
 
 if (!isset($topics) && !is_array($topics) && count($topics) < 1) {
-   // Class member access on instantiation
    header('Location: ' . URL_ROOT . '/errorPages/internalError');
    return;
 }
+?>
+
+<?php if($helper->isLoggedIn()) :?>
+   <div class="alert">
+      <a href="<?php echo URL_ROOT . '/topics/create' ?>">
+         <i title="Add" class="fas fa-2x fa-plus-square" style="color: lightgreen"></i>
+      </a>      
+   </div>
+<?php else: ?>
+   <i class="fas fa-plus-square"></i>
+<?php endif; ?>
+
+<?php
 echo '<ul class="list-group">';
 foreach ($topics as $topic) {
    include APP_ROOT . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'topic.phtml';
