@@ -45,16 +45,16 @@ class ControllerSuggestions extends Controller
 
       if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit']) && filter_var($_POST['submit'], FILTER_VALIDATE_BOOLEAN)) {
          $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-         $data['topicTitle'] = trim($_POST['topicTitle']);
-         $data['topicShortDescription'] = trim($_POST['topicShortDescription']);
-         $data['topicLongDescription'] = trim($_POST['topicLongDescription']);
+         $data['topicTitle'] = trim($_POST['title']);
+         $data['topicShortDescription'] = trim($_POST['shortDescription']);
+         $data['topicLongDescription'] = trim($_POST['longDescription']);
          $data['topicSuggesterId'] = (int) $_SESSION['id'];
          
          $data['topicTitleError'] = $this->validateTopicTitle($data['topicTitle']);
          $data['topicShortDescriptionError'] = $this->validateTopicShortDescription($data['topicShortDescription']);
          $data['topicLongDescriptionError'] = $this->validateTopicLongDescription($data['topicLongDescription']);
 
-         if ($_POST['topicTitle'] !== '' && $_POST['topicShortDescription'] !== '' && $_POST['topicLongDescription'] !== '') {
+         if ($data['topicTitle'] !== '' && $data['topicShortDescription'] !== '' && $data['topicLongDescription'] !== '') {
             $suggestion = new stdClass;
             $suggestion->user = $data['topicSuggesterId'];
             $suggestion->title = $data['topicTitle'];
@@ -65,7 +65,7 @@ class ControllerSuggestions extends Controller
 
             $this->model->insert($suggestion);
          }
-         $this->view->render('createSuggestion', $data);
+         header('location: ' . URL_ROOT . '/topics/topic/' . $topicId);
          return;
       } else {
          $this->view->render('suggestions/create', $data);

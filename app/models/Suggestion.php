@@ -12,8 +12,9 @@ class Suggestion extends Model
 
    public function insert(stdClass $suggestion) : bool
    {
-      $sql = "INSERT INTO $this->TABLE_NAME VALUES (:user, :title, :topic, :datePosted, :shortDescription, :longDescription)";
-      $statement = $this->dbHandler->prepare($sql);
+      $sql = "INSERT INTO $this->TABLE_NAME VALUES (null, :user, :title, :topic, :datePosted, :shortDescription, :longDescription)";
+      $dbHandler = $this->db->getDbHandler();
+      $statement = $dbHandler->prepare($sql);
       $statement->bindParam(':user', $suggestion->user);
       $statement->bindParam(':title', $suggestion->title);
       $statement->bindParam(':topic', $suggestion->topic);

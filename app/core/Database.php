@@ -10,7 +10,6 @@ class Database
    private $dbName = DB_NAME;
 
    private $statement;
-   // changed to protected so that inheritable classes can still access it.
    protected $dbHandler;
    private $error;
 
@@ -84,5 +83,13 @@ class Database
    {
       $this->execute();
       return $this->statement->rowCount();
+   }
+
+   /**
+    * Get the value of dbHandler
+    */ 
+   public function getDbHandler()
+   {
+      return $this->dbHandler;
    }
 }
