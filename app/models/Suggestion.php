@@ -40,9 +40,25 @@ class Suggestion extends Model
       return $statement->fetchAll(PDO::FETCH_OBJ);
    }
 
+   public function getTopicsByTopicId(int $topicId)
+   {
+      // TODO: update this to show the most upvoted things.
+      $sql = "select a.id, a.`user`, a.title, a.topic, a.datePosted, a.shortDescription, a.longDescription, b.username from suggestion a 
+      inner join user b on a.`user` = b.id
+      where a.topic = :topicId;";
+      $statement = $this->dbHandler->prepare($sql);
+      $statement->bindParam(':topicId', $topicId);
+      $statement->execute();
+      return $statement->fetchAll(PDO::FETCH_OBJ);
+   }
+
    public function getNumTopicsByTopicId(int $topicId, int $numb)
    {
-      $sql = "SELECT * FROM $this->TABLE_NAME WHERE topic = :topicId limit :numb";
+      // TODO: update this to show the most upvoted things.
+      $sql = "select a.id, a.`user`, a.title, a.topic, a.datePosted, a.shortDescription, a.longDescription, b.username from suggestion a 
+      inner join user b on a.`user` = b.id
+      where a.topic = :topicId
+      limit :numb;";
       $statement = $this->dbHandler->prepare($sql);
       $statement->bindParam(':topicId', $topicId);
       $statement->bindValue(':numb', $numb, PDO::PARAM_INT);

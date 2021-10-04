@@ -1,0 +1,10 @@
+<div class="form-control ml-0">
+   <span class="badge rounded-pill bg-info"><a class="text-dark" href="<?php echo URL_ROOT . 'users/user/' . $suggestion->user?>"><?php echo $suggestion->username?></a></span>
+   <div class="container">
+      <strong><?php echo $suggestion->shortDescription; ?></strong>
+   </div>
+   <div class="container">
+      <?php echo $suggestion->longDescription; ?>
+   </div>
+   <?php echo $suggestion->datePosted; ?>
+</div>
