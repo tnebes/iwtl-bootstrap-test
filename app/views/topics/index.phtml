@@ -11,9 +11,10 @@ if (!isset($topics) && !is_array($topics) && count($topics) < 1) {
 ?>
 
 <?php if($helper->isLoggedIn()) :?>
-   <div class="alert">
+   <div class="alert bg-light">
       <a href="<?php echo URL_ROOT . '/topics/create' ?>">
          <i title="Add" class="fas fa-2x fa-plus-square" style="color: lightgreen"></i>
+         Add a new question
       </a>      
    </div>
 <?php else: ?>
@@ -22,6 +23,9 @@ if (!isset($topics) && !is_array($topics) && count($topics) < 1) {
 
 <?php
 echo '<ul class="list-group">';
+// TODO: cursed
+$numberOfSuggestions = 3;
+// end of cursed code
 foreach ($topics as $topic) {
    include APP_ROOT . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'topic.phtml';
 }

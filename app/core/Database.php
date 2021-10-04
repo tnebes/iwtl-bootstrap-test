@@ -31,6 +31,14 @@ class Database
       }
    }
 
+   /**
+   * Get the value of dbHandler
+   */ 
+   public function getDbHandler()
+   {
+      return $this->dbHandler;
+   } 
+
    public static function getInstance()
    {
       if (!isset(self::$instance)) {
@@ -85,11 +93,4 @@ class Database
       return $this->statement->rowCount();
    }
 
-   /**
-    * Get the value of dbHandler
-    */ 
-   public function getDbHandler()
-   {
-      return $this->dbHandler;
-   }
 }

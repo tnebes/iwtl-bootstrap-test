@@ -5,6 +5,7 @@ declare(strict_types=1);
 abstract class Model
 {
    protected $db;
+   protected $dbHandler;
    protected $TABLE_NAME;
 
    public function __construct()
@@ -13,6 +14,7 @@ abstract class Model
       if (empty($this->db)) {
          die('Could not connect to database. Please check the connection data.');
       }
+      $this->dbHandler = $this->db->getDbHandler();
    }
 
    /**
