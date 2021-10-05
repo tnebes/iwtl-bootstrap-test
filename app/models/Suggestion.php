@@ -61,7 +61,7 @@ class Suggestion extends Model
       limit :numb;";
       $statement = $this->dbHandler->prepare($sql);
       $statement->bindParam(':topicId', $topicId);
-      $statement->bindValue(':numb', $numb, PDO::PARAM_INT);
+      $statement->bindParam(':numb', $numb, PDO::PARAM_INT);
       $statement->execute();
       return $statement->fetchAll(PDO::FETCH_OBJ);
    }

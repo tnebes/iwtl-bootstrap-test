@@ -23,4 +23,33 @@ class UserTopicSubscription extends Model
       return $statement->fetchAll(PDO::FETCH_OBJ);
    }
 
+   public function userIsSubscribedToTopic(int $userId, int $topicId) : bool
+   {
+      $sql = "select count(*) as count from usertopicsubscription where `user` = :userId and topic = :topicId;";
+      $statement = $this->dbHandler->prepare($sql);
+      $statement->bindParam(':userId', $userId);
+      $statement->bindParam(':topicId', $topicId);
+      $statement->execute();
+      $result = $statement->fetch(PDO::FETCH_OBJ);
+      return $result->count > 0;
+   }
+
+   public function subscribe(int $userId, int $topicId) : bool
+   {
+      $sql = "insert into usertopicsubscription (`user`, topic, subscribedSince) values (:userId, :topicId, now())";
+      $statement = $this->dbHandler->prepare($sql);
+      $statement->bindParam(':userId', $userId);
+      $statement->bindParam(':topicId', $topicId);
+      return $statement->execute();
+   }
+
+   public function unsubscribe(int $userId, int $topicId) : bool
+   {
+      $sql = "delete from usertopicsubscription where `user` = :userId and topic = :topicId";
+      $statement = $this->dbHandler->prepare($sql);
+      $statement->bindParam(':userId', $userId);
+      $statement->bindParam(':topicId', $topicId);
+      return $statement->execute();
+   }
+   
 }

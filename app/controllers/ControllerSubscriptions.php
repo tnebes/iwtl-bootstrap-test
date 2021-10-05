@@ -18,4 +18,30 @@ class ControllerSubscriptions extends Controller
       $data = ['subscriptions' => $this->model->getSubscriptionsFromUser((int) $_SESSION['id'])];
       $this->view->render('/subscriptions/index', $data);
    }
+
+   public function subscribe() : void
+   {
+      if (!$this->helper->isLoggedIn())
+      {
+         header('location: ' . URL_ROOT . 'errorPages/restricted');
+         return;
+      }
+      $topicId = (int) func_get_arg(0);
+      $data = [
+         'redirect' => $_SERVER['HTTP_REFERER'] ?? URL_ROOT . 'subscriptions',
+      ];
+      // check if the user is already subscribed
+      if ($this->model->userIsSubscribedToTopic((int) $_SESSION['id'], $topicId))
+      {
+         $this->model->unsubscribe((int) $_SESSION['id'], $topicId);
+         $data['message'] = 'You have unsubscribed from this topic.';
+      }
+      else
+      {
+         $this->model->subscribe((int) $_SESSION['id'], $topicId);
+         $data['message'] = 'You have subscribed to this topic.';
+      }
+      $this->view->render('/subscriptions/message', $data);
+   }
+
 }
