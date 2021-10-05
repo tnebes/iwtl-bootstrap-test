@@ -39,10 +39,6 @@
             <div class="alert">
                <?php
                   $suggestions = (new Suggestion)->getNumTopicsByTopicId((int) $topic->id, $numberOfSuggestions);
-                  foreach($suggestions as $suggestion)
-                  {
-                     include APP_ROOT . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'suggestion.phtml';
-                  }
                ?>
             </div>
          <?php endif; ?>
@@ -50,13 +46,18 @@
             <div class="alert">
                <?php
                   $suggestions = (new Suggestion)->getTopicsByTopicId((int) $topic->id);
-                  foreach($suggestions as $suggestion)
-                  {
-                     include APP_ROOT . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'suggestion.phtml';
-                  }
                ?>
             </div>
       <?php endif; ?>
+      <?php 
+         if (isset($suggestions))
+         {
+            foreach($suggestions as $suggestion)
+            {
+               include APP_ROOT . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'suggestion.phtml';
+            }               
+         }
+         ?>
    </div>
 
 <?php
