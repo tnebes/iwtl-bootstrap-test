@@ -5,6 +5,7 @@ declare(strict_types=1);
 class Controller
 {
    protected $view;
+   protected $helper;
 
    public function getModel(string $model): Model
    {
@@ -32,6 +33,7 @@ class Controller
    public function __construct()
    {
       $this->view = new View();
+      $this->helper = Helper::getInstance();
    }
 
    public function view(string $view, array $data = []): void

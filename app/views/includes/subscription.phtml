@@ -1,0 +1,9 @@
+<!-- bootstrap fancy entry with link to topic -->
+<div class="card">
+   <a href="<?php echo URL_ROOT . '/topics/topic/' . $subscription->topic?>">
+      <?php echo $subscription->topicTitle; ?>
+   </a>
+   <p class="text-dark">
+   Subscribed since: <?php echo $subscription->subscribedSince; ?>
+   </p>
+</div>

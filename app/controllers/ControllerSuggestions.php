@@ -8,7 +8,6 @@ class ControllerSuggestions extends Controller
    {
       parent::__construct();
       $this->model = $this->getModel('Suggestion');
-      $helper = Helper::getInstance();
    }
 
    public function index(): void

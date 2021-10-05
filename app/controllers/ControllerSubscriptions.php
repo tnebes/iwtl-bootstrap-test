@@ -6,11 +6,16 @@ class ControllerSubscriptions extends Controller
    {
       parent::__construct();
       $this->model = $this->getModel('UserTopicSubscription');
-      $helper = Helper::getInstance();
    }
 
    public function index() : void
    {
-      echo 'hello!';
+      if (!$this->helper->isLoggedIn())
+      {
+         header('location: ' . URL_ROOT . 'errorPages/restricted');
+         return;
+      }
+      $data = ['subscriptions' => $this->model->getSubscriptionsFromUser((int) $_SESSION['id'])];
+      $this->view->render('/subscriptions/index', $data);
    }
 }

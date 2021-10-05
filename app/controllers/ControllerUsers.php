@@ -10,7 +10,6 @@ class ControllerUsers extends Controller
    {
       parent::__construct();
       $this->model = $this->getModel('User');
-      $this->helper = Helper::getInstance();
    }
 
    public function index(): void

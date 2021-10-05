@@ -4,13 +4,10 @@ declare(strict_types=1);
 
 class ControllerTopics extends Controller
 {
-   private $helper = null;
-
    public function __construct()
    {
       parent::__construct();
       $this->model = $this->getModel('Topic');
-      $this->helper = Helper::getInstance();
    }
 
    public function index(): void
