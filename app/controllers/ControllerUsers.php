@@ -170,6 +170,7 @@ class ControllerUsers extends Controller
       $id = (int) $id[0];
       $data =
          [
+            'redirect' => $_SERVER['HTTP_REFERER'],
             'usernameError' => '',
             'emailError' => '',
             'passwordError' => '',
