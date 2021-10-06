@@ -6,13 +6,13 @@
    require_once(APP_ROOT . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'head.phtml');
    ?>
    <link rel="stylesheet" type="text/css" href="<?php echo URL_ROOT . '/public/css/login-register.css' ?>">
-
 </head>
 
+<?php
+require_once(APP_ROOT . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'navigator.phtml');
+?>
+
 <body class="flex-column mt-0 pt-0 text-center h-100 w-100">
-   <?php
-   require_once(APP_ROOT . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'navigator.phtml');
-   ?>
    <?php echo $content ?>
    <?php
    require_once(APP_ROOT . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'scripts.phtml');

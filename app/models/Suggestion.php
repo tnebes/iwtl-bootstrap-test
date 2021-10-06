@@ -40,7 +40,7 @@ class Suggestion extends Model
       return $statement->fetchAll(PDO::FETCH_OBJ);
    }
 
-   public function getTopicsByTopicId(int $topicId)
+   public function getSuggestionsByTopicId(int $topicId)
    {
       // TODO: update this to show the most upvoted things.
       $sql = "select a.id, a.`user`, a.title, a.topic, a.datePosted, a.shortDescription, a.longDescription, b.username from $this->TABLE_NAME a 

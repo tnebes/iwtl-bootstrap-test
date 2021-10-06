@@ -12,7 +12,7 @@ class ControllerSubscriptions extends Controller
    {
       if (!$this->helper->isLoggedIn())
       {
-         header('location: ' . URL_ROOT . 'errorPages/restricted');
+         header('location: ' . URL_ROOT . '/errorPages/restricted');
          return;
       }
       $data = ['subscriptions' => $this->model->getSubscriptionsFromUser((int) $_SESSION['id'])];
@@ -23,7 +23,7 @@ class ControllerSubscriptions extends Controller
    {
       if (!$this->helper->isLoggedIn())
       {
-         header('location: ' . URL_ROOT . 'errorPages/restricted');
+         header('location: ' . URL_ROOT . '/errorPages/restricted');
          return;
       }
       $topicId = (int) func_get_arg(0);

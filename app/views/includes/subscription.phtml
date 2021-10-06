@@ -1,10 +1,10 @@
-<!-- bootstrap fancy entry with link to topic -->
-<div class="card">
-   <a href="<?php echo URL_ROOT . '/topics/topic/' . $subscription->topic?>">
-      <?php echo $subscription->topicTitle; ?>
-   </a>
-   <p class="text-dark">
-   Subscribed since: <?php echo $subscription->subscribedSince; ?>
-   </p>
-   <span class="badge rounded-pill bg-success"><a class="text-dark" href="<?php echo URL_ROOT . '/subscriptions/subscribe/' . $subscription->topic?>">Subscribe</a></span>
+<div class="card text-dark p-3 mb-2">
+   <div class="text-center mb-3">
+   <a href="<?php echo URL_ROOT . '/topics/topic/' . $subscription->topic?>"><?php echo $subscription->topicTitle; ?></a><br/>
+      <small class="text-muted">Subscribed since: <?php echo (new DateTime($subscription->subscribedSince))->format('dS M Y'); ?></small>
+   </div>
+   <div class="mx-auto">
+      <a href="<?php echo URL_ROOT . '/topics/topic/' . $subscription->topic ;?>" type="button" class="btn btn-primary btn-sm">Goto</a>
+      <a href="<?php echo URL_ROOT . '/subscriptions/subscribe/' . $subscription->topic ;?>" type="button" class="btn btn-secondary btn-sm">Unsubscribe</a>
+   </div>
 </div>

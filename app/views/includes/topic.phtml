@@ -1,6 +1,7 @@
+<li class="list-group-item text-dark mx-auto my-2">
+
 <?php 
 // TODO: this is not responsive
-   echo '<li class="list-group-item text-dark mx-auto my-2" style="max-wdith: 50%">';
    $helper = Helper::getInstance();
    $subscribed = false;
    if ($helper->isLoggedIn())
@@ -9,17 +10,29 @@
    }
    
 ?>
-   <div class="thumbnail">
-      <div class="caption">
+   <div class="" id="topic">
+      <div class="" id="topic-container">
          <img src="...image..." alt="...img...">
-         <div class="form-control">
-            <h1><a href="<?php echo $helper->getLinkToTopic($topic); ?>"><div class="col-lg-4 badge bg-dark text-light w-100"><?php echo $topic->name ?></div></a></h1>
-            <h6><a href="<?php echo $helper->getLinkToUser($helper->getUserFromTopic($topic)); ?>"><span class="badge bg-info text-dark"><?php echo $helper->getUserFromTopic($topic)->username ?></span></a></h6>
+         <div class="" id="topic-content">
+            <h1>
+               <a href="<?php echo $helper->getLinkToTopic($topic); ?>">
+                  <div class="">
+                     <?php echo $topic->name ?>
+                  </div>      
+               </a>
+            </h1>
+            <h6>
+               <a href="<?php echo $helper->getLinkToUser($helper->getUserFromTopic($topic)); ?>">
+                  <span class="badge bg-info text-dark">
+                     <?php echo $helper->getUserFromTopic($topic)->username ?>
+                  </span>
+               </a>
+            </h6>
             <p><?php echo $topic->description ?></p>
             <small class="text-muted" class="center">Date asked: <p><?php echo date('d m Y', strtotime($topic->datePosted)) ?></p></small>
          </div>
 
-         <p>
+         <p id="buttons">
             <?php if ($helper->isLoggedIn()) : ?>
                <a href="#" class="btn btn-primary mt-1" role="button">&#128077;</a>
                <a href="#" class="btn btn-primary mt-1" role="button">&#128078;</a>
@@ -42,26 +55,24 @@
       </div>
       <?php if (isset($numberOfSuggestions)) : ?>
          <?php if ($numberOfSuggestions > 0) : ?>
-            <div class="alert">
-               <?php
-                  $suggestions = (new Suggestion)->getNumTopicsByTopicId((int) $topic->id, $numberOfSuggestions);
-               ?>
-            </div>
+            <?php
+               $suggestions = (new Suggestion)->getNumTopicsByTopicId((int) $topic->id, $numberOfSuggestions);
+            ?>
          <?php endif; ?>
-         <?php else : ?>
-            <div class="alert">
-               <?php
-                  $suggestions = (new Suggestion)->getTopicsByTopicId((int) $topic->id);
-               ?>
-            </div>
+      <?php else : ?>
+            <?php
+               $suggestions = (new Suggestion)->getSuggestionsByTopicId((int) $topic->id);
+            ?>
       <?php endif; ?>
       <?php 
          if (isset($suggestions))
          {
+            echo '<div class="alert" id="suggestions-container">';
             foreach($suggestions as $suggestion)
             {
                include APP_ROOT . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'suggestion.phtml';
             }               
+            echo '</div>';
          }
          ?>
    </div>
