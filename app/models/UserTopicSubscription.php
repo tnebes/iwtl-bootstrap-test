@@ -31,7 +31,8 @@ class UserTopicSubscription extends Model
       $statement->bindParam(':topicId', $topicId);
       $statement->execute();
       $result = $statement->fetchAll(PDO::FETCH_OBJ);
-      return count($result) > 0;
+      // cursed
+      return $result[0]->count > 0;
    }
 
    public function getSubscribedUsers(int $topicId) : ?array

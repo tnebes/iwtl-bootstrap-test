@@ -15,6 +15,7 @@
          }
       }
    }
+   echo $subscribed ? 'user is subscribed' : 'user is not subscribed';
 ?>
    <div class="thumbnail">
       <div class="caption">
@@ -31,7 +32,7 @@
                <a href="#" class="btn btn-primary mt-1" role="button">&#128077;</a>
                <a href="#" class="btn btn-primary mt-1" role="button">&#128078;</a>
                <a href="<?php echo URL_ROOT . '/suggestions/create/' . $topic->id ;?>" class="btn btn-primary mt-1" role="button">Suggest</a>
-               <a href="<?php echo URL_ROOT . '/subscriptions/subscribe/' . $topic->id ;?>" class="btn btn-<?php echo $subscribed ? 'primary' : 'secondary'?> mt-1" role="button"><?php echo $subscribed ? 'Subscribe' : 'Unsubscribe'?></a>
+               <a href="<?php echo URL_ROOT . '/subscriptions/subscribe/' . $topic->id ;?>" class="btn btn-<?php echo $subscribed ? 'secondary' : 'primary'?> mt-1" role="button"><?php echo $subscribed ? 'Unsubscribe' : 'Subscribe'?></a>
                <?php if ($helper->isAdmin() || $_SESSION['id'] == $topic->user) : ?>
                   <a href="<?php echo URL_ROOT . '/topics/edit/' . $topic->id ;?>" class="btn btn-success mt-1" role="button">Edit</a>
                   <a href="<?php echo URL_ROOT . '/topics/delete/' . $topic->id ;?>" class="btn btn-danger mt-1" role="button">Delete</a>
