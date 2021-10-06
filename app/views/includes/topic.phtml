@@ -5,17 +5,9 @@
    $subscribed = false;
    if ($helper->isLoggedIn())
    {
-      $subscribedUsers = (new UserTopicSubscription)->getSubscribedUsers($topic->id);
-      foreach($subscribedUsers as $subscribedUser)
-      {
-         if ($subscribedUser->id == $_SESSION['id'])
-         {
-            $subscribed = true;
-            break;
-         }
-      }
+      $subscribed = (new UserTopicSubscription)->userIsSubscribedToTopic($_SESSION['id'], $topic->id);
    }
-   echo $subscribed ? 'user is subscribed' : 'user is not subscribed';
+   
 ?>
    <div class="thumbnail">
       <div class="caption">
