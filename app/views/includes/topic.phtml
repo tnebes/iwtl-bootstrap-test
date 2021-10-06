@@ -2,6 +2,19 @@
 // TODO: this is not responsive
    echo '<li class="list-group-item text-dark mx-auto my-2" style="max-wdith: 50%">';
    $helper = Helper::getInstance();
+   $subscribed = false;
+   if ($helper->isLoggedIn())
+   {
+      $subscribedUsers = (new UserTopicSubscription)->getSubscribedUsers($topic->id);
+      foreach($subscribedUsers as $subscribedUser)
+      {
+         if ($subscribedUser->id == $_SESSION['id'])
+         {
+            $subscribed = true;
+            break;
+         }
+      }
+   }
 ?>
    <div class="thumbnail">
       <div class="caption">
@@ -18,7 +31,7 @@
                <a href="#" class="btn btn-primary mt-1" role="button">&#128077;</a>
                <a href="#" class="btn btn-primary mt-1" role="button">&#128078;</a>
                <a href="<?php echo URL_ROOT . '/suggestions/create/' . $topic->id ;?>" class="btn btn-primary mt-1" role="button">Suggest</a>
-               <a href="<?php echo URL_ROOT . '/subscriptions/subscribe/' . $topic->id ;?>" class="btn btn-primary mt-1" role="button">Subscribe</a>
+               <a href="<?php echo URL_ROOT . '/subscriptions/subscribe/' . $topic->id ;?>" class="btn btn-primary mt-1" role="button"><?php echo $subscribed ? 'Subscribe' : 'Unsubscribe'?></a>
                <?php if ($helper->isAdmin() || $_SESSION['id'] == $topic->user) : ?>
                   <a href="<?php echo URL_ROOT . '/topics/edit/' . $topic->id ;?>" class="btn btn-success mt-1" role="button">Edit</a>
                   <a href="<?php echo URL_ROOT . '/topics/delete/' . $topic->id ;?>" class="btn btn-success mt-1" role="button">Delete</a>

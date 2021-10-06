@@ -30,8 +30,19 @@ class UserTopicSubscription extends Model
       $statement->bindParam(':userId', $userId);
       $statement->bindParam(':topicId', $topicId);
       $statement->execute();
-      $result = $statement->fetch(PDO::FETCH_OBJ);
-      return $result->count > 0;
+      $result = $statement->fetchAll(PDO::FETCH_OBJ);
+      return count($result) > 0;
+   }
+
+   public function getSubscribedUsers(int $topicId) : ?array
+   {
+      $sql = "select b.`user` as id from topic a
+      inner join usertopicsubscription b on a.id = b.topic
+      where a.id = :topicId;";
+      $statement = $this->dbHandler->prepare($sql);
+      $statement->bindParam(':topicId', $topicId);
+      $statement->execute();
+      return $statement->fetchAll(PDO::FETCH_OBJ);
    }
 
    public function subscribe(int $userId, int $topicId) : bool
