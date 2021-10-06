@@ -32,37 +32,41 @@ class ControllerSuggestions extends Controller
          [
             'topic' => $topic,
             'topicSuggesterId' => '',
-            'topicTitle' => '',
             'topicId' => $topicId,
-            'topicShortDescription' => '',
-            'topicLongDescription' => '',
+            'suggestionTitle' => '',
+            'suggestionShortDescription' => '',
+            'suggestionLongDescription' => '',
 
-            'topicTitleError' => '',
-            'topicShortDescriptionError' => '',
-            'topicLongDescriptionError' => ''
+            'suggestionTitleError' => '',
+            'suggestionShortDescriptionError' => '',
+            'suggestionLongDescriptionError' => ''
          ];
 
       if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit']) && filter_var($_POST['submit'], FILTER_VALIDATE_BOOLEAN)) {
          $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-         $data['topicTitle'] = trim($_POST['title']);
-         $data['topicShortDescription'] = trim($_POST['shortDescription']);
-         $data['topicLongDescription'] = trim($_POST['longDescription']);
+         $data['suggestionTitle'] = trim($_POST['title']);
+         $data['suggestionShortDescription'] = trim($_POST['shortDescription']);
+         $data['suggestionLongDescription'] = trim($_POST['longDescription']);
          $data['topicSuggesterId'] = (int) $_SESSION['id'];
          
-         $data['topicTitleError'] = $this->validateTopicTitle($data['topicTitle']);
-         $data['topicShortDescriptionError'] = $this->validateTopicShortDescription($data['topicShortDescription']);
-         $data['topicLongDescriptionError'] = $this->validateTopicLongDescription($data['topicLongDescription']);
+         $data['suggestionTitleError'] = $this->validateSuggestionTitle($data['suggestionTitle']);
+         $data['suggestionShortDescriptionError'] = $this->validateSuggestionShortDescription($data['suggestionShortDescription']);
+         $data['suggestionLongDescriptionError'] = $this->validateSuggestionLongDescription($data['suggestionLongDescription']);
 
-         if ($data['topicTitle'] !== '' && $data['topicShortDescription'] !== '' && $data['topicLongDescription'] !== '') {
+         if ($data['suggestionTitleError'] == '' && $data['suggestionShortDescription'] == '' && $data['suggestionLongDescription'] == '') {
             $suggestion = new stdClass;
             $suggestion->user = $data['topicSuggesterId'];
-            $suggestion->title = $data['topicTitle'];
+            $suggestion->title = $data['suggestionTitle'];
             $suggestion->topic = $data['topicId'];
             $suggestion->datePosted = (new DateTime())->format('Y-m-d H:i:s');
-            $suggestion->shortDescription = $data['topicShortDescription'];
-            $suggestion->longDescription = $data['topicLongDescription'];
+            $suggestion->shortDescription = $data['suggestionShortDescription'];
+            $suggestion->longDescription = $data['suggestionLongDescription'];
             
             $this->model->insert($suggestion);
+         }
+         else
+         {
+            $this->view->render('suggestions/create', $data);
          }
          header('location: ' . URL_ROOT . '/topics/topic/' . $topicId);
          return;
@@ -73,7 +77,9 @@ class ControllerSuggestions extends Controller
 
    public function edit() : void
    {
-      $data = [];
+      $data = [
+         
+      ];
       $this->view->render('suggestions/edit', $data);
    }
 
@@ -83,7 +89,7 @@ class ControllerSuggestions extends Controller
       $this->view->render('suggestions/delete', $data);
    }
 
-   private function validateTopicTitle(string $topicTitle) : string
+   private function validateSuggestionTitle(string $topicTitle) : string
    {
       if (empty($topicTitle)) {
          return 'Title is required';
@@ -98,7 +104,7 @@ class ControllerSuggestions extends Controller
       return '';
    }
 
-   private function validateTopicShortDescription(string $topicTitle) : string
+   private function validateSuggestionShortDescription(string $topicTitle) : string
    {
       if (empty($topicTitle)) {
          return 'Short description is required';
@@ -113,7 +119,7 @@ class ControllerSuggestions extends Controller
       return '';
    }
 
-   private function validateTopicLongDescription(string $topicTitle) : string
+   private function validateSuggestionLongDescription(string $topicTitle) : string
    {
       // no further checking required if the long description is valid
       if (empty($topicTitle)) {
