@@ -7,12 +7,12 @@ class UserTopicSubscription extends Model
    public function __construct()
    {
       parent::__construct();
-      $this->TABLE_NAME = 'usertopicsubscription';
+      $this->TABLE_NAME = 'userTopicSubscription';
    }
 
    public function getSubscriptionsFromUser(int $userId) : array
    {
-      $sql = "select a.topic, a.subscribedSince, c.name as topicTitle from usertopicsubscription a
+      $sql = "select a.topic, a.subscribedSince, c.name as topicTitle from $this->TABLE_NAME a
       inner join user b on a.`user` = b.id
       inner join topic c on a.topic = c.id
       where b.id = :userId
@@ -25,7 +25,7 @@ class UserTopicSubscription extends Model
 
    public function userIsSubscribedToTopic(int $userId, int $topicId) : bool
    {
-      $sql = "select count(*) as count from usertopicsubscription where `user` = :userId and topic = :topicId;";
+      $sql = "select count(*) as count from $this->TABLE_NAME where `user` = :userId and topic = :topicId;";
       $statement = $this->dbHandler->prepare($sql);
       $statement->bindParam(':userId', $userId);
       $statement->bindParam(':topicId', $topicId);
@@ -38,7 +38,7 @@ class UserTopicSubscription extends Model
    public function getSubscribedUsers(int $topicId) : ?array
    {
       $sql = "select b.`user` as id from topic a
-      inner join usertopicsubscription b on a.id = b.topic
+      inner join $this->TABLE_NAME b on a.id = b.topic
       where a.id = :topicId;";
       $statement = $this->dbHandler->prepare($sql);
       $statement->bindParam(':topicId', $topicId);
@@ -48,7 +48,7 @@ class UserTopicSubscription extends Model
 
    public function subscribe(int $userId, int $topicId) : bool
    {
-      $sql = "insert into usertopicsubscription (`user`, topic, subscribedSince) values (:userId, :topicId, now())";
+      $sql = "insert into $this->TABLE_NAME (`user`, topic, subscribedSince) values (:userId, :topicId, now())";
       $statement = $this->dbHandler->prepare($sql);
       $statement->bindParam(':userId', $userId);
       $statement->bindParam(':topicId', $topicId);
@@ -57,7 +57,7 @@ class UserTopicSubscription extends Model
 
    public function unsubscribe(int $userId, int $topicId) : bool
    {
-      $sql = "delete from usertopicsubscription where `user` = :userId and topic = :topicId";
+      $sql = "delete from $this->TABLE_NAME where `user` = :userId and topic = :topicId";
       $statement = $this->dbHandler->prepare($sql);
       $statement->bindParam(':userId', $userId);
       $statement->bindParam(':topicId', $topicId);

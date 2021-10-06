@@ -78,7 +78,7 @@ class ControllerUsers extends Controller
 
    public function register(): void
    {
-      if ($this->helper->isLoggedIn()) {
+      if ($this->helper->isLoggedIn() && !$this->helper->isAdmin()) {
          header('location: ' . URL_ROOT . '/users/index');
          return;
       }
@@ -287,26 +287,45 @@ class ControllerUsers extends Controller
          header('location: ' . URL_ROOT . '/errorPages/restricted');
          return;
       }
-      $id = func_get_args();
+      $id = (int) func_get_args()[0];
       if (empty($id)) {
          header('location: ' . URL_ROOT . '/errorPages/internalError');
          return;
       }
-      $id = (int) $id[0];
       $user = $this->model->getUserById((int) $id);
+      if (empty($user)) {
+         header('location: ' . URL_ROOT . '/errorPages/internalError');
+         return;
+      }
+
+      // cursed
+      // check if the redirect exists
+      if (!isset(func_get_args()[1]) && !isset($_POST['redirect']))
+      {
+         // no redirect
+         $redirect = $_SERVER['HTTP_REFERER'] ?? URL_ROOT . '/users/index';
+      }
+      elseif (isset($_POST['redirect']))
+      {
+         // redirect exists
+         $redirect = $_POST['redirect'];
+      }
+      else
+      {
+         $redirect = func_get_args()[1];
+      }
+
       $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
       if ($_SERVER['REQUEST_METHOD'] === 'POST') {
          if (isset($_POST['confirm']) && filter_var($_POST['confirm'], FILTER_VALIDATE_BOOLEAN)) {
             // TODO: add a check to see whether anything is tied to the user
             $this->model->deleteUserById($id);
-            header('location: ' . URL_ROOT . '/users/index');
-            return;
          }
-         header('location: ' . URL_ROOT . '/users/index');
+         header('location: ' . $redirect);
          return;
       }
-      $this->view->render('users/delete', ['user' => $user]);
+      $this->view->render('users/delete', ['user' => $user, 'redirect' => $redirect]);
    }
 
    public function ban(): void
@@ -317,7 +336,7 @@ class ControllerUsers extends Controller
       }
 
       $id = (int) func_get_args()[0];
-      if (!$id)
+      if (empty($id))
       {
          header('location: ' . URL_ROOT . '/errorPages/internalError');
          return;   
