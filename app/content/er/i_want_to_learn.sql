@@ -1,5 +1,5 @@
 drop database if exists iwtl;
-create database iwtl;
+create database iwtl character set utf8mb4;
 use iwtl;
 create table `user`(
    id int primary key not null auto_increment,
