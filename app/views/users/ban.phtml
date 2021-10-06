@@ -5,6 +5,7 @@
          <p class="card-text">
          <form action="<?php echo URL_ROOT . '/users/ban/' . $user->id; ?>" method="POST">
             <input type="hidden" name="user_id" value="<?php echo $user->id; ?>">
+            <input type="hidden" name="redirect" value="<?php echo $redirect?>">
             <p>Are you sure you want to <?php echo $user->banned ? 'unban' : 'ban'; ?> <?php echo $user->username; ?>? This action can be undone.</p>
             <button type="submit" name="confirm" value="true" class="btn btn-danger">Ban User</button>
             <button type="submit" name="confirm" value="false" class="btn btn-success">Cancel</button>

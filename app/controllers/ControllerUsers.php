@@ -315,26 +315,49 @@ class ControllerUsers extends Controller
          header('location: ' . URL_ROOT . '/errorPages/restricted');
          return;
       }
-      $id = func_get_args();
-      if (empty($id)) {
+
+      $id = (int) func_get_args()[0];
+      if (!$id)
+      {
          header('location: ' . URL_ROOT . '/errorPages/internalError');
-         return;
+         return;   
       }
-      $id = (int) $id[0];
-      $user = $this->model->getUserById((int) $id);
+
+      $user = $this->model->getUserById($id);
       if (empty($user)) {
          header('location: ' . URL_ROOT . '/errorPages/internalError');
          return;
       }
+
+      // cursed
+      // check if the redirect exists
+      if (!isset(func_get_args()[1]) && !isset($_POST['redirect']))
+      {
+         // no redirect
+         $redirect = $_SERVER['HTTP_REFERER'] ?? URL_ROOT . '/users/index';
+      }
+      elseif (isset($_POST['redirect']))
+      {
+         // redirect exists
+         $redirect = $_POST['redirect'];
+      }
+      else
+      {
+         $redirect = func_get_args()[1];
+      }
+
       $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-      if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm']) && filter_var($_POST['confirm'], FILTER_VALIDATE_BOOLEAN)) {
-         $user->banned = $user->banned ? 0 : 1;
-         $user->dateBanned = (new DateTime())->format('Y-m-d H:i:s');
-         $this->model->updateUser($user);
-         $this->profile($user->id);
+      if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+         if (isset($_POST['confirm']) && filter_var($_POST['confirm'], FILTER_VALIDATE_BOOLEAN))
+         {
+            $user->banned = $user->banned ? 0 : 1;
+            $user->dateBanned = (new DateTime())->format('Y-m-d H:i:s');
+            $this->model->updateUser($user);
+         }
+         header('location: ' . $redirect);
          return;
       }
-      $this->view->render('users/ban', ['user' => $user]);
+      $this->view->render('users/ban', ['user' => $user, 'redirect' => $redirect]);
    }
 
    public function logout(): void
