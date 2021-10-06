@@ -15,12 +15,14 @@
          </div>      
       </div>
       <div class="col">
+         <?php if(Helper::getInstance()->isAdmin() || (Helper::getInstance()->isLoggedIn() && $suggestion->user == $_SESSION['id'])) : ?>
          <div class="row">
             <a href="<?php echo URL_ROOT . '/suggestions/edit/' . $suggestion->id; ?>" type="button" class="btn btn-success btn-sm my-1" role="button">Edit</a>
          </div>
          <div class="row">
          <a href="<?php echo URL_ROOT . '/suggestions/delete/' . $suggestion->id; ?>" type="button" class="btn btn-danger btn-sm" role="button">Delete</a>
          </div>
+         <?php endif; ?>
       </div>   
    </div>
 </div>
