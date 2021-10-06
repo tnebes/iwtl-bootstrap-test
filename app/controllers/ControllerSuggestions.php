@@ -71,6 +71,18 @@ class ControllerSuggestions extends Controller
       }
    }
 
+   public function edit() : void
+   {
+      $data = [];
+      $this->view->render('suggestions/edit', $data);
+   }
+
+   public function delete() : void
+   {
+      $data = [];
+      $this->view->render('suggestions/delete', $data);
+   }
+
    private function validateTopicTitle(string $topicTitle) : string
    {
       if (empty($topicTitle)) {

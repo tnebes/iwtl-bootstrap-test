@@ -1,16 +1,26 @@
-<div class="form-control ml-0">
-   <span class="badge rounded-pill bg-info"><a class="text-dark" href="<?php echo URL_ROOT . 'users/user/' . $suggestion->user?>"><?php echo $suggestion->username?></a></span>
-   <div class="col">
-      <div class="row">
-         <strong><?php echo $suggestion->shortDescription; ?></strong>
+<div class="container">
+   <a class="badge rounded-pill bg-info text-dark" href="<?php echo URL_ROOT . 'users/user/' . $suggestion->user?>"><?php echo $suggestion->username?></a>
+   <div class="row">
+      <div class="col">
+         <div class="row">
+            <strong><?php echo $suggestion->shortDescription; ?></strong>
+         </div>
+         <div class="row">
+            <?php echo $suggestion->longDescription; ?>
+         </div>
+         <div class="row">
+            <small class="text-muted">
+               <?php echo (new DateTime($suggestion->datePosted))->format('dS M Y'); ?>
+            </small>
+         </div>      
       </div>
-      <div class="row">
-         <?php echo $suggestion->longDescription; ?>
-      </div>
-      <div class="row">
-         <small class="text-muted">
-            <?php echo (new DateTime($suggestion->datePosted))->format('dS M Y'); ?>
-         </small>
-      </div>      
-   </div>   
+      <div class="col">
+         <div class="row">
+            <a href="<?php echo URL_ROOT . '/suggestions/edit/' . $suggestion->id; ?>" type="button" class="btn btn-success btn-sm my-1" role="button">Edit</a>
+         </div>
+         <div class="row">
+         <a href="<?php echo URL_ROOT . '/suggestions/delete/' . $suggestion->id; ?>" type="button" class="btn btn-danger btn-sm" role="button">Delete</a>
+         </div>
+      </div>   
+   </div>
 </div>
