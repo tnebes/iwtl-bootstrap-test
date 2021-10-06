@@ -37,6 +37,7 @@ class ControllerTopics extends Controller
          return;
       }
       $data = [
+         'redirect' => $_SERVER['HTTP_REFERER'],
          'nameError' => '',
          'descriptionError' => '',
          'datePostedError' => '',
@@ -94,6 +95,7 @@ class ControllerTopics extends Controller
          return;
       }
       $data = [
+         'redirect' => $_SERVER['HTTP_REFERER'],
          'topic' => $topic,
          'nameError' => '',
          'descriptionError' => '',

@@ -20,6 +20,13 @@
    </div>
 
    <!-- Submit button -->
-   <button type="submit" id="submit" class="btn btn-primary btn-block mb-4">Send</button>
-   </form>
+   <div class="container">
+      <div class="col-xl">
+         <div class="row mx-auto">
+            <button type="submit" id="submit" class="btn btn-primary mb-4 mx-auto">Send</button>
+            <a href="<?php echo $redirect ?? URL_ROOT;?>" role="button" class="btn btn-light mb-4 mx-auto">Back</a>
+         </div>
+      </div>   
+   </div>   
+   </form>   
 </div>
