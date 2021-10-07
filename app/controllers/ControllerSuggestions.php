@@ -174,7 +174,7 @@ class ControllerSuggestions extends Controller
       }      
 
       $data = [
-         'redirect' => $_SERVER['HTTP_REFERER'],
+         'redirect' => $_POST['redirect'] ?? $_SERVER['HTTP_REFERER'],
          'suggestion' => $suggestion
       ];
 
@@ -182,7 +182,10 @@ class ControllerSuggestions extends Controller
       {
          if (isset($_POST['confirm']) && filter_var($_POST['confirm'], FILTER_VALIDATE_BOOLEAN)) 
          {
-            $this->model->myDelete((int) $suggestion->id);
+            // $this->model->myDelete((int) $suggestion->id);
+            echo 'deleted DELETED DELETED.';
+            header('location: ' . $data['redirect'] ?? $_SERVER['HTTP_REFERER']);
+            return;
          }
       }
       $this->view->render('suggestions/delete', $data);
