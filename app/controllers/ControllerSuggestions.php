@@ -17,6 +17,9 @@ class ControllerSuggestions extends Controller
 
    public function create(): void
    {
+      if ($this->redirectIfNotLoggedIn()) {
+         return;
+      }
       $topicId = (int) func_get_arg(0);
       if ($topicId === null) {
          header('location:' . URL_ROOT . '/errorPages/notFound');
@@ -77,15 +80,111 @@ class ControllerSuggestions extends Controller
 
    public function edit() : void
    {
-      $data = [
+      if ($this->redirectIfNotLoggedIn()) {
+         return;
+      }
+      $suggestionId = (int) func_get_arg(0);
+      if ($suggestionId === null) {
+         header('location:' . URL_ROOT . '/errorPages/notFound');
+         return;
+      }
+      $suggestion = $this->model->getById($suggestionId)[0];
+      if ($suggestion === null) {
+         header('location:' . URL_ROOT . '/errorPages/internalError');
+         return;
+      }
+      $topic = (new Topic())->getTopicById((int) $suggestion->topic);
+      if ($topic === null) {
+         header('location:' . URL_ROOT . '/errorPages/internalError');
+         return;
+      }
+      if ($suggestion->user != $_SESSION['id'] && !$this->helper->isAdmin())
+      {
+         header('location: ' . URL_ROOT . '/errorPages/restricted');
+         return;
+      }
+
+      $data =
+         [
+            'redirect' => $_SERVER['HTTP_REFERER'],
+            'topic' => $topic,
+            'topicSuggesterId' => '',
+            'topicId' => $topic->id,
+            'suggestionTitle' => $suggestion->title,
+            'suggestionShortDescription' => $suggestion->shortDescription,
+            'suggestionLongDescription' => $suggestion->longDescription,
+
+            'suggestionTitleError' => '',
+            'suggestionShortDescriptionError' => '',
+            'suggestionLongDescriptionError' => ''
+         ];
+
+      if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit']) && filter_var($_POST['submit'], FILTER_VALIDATE_BOOLEAN)) {
+         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+         $data['suggestionTitle'] = trim($_POST['title']);
+         $data['suggestionShortDescription'] = trim($_POST['shortDescription']);
+         $data['suggestionLongDescription'] = trim($_POST['longDescription']);
+         $data['topicSuggesterId'] = (int) $_SESSION['id'];
          
-      ];
-      $this->view->render('suggestions/edit', $data);
+         $data['suggestionTitleError'] = $this->validateSuggestionTitle($data['suggestionTitle']);
+         $data['suggestionShortDescriptionError'] = $this->validateSuggestionShortDescription($data['suggestionShortDescription']);
+         $data['suggestionLongDescriptionError'] = $this->validateSuggestionLongDescription($data['suggestionLongDescription']);
+
+         if (empty($data['suggestionTitleError']) && empty($data['suggestionShortDescriptionError']) && empty($data['suggestionLongDescriptionError'])) {
+            $suggestion->title = $data['suggestionTitle'];
+            $suggestion->shortDescription = $data['suggestionShortDescription'];
+            $suggestion->longDescription = $data['suggestionLongDescription'];
+            
+            $this->model->myUpdate($suggestion);
+            // TODO: fix the redirect
+            header('location: ' . $data['redirect'] ?? URL_ROOT . '/topics/topic/' . $topic->id);
+            return;
+         }
+         else
+         {
+            $this->view->render('suggestions/edit', $data);
+            return;
+         }
+         header('location: ' . URL_ROOT . '/topics/topic/' . $topic->id);
+         return;
+      } else {
+         $this->view->render('suggestions/edit', $data);
+      }
    }
 
    public function delete() : void
    {
-      $data = [];
+      if ($this->redirectIfNotLoggedIn()) {
+         return;
+      }
+      $suggestionId = (int) func_get_arg(0);
+      if ($suggestionId === null) {
+         header('location:' . URL_ROOT . '/errorPages/notFound');
+         return;
+      }
+      $suggestion = $this->model->getById($suggestionId)[0];
+      if ($suggestion === null) {
+         header('location:' . URL_ROOT . '/errorPages/internalError');
+         return;
+      }
+      if ($suggestion->user != $_SESSION['id'] && !$this->helper->isAdmin())
+      {
+         header('location: ' . URL_ROOT . '/errorPages/restricted');
+         return;
+      }      
+
+      $data = [
+         'redirect' => $_SERVER['HTTP_REFERER'],
+         'suggestion' => $suggestion
+      ];
+
+      if ($_SERVER['REQUEST_METHOD'] === 'POST')
+      {
+         if (isset($_POST['confirm']) && filter_var($_POST['confirm'], FILTER_VALIDATE_BOOLEAN)) 
+         {
+            $this->model->myDelete((int) $suggestion->id);
+         }
+      }
       $this->view->render('suggestions/delete', $data);
    }
 

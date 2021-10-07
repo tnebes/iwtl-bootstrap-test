@@ -45,7 +45,8 @@ class Suggestion extends Model
       // TODO: update this to show the most upvoted things.
       $sql = "select a.id, a.`user`, a.title, a.topic, a.datePosted, a.shortDescription, a.longDescription, b.username from $this->TABLE_NAME a 
       inner join user b on a.`user` = b.id
-      where a.topic = :topicId;";
+      where a.topic = :topicId
+      order by a.datePosted desc;";
       $statement = $this->dbHandler->prepare($sql);
       $statement->bindParam(':topicId', $topicId);
       $statement->execute();
@@ -58,6 +59,7 @@ class Suggestion extends Model
       $sql = "select a.id, a.`user`, a.title, a.topic, a.datePosted, a.shortDescription, a.longDescription, b.username from $this->TABLE_NAME a 
       inner join user b on a.`user` = b.id
       where a.topic = :topicId
+      order by a.datePosted desc
       limit :numb;";
       $statement = $this->dbHandler->prepare($sql);
       $statement->bindParam(':topicId', $topicId);

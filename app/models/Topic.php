@@ -23,7 +23,10 @@ class Topic extends Model
 
    public function getTopics(): array
    {
-      return $this->read($this->TABLE_NAME, ['*'], null, null,);
+      $sql = "SELECT * FROM $this->TABLE_NAME order by datePosted desc";
+      $statement = $this->dbHandler->prepare($sql);
+      $statement->execute();
+      return $statement->fetchAll(PDO::FETCH_OBJ);
    }
 
    public function getTopicsByUser(int $userId): array

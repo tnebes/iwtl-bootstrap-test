@@ -1,1 +1,15 @@
-delete
+<div class="p-4 bg-dark">
+   <div class="card bg-dark">
+      <div class="card-body">
+         <h4 class="card-title">Delete Suggestion</h4>
+         <p class="card-text">
+         <form action="<?php echo URL_ROOT . '/suggestions/delete/' . $suggestion->id; ?>" method="POST">
+            <input type="hidden" name="topic_id" value="<?php echo $suggestion->id; ?>">
+            <p>Are you sure you want to delete the suggestion <span class="font-weight-light"><?php echo $suggestion->title; ?></span>? This action cannot be undone.</p>
+            <button type="submit" name="confirm" value="true" class="btn btn-danger">Delete Suggestion</button>
+            <button type="submit" name="confirm" value="false" class="btn btn-success">Cancel</button>
+         </form>
+         </p>
+      </div>
+   </div>
+</div>
