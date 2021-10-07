@@ -7,7 +7,8 @@ echo '</ul>';
 ?>
 
 <div class="container mt-5">
-   <form method="POST" action="/suggestions/edit/<?php echo $topic->id?>">
+   <form method="POST" action="/suggestions/edit/<?php echo $suggestionId?>">
+   <input type="hidden" name="redirect" value="<?php echo $redirect ?? URL_ROOT; ?>">
       <!-- Title input -->
       <div class="form-outline mx-auto mb-4">
          <h1>Edit the title</h1>
