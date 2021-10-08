@@ -19,12 +19,11 @@ class ControllerUsers extends Controller
       $data = [];
       if ($this->helper->isLoggedIn()) {
          $users = $this->model->getUsersPrivate();
-         $data['users'] = $users;
       } else {
          $users = $this->model->getUsersPublic();
-         $data['users'] = $users;
       }
-      $this->view->render('users/index', $data);
+       $data['users'] = $users;
+       $this->view->render('users/index', $data);
    }
 
    public function login(): void
@@ -73,7 +72,6 @@ class ControllerUsers extends Controller
       }
 
       $this->view->render('users/login', $data);
-      return;
    }
 
    public function register(): void
@@ -293,7 +291,7 @@ class ControllerUsers extends Controller
          header('location: ' . URL_ROOT . '/errorPages/internalError');
          return;
       }
-      $user = $this->model->getUserById((int) $id);
+      $user = $this->model->getUserById($id);
       if (empty($user)) {
          header('location: ' . URL_ROOT . '/errorPages/internalError');
          return;

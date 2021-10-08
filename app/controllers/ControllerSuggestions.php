@@ -72,7 +72,6 @@ class ControllerSuggestions extends Controller
             $this->view->render('suggestions/create', $data);
          }
          header('location: ' . URL_ROOT . '/topics/topic/' . $topicId);
-         return;
       } else {
          $this->view->render('suggestions/create', $data);
       }
@@ -139,15 +138,11 @@ class ControllerSuggestions extends Controller
             $this->model->myUpdate($suggestion);
             // TODO: fix the redirect
             header('location: ' . $data['redirect'] ?? URL_ROOT . '/topics/topic/' . $topic->id);
-            return;
          }
          else
          {
             $this->view->render('suggestions/edit', $data);
-            return;
          }
-         header('location: ' . URL_ROOT . '/topics/topic/' . $topic->id);
-         return;
       } else {
          $this->view->render('suggestions/edit', $data);
       }

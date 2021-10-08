@@ -21,11 +21,11 @@ A web application for collecting information on how to learn anything.
 
 - [x] Upload to hosting application
 
-- [x] Upload to github code
+- [x] Upload to GitHub code
 
 - [x] In readme.md write which points are realized
 
-- [x] In the public part of the application, place a link to the github code
+- [x] In the public part of the application, place a link to the GitHub code
 
 - [x] On the private part of the application put a link to the ERA diagram
 

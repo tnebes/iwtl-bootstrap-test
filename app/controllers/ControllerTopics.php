@@ -19,15 +19,13 @@ class ControllerTopics extends Controller
    public function topic(): void
    {
       $topicId = (int) func_get_arg(0);
-      if ($topicId !== null && is_int($topicId))
+      if (is_int($topicId))
       {
          $this->model->getTopicById($topicId) ? $this->view->render('topics/topic', ['topic' => $this->model->getTopicById($topicId)]) : header('location: ' . URL_ROOT . '/errorPages/notFound');
-         return;
       }
       else
       {
          header('location: ' . URL_ROOT . '/errorPages/notFound');
-         return;
       }
    }
 
@@ -80,7 +78,7 @@ class ControllerTopics extends Controller
       $userId = (int) $_SESSION['id'];
       $topicId = (int) func_get_arg(0);
       $topic = null;
-      if ($topicId !== null && is_int($topicId))
+      if (is_int($topicId))
       {
          $topic = $this->model->getTopicById($topicId);
       }
@@ -129,8 +127,6 @@ class ControllerTopics extends Controller
          $topic->image = $data['image'];
          // TODO: redirect in header so that the user can go back.
          header('location: ' . URL_ROOT . '/topics/topic/' . $this->model->updateTopic($topic));
-         // $this->topic($this->model->updateTopic($topic));
-         return;
       }
       else
       {
@@ -146,7 +142,7 @@ class ControllerTopics extends Controller
       $userId = (int) $_SESSION['id'];
       $topicId = (int) func_get_arg(0);
       $topic = null;
-      if ($topicId !== null && is_int($topicId))
+      if (is_int($topicId))
       {
          $topic = $this->model->getTopicById($topicId);
       }

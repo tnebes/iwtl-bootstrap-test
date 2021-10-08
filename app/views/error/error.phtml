@@ -1,6 +1,6 @@
 <div class="container text-center alert alert-light" role="alert">
    <h1 class="h1-responsive text-center text-danger">
-      <?php echo isset($title) ? $title : 'Something went terribly wrong.'; ?>
+      <?php echo $title ?? 'Something went terribly wrong.'; ?>
    </h1>
-   <?php echo isset($description) ? $description : 'Sorry!'; ?>
+   <?php echo $description ?? 'Sorry!'; ?>
 </div>

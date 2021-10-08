@@ -49,12 +49,12 @@ class User extends Model
 
    public function userByEmailExists(string $email): bool
    {
-      return $this->readSingle($this->TABLE_NAME, ['*'], ['email'], [$email]) ? true : false;
+      return (bool)$this->readSingle($this->TABLE_NAME, ['*'], ['email'], [$email]);
    }
 
    public function userByUsernameExists(string $username): bool
    {
-      return $this->readSingle($this->TABLE_NAME, ['*'], ['username'], [$username]) ? true : false;
+      return (bool)$this->readSingle($this->TABLE_NAME, ['*'], ['username'], [$username]);
    }
 
    public function getUserById(int $id): ?stdClass

@@ -34,12 +34,12 @@ class Database
    /**
    * Get the value of dbHandler
    */ 
-   public function getDbHandler()
+   public function getDbHandler() : ?PDO
    {
       return $this->dbHandler;
    } 
 
-   public static function getInstance()
+   public static function getInstance() : Database
    {
       if (!isset(self::$instance)) {
          self::$instance = new Database();

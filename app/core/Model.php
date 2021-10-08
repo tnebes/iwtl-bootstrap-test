@@ -17,13 +17,13 @@ abstract class Model
       $this->dbHandler = $this->db->getDbHandler();
    }
 
-   /**
-    * Protected create function.
-    * @return bool
-    * @param tName is the table name in the SQL database
-    * @param cols is the column(s) to be created
-    * @param vals is the values to be inserted into the columns
-    */
+    /**
+     * Protected create function.
+     * @param string $tName is the table name in the SQL database
+     * @param array $cols is the column(s) to be created
+     * @param array $vals is the values to be inserted into the columns
+     * @return bool
+     */
    protected function create(string $tName, array $cols, array $vals): bool
    {
       if (empty($tName)) {
@@ -63,15 +63,14 @@ abstract class Model
       return $this->db->execute();
    }
 
-   /**
-    * Protected read function
-    * @return array
-    * @param tName table name
-    * @param cols affected columns
-    * @param criteria where criteria
-    * @param criteriaVals where criteria values
-    * SELECT cols FROM tName WHERE criterion0 = criteriaVal0 OR criterion1 = criterionVal1...
-    */
+    /**
+     * Protected read function
+     * @param string $tName
+     * @param array $cols
+     * @param array|null $criteria
+     * @param array|null $criteriaVals
+     * @return array
+     */
    protected function read(string $tName, array $cols, ?array $criteria, ?array $criteriaVals): array
    {
       if (empty($tName)) {

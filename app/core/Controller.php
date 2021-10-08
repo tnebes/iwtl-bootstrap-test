@@ -6,6 +6,7 @@ class Controller
 {
    protected $view;
    protected $helper;
+   protected $model;
 
    public function getModel(string $model): Model
    {
@@ -36,8 +37,4 @@ class Controller
       $this->helper = Helper::getInstance();
    }
 
-   public function view(string $view, array $data = []): void
-   {
-      $this->view = new View();
-   }
 }
