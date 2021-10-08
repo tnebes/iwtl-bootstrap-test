@@ -30,6 +30,7 @@ class ControllerSuggestionReview extends Controller
         {
             echo 'reviewed';
             header('location: ' . $redirect);
+            return;
         }
         $anyReviewExists = $this->model->isReviewedSuggestion($userId, $suggestionId);
         if ($anyReviewExists)
@@ -40,8 +41,6 @@ class ControllerSuggestionReview extends Controller
         {
             $this->model->createSuggestionReview($userId, $suggestionId, 1);
         }
-
-
     }
 
     public function reviewNegative() : void
