@@ -62,7 +62,7 @@ class ControllerSuggestions extends Controller
          $data['suggestionShortDescriptionError'] = $this->validateSuggestionShortDescription($data['suggestionShortDescription']);
          $data['suggestionLongDescriptionError'] = $this->validateSuggestionLongDescription($data['suggestionLongDescription']);
 
-         if ($data['suggestionTitleError'] == '' && $data['suggestionShortDescription'] == '' && $data['suggestionLongDescription'] == '') {
+         if ($data['suggestionTitleError'] == '' && $data['suggestionShortDescriptionError'] == '' && $data['suggestionLongDescriptionError'] == '') {
             $suggestion = new stdClass;
             $suggestion->user = $data['topicSuggesterId'];
             $suggestion->title = $data['suggestionTitle'];
@@ -76,6 +76,7 @@ class ControllerSuggestions extends Controller
          else
          {
             $this->view->render('suggestions/create', $data);
+            return;
          }
          header('location: ' . URL_ROOT . '/topics/topic/' . $topicId);
       } else {

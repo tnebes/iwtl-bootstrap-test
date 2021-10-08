@@ -31,13 +31,13 @@ class Suggestion extends Model
       return $statement->fetchAll(PDO::FETCH_OBJ);
    }
 
-   public function getById(int $id) : array
+   public function getById(int $id) : ?stdClass
    {
       $sql = "SELECT * FROM $this->TABLE_NAME WHERE id = :id";
       $statement = $this->dbHandler->prepare($sql);
       $statement->bindParam(':id', $id);
       $statement->execute();
-      return $statement->fetchAll(PDO::FETCH_OBJ);
+      return $statement->fetchAll(PDO::FETCH_OBJ)[0];
    }
 
    public function getSuggestionsByTopicId(int $topicId)

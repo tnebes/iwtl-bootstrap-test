@@ -82,7 +82,7 @@ class ControllerUsers extends Controller
    }
 
     /**
-     *
+     * Method handles the registration of a user.
      */
     public function register(): void
    {
@@ -143,7 +143,7 @@ class ControllerUsers extends Controller
    }
 
     /**
-     *
+     * Method handles the showing of a user profile.
      */
     public function profile(): void
    {
@@ -168,7 +168,7 @@ class ControllerUsers extends Controller
    }
 
     /**
-     *
+     * Method handles the update of an user based on the user id.
      */
     public function update(): void
    {
@@ -297,7 +297,7 @@ class ControllerUsers extends Controller
    }
 
     /**
-     *
+     * Method handles the deletion of a user.
      */
     public function delete(): void
    {
@@ -347,7 +347,7 @@ class ControllerUsers extends Controller
    }
 
     /**
-     *
+     * Method handles the banning of an user.
      */
     public function ban(): void
    {
