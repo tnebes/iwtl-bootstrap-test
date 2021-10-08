@@ -46,7 +46,7 @@ class Suggestion extends Model
       $sql = "select a.id, a.`user`, a.title, a.topic, a.datePosted, a.shortDescription, a.longDescription, b.username from $this->TABLE_NAME a 
       inner join user b on a.`user` = b.id
       where a.topic = :topicId
-      order by (select sum(userScore) from usersuggestionreview c where a.id = c.suggestion) desc, a.datePosted desc;";
+      order by (select sum(userScore) from userSuggestionReview c where a.id = c.suggestion) desc, a.datePosted desc;";
       $statement = $this->dbHandler->prepare($sql);
       $statement->bindParam(':topicId', $topicId);
       $statement->execute();
@@ -59,7 +59,7 @@ class Suggestion extends Model
       $sql = "select a.id, a.`user`, a.title, a.topic, a.datePosted, a.shortDescription, a.longDescription, b.username from $this->TABLE_NAME a 
       inner join user b on a.`user` = b.id
       where a.topic = :topicId
-      order by (select sum(userScore) from usersuggestionreview c where a.id = c.suggestion) desc, a.datePosted desc;
+      order by (select sum(userScore) from userSuggestionReview c where a.id = c.suggestion) desc, a.datePosted desc;
       limit :numb;";
       $statement = $this->dbHandler->prepare($sql);
       $statement->bindParam(':topicId', $topicId);
