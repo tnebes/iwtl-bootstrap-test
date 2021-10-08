@@ -10,13 +10,19 @@ class ControllerTopics extends Controller
       $this->model = $this->getModel('Topic');
    }
 
-   public function index(): void
+    /**
+     *
+     */
+    public function index(): void
    {
       $topics = $this->model->getTopics();
       $this->view->render('topics/index', ['topics' => $topics]);
    }
 
-   public function topic(): void
+    /**
+     * Method handles the contents of a topic passed to view.
+     */
+    public function topic(): void
    {
       $topicId = (int) func_get_arg(0);
       if (is_int($topicId))
@@ -29,7 +35,10 @@ class ControllerTopics extends Controller
       }
    }
 
-   public function create(): void
+    /**
+     * Method handles the creation of a topic
+     */
+    public function create(): void
    {
       if ($this->redirectIfNotLoggedIn()) {
          return;
@@ -73,7 +82,10 @@ class ControllerTopics extends Controller
       $this->view->render('topics/create', $data);
    }
 
-   public function edit(): void
+    /**
+     *
+     */
+    public function edit(): void
    {
       $userId = (int) $_SESSION['id'];
       $topicId = (int) func_get_arg(0);
@@ -134,7 +146,10 @@ class ControllerTopics extends Controller
       }
    }
 
-   public function delete(): void
+    /**
+     *
+     */
+    public function delete(): void
    {
       if ($this->redirectIfNotLoggedIn()) {
          return;
@@ -168,7 +183,11 @@ class ControllerTopics extends Controller
       $this->view->render('topics/delete', ['topic' => $topic]);
    }
 
-   private function validateName(string $name): string
+    /**
+     * @param string $name
+     * @return string
+     */
+    private function validateName(string $name): string
    {
       if (empty($name))
       {
@@ -185,7 +204,11 @@ class ControllerTopics extends Controller
       return '';
    }
 
-   private function validateDescription(string $description): string
+    /**
+     * @param string $description
+     * @return string
+     */
+    private function validateDescription(string $description): string
    {
       if (empty($description))
       {
@@ -202,7 +225,11 @@ class ControllerTopics extends Controller
       return '';
    }
 
-   private function validateImage(string $image): string
+    /**
+     * @param string $image
+     * @return string
+     */
+    private function validateImage(string $image): string
    {
       return '';
    }

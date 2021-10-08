@@ -9,6 +9,9 @@ class ControllerEr extends Controller
       parent::__construct();
    }
 
+    /**
+     * The index page where the ER diagram is shown.
+     */
    public function index(): void
    {
       if (!Helper::getInstance()->isLoggedIn()) {

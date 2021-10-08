@@ -8,7 +8,10 @@ class ControllerSubscriptions extends Controller
       $this->model = $this->getModel('UserTopicSubscription');
    }
 
-   public function index() : void
+    /**
+     * method returns the data required for the index page of subscriptions to have content.
+     */
+    public function index() : void
    {
       if (!$this->helper->isLoggedIn())
       {
@@ -19,7 +22,10 @@ class ControllerSubscriptions extends Controller
       $this->view->render('/subscriptions/index', $data);
    }
 
-   public function subscribe() : void
+    /**
+     * Method handles the subscription or unsubscription of a user to a topic
+     */
+    public function subscribe() : void
    {
       if (!$this->helper->isLoggedIn())
       {

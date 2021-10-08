@@ -10,12 +10,18 @@ class ControllerSuggestions extends Controller
       $this->model = $this->getModel('Suggestion');
    }
 
-   public function index(): void
+    /**
+     *
+     */
+    public function index(): void
    {
       header('location:' . URL_ROOT . '/errorPages/notFound');
    }
 
-   public function create(): void
+    /**
+     * Method handles the creation of a suggestion based on the user's id and the id of the topic.
+     */
+    public function create(): void
    {
       if ($this->redirectIfNotLoggedIn()) {
          return;
@@ -77,7 +83,10 @@ class ControllerSuggestions extends Controller
       }
    }
 
-   public function edit() : void
+    /**
+     * Method handles the editing of a suggestion
+     */
+    public function edit() : void
    {
       if ($this->redirectIfNotLoggedIn()) {
          return;
@@ -148,7 +157,10 @@ class ControllerSuggestions extends Controller
       }
    }
 
-   public function delete() : void
+    /**
+     * Method handles the deletion of a suggestion
+     */
+    public function delete() : void
    {
       if ($this->redirectIfNotLoggedIn()) {
          return;
@@ -186,7 +198,12 @@ class ControllerSuggestions extends Controller
       $this->view->render('suggestions/delete', $data);
    }
 
-   private function validateSuggestionTitle(string $topicTitle) : string
+    /**
+     * Method validates a topic title based on rules. Returns an empty string if the topic title is valid.
+     * @param string $topicTitle
+     * @return string
+     */
+    private function validateSuggestionTitle(string $topicTitle) : string
    {
       if (empty($topicTitle)) {
          return 'Title is required';
@@ -201,7 +218,12 @@ class ControllerSuggestions extends Controller
       return '';
    }
 
-   private function validateSuggestionShortDescription(string $topicTitle) : string
+    /**
+     * Method validates the short description of a topic title. Returns an empty string if valid.
+     * @param string $topicTitle
+     * @return string
+     */
+    private function validateSuggestionShortDescription(string $topicTitle) : string
    {
       if (empty($topicTitle)) {
          return 'Short description is required';
@@ -216,7 +238,12 @@ class ControllerSuggestions extends Controller
       return '';
    }
 
-   private function validateSuggestionLongDescription(string $topicTitle) : string
+    /**
+     * Method validates the long description. Returns empty string if valid.
+     * @param string $topicTitle
+     * @return string
+     */
+    private function validateSuggestionLongDescription(string $topicTitle) : string
    {
       // no further checking required if the long description is valid
       if (empty($topicTitle)) {
