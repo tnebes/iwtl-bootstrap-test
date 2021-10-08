@@ -28,8 +28,7 @@ class UserSuggestionReview extends Model
             $statement->bindParam(':reviewScore', $reviewScore, PDO::PARAM_INT);
         }
         $statement->execute();
-        $result = $statement->fetchColumn();
-        return $result > 0;
+        return $statement->fetchColumn() > 0;
     }
 
     /**
@@ -62,6 +61,24 @@ class UserSuggestionReview extends Model
         $statement->bindParam(':suggestion', $suggestionId);
         $statement->bindParam(':reviewScore', $reviewScore);
         return $statement->execute();
+    }
+
+    public function deleteReview(int $userId, int $suggestionId) : bool
+    {
+        $sql = "delete from $this->TABLE_NAME where user = :userId and suggestion = :suggestionId;";
+        $statement = $this->dbHandler->prepare($sql);
+        $statement->bindParam(':userId', $userId, PDO::PARAM_INT);
+        $statement->bindParam(':suggestionId', $suggestionId, PDO::PARAM_INT);
+        return $statement->execute();
+    }
+
+    public function getReviewScore(int $userSuggestionReviewId) : int
+    {
+        $sql = "select sum(a.userScore) as score from $this->TABLE_NAME a where suggestion = :suggestionId;";
+        $statement = $this->dbHandler->prepare($sql);
+        $statement->bindParam(':suggestionId', $userSuggestionReviewId);
+        $statement->execute();
+        return $statement->fetch()[0] ?? 0;
     }
 
 

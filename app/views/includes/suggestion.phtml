@@ -44,7 +44,7 @@
        </div>
        <div class="col">
           <div class="row">
-             <!-- TODO: insert the like count here --> <strong><?php echo random_int(-100, 100)?></strong>
+             <!-- TODO: insert the like count here --> <strong><?php echo (new UserSuggestionReview)->getReviewScore($suggestion->id)?></strong>
           </div>
        </div>
    </div>
