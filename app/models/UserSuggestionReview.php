@@ -63,6 +63,11 @@ class UserSuggestionReview extends Model
         return $statement->execute();
     }
 
+    /**
+     * @param int $userId
+     * @param int $suggestionId
+     * @return bool
+     */
     public function deleteReview(int $userId, int $suggestionId) : bool
     {
         $sql = "delete from $this->TABLE_NAME where user = :userId and suggestion = :suggestionId;";
@@ -72,6 +77,10 @@ class UserSuggestionReview extends Model
         return $statement->execute();
     }
 
+    /**
+     * @param int $userSuggestionReviewId
+     * @return int
+     */
     public function getReviewScore(int $userSuggestionReviewId) : int
     {
         $sql = "select sum(a.userScore) as score from $this->TABLE_NAME a where suggestion = :suggestionId;";
