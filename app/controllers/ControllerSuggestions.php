@@ -97,7 +97,7 @@ class ControllerSuggestions extends Controller
          header('location:' . URL_ROOT . '/errorPages/notFound');
          return;
       }
-      $suggestion = $this->model->getById($suggestionId)[0];
+      $suggestion = $this->model->getById($suggestionId);
       if ($suggestion === null) {
          header('location:' . URL_ROOT . '/errorPages/internalError');
          return;

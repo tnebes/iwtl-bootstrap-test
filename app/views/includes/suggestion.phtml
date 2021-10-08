@@ -1,51 +1,54 @@
-<div class="container">
+<div class="container border my-1 px-4 py-1">
    <a class="badge rounded-pill bg-info text-dark" href="<?php echo URL_ROOT . 'users/user/' . $suggestion->user?>"><?php echo $suggestion->username?></a>
-   <div class="row">
-      <div class="col">
-         <div class="row">
-            <strong><?php echo $suggestion->shortDescription; ?></strong>
-         </div>
-         <div class="row">
-            <?php echo $suggestion->longDescription; ?>
-         </div>
-         <div class="row">
-            <small class="text-muted">
-               <?php echo (new DateTime($suggestion->datePosted))->format('dS M Y'); ?>
-            </small>
-         </div>      
-      </div>
-      <div class="col">
-<!--          TODO: place the like and dislike buttons here.-->
-         <?php if(Helper::getInstance()->isAdmin() || (Helper::getInstance()->isLoggedIn() && $suggestion->user == $_SESSION['id'])) : ?>
-         <div class="row">
-            <a href="<?php echo URL_ROOT . '/suggestions/edit/' . $suggestion->id; ?>" type="button" class="btn btn-success btn-sm my-1" role="button">Edit</a>
-         </div>
-         <div class="row">
-         <a href="<?php echo URL_ROOT . '/suggestions/delete/' . $suggestion->id; ?>" type="button" class="btn btn-danger btn-sm" role="button">Delete</a>
-         </div>
-         <?php endif; ?>
-      </div>
-       <div class="col">
-           <?php if(Helper::getInstance()->isLoggedIn()) : ?>
+   <div class="col">
+      <div class="row">
+         <div class="col">
             <div class="row">
-               <a href="<?php echo URL_ROOT . '/suggestionReview/reviewPositive/' . $suggestion->id ?>" class="btn btn-primary mt-1" role="button">&#128077;</a>
+               <strong><?php echo $suggestion->shortDescription; ?></strong>
             </div>
             <div class="row">
-               <a href="<?php echo URL_ROOT . '/suggestionReview/reviewNegative/' . $suggestion->id ?>" class="btn btn-primary mt-1" role="button">&#128078;</a>
+               <?php echo $suggestion->longDescription; ?>
             </div>
-            <?php else: ?>
+            <div class="row">
+               <small class="text-muted">
+                  <?php echo (new DateTime($suggestion->datePosted))->format('dS M Y'); ?>
+               </small>
+            </div>      
+         </div>
+      </div>
+      <div class="row">
+         <div class="col">
+            <?php if(Helper::getInstance()->isAdmin() || (Helper::getInstance()->isLoggedIn() && $suggestion->user == $_SESSION['id'])) : ?>
+            <div class="row">
+               <a href="<?php echo URL_ROOT . '/suggestions/edit/' . $suggestion->id; ?>" type="button" class="btn btn-success mt-1" role="button">Edit</a>
+            </div>
+            <div class="row">
+            <a href="<?php echo URL_ROOT . '/suggestions/delete/' . $suggestion->id; ?>" type="button" class="btn btn-danger mt-1" role="button">Delete</a>
+            </div>
+            <?php endif; ?>
+         </div>
+         <div class="col">
+            <?php if(Helper::getInstance()->isLoggedIn()) : ?>
                <div class="row">
-                  <a href="#" class="btn btn-outline-primary mt-1 disabled" disabled role="button">&#128077;</a>
+                  <a href="<?php echo URL_ROOT . '/suggestionReview/reviewPositive/' . $suggestion->id ?>" class="btn btn-primary mt-1" role="button">&#128077;</a>
                </div>
                <div class="row">
-                  <a href="#" class="btn btn-outline-primary mt-1 disabled" disabled role="button">&#128078;</a>
+                  <a href="<?php echo URL_ROOT . '/suggestionReview/reviewNegative/' . $suggestion->id ?>" class="btn btn-primary mt-1" role="button">&#128078;</a>
                </div>
-           <?php endif; ?>
-       </div>
-       <div class="col">
-          <div class="row">
-             <!-- TODO: insert the like count here --> <strong><?php echo (new UserSuggestionReview)->getReviewScore($suggestion->id)?></strong>
-          </div>
-       </div>
+               <?php else: ?>
+                  <div class="row">
+                     <a href="#" class="btn btn-outline-primary mt-1 disabled" disabled role="button">&#128077;</a>
+                  </div>
+                  <div class="row">
+                     <a href="#" class="btn btn-outline-primary mt-1 disabled" disabled role="button">&#128078;</a>
+                  </div>
+            <?php endif; ?>
+         </div>
+         <div class="col">
+            <div class="row">
+               <strong>Upvotes: <?php echo (new UserSuggestionReview)->getReviewScore($suggestion->id)?></strong>
+            </div>
+         </div>
+      </div>
    </div>
 </div>
