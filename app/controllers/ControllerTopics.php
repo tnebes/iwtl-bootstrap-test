@@ -83,7 +83,7 @@ class ControllerTopics extends Controller
    }
 
     /**
-     *
+     * Method handles the editing of topics
      */
     public function edit(): void
    {
@@ -147,7 +147,7 @@ class ControllerTopics extends Controller
    }
 
     /**
-     *
+     * Method handles the deletion of topics
      */
     public function delete(): void
    {
@@ -184,6 +184,7 @@ class ControllerTopics extends Controller
    }
 
     /**
+     * Method validates the name (title) of a topic and returns an empty string if valid.
      * @param string $name
      * @return string
      */
@@ -205,6 +206,7 @@ class ControllerTopics extends Controller
    }
 
     /**
+     * Method validates the description of a topic and returns an empty string if valid.
      * @param string $description
      * @return string
      */
@@ -226,6 +228,7 @@ class ControllerTopics extends Controller
    }
 
     /**
+     * Method validates an image and returns an empty string if valid.
      * @param string $image
      * @return string
      */

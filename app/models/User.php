@@ -89,6 +89,15 @@ class User extends Model
       return $this->update($this->TABLE_NAME, $userCols, $user, ['id'], [$userId]);
    }
 
+   public function updateUserLogin(int $userId, string $time): bool
+   {
+       $sql = "UPDATE $this->TABLE_NAME SET lastLogin = :time WHERE id = :id";
+       $statement = $this->dbHandler->prepare($sql);
+       $statement->bindParam(':time', $time);
+       $statement->bindParam(':id', $userId, PDO::PARAM_INT);
+       return $statement->execute();
+   }
+
    public function getIsAdmin(string $id): bool
    {
       return $this->read($this->TABLE_NAME, ['role'], ['id'], [$id])[0]->role == ADMIN_ROLE;

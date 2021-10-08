@@ -10,7 +10,10 @@ class ControllerUsers extends Controller
       $this->model = $this->getModel('User');
    }
 
-   public function index(): void
+    /**
+     * Method handles the sending of data to view.
+     */
+    public function index(): void
    {
       if (!$this->helper->isLoggedIn()) {
          header('location: ' . URL_ROOT . '/errorPages/restricted');
@@ -26,7 +29,10 @@ class ControllerUsers extends Controller
        $this->view->render('users/index', $data);
    }
 
-   public function login(): void
+    /**
+     * Method handles the logging in of a user.
+     */
+    public function login(): void
    {
       if ($this->helper->isLoggedIn()) {
          header('location: ' . URL_ROOT . '/users/index');
@@ -62,6 +68,7 @@ class ControllerUsers extends Controller
             $user = $this->model->login($data['email'], $data['password']);
             if (!empty($user)) {
                $this->helper->createUserSession($user);
+               $this->model->updateUserLogin((int) $user->id, (new DateTime())->format('Y-m-d H:i:s'));
                header('Location: ' . URL_ROOT . '/users/index');
                return;
             } else {
@@ -74,7 +81,10 @@ class ControllerUsers extends Controller
       $this->view->render('users/login', $data);
    }
 
-   public function register(): void
+    /**
+     *
+     */
+    public function register(): void
    {
       if ($this->helper->isLoggedIn() && !$this->helper->isAdmin()) {
          header('location: ' . URL_ROOT . '/users/index');
@@ -132,7 +142,10 @@ class ControllerUsers extends Controller
       $this->view->render('/users/register', $data);
    }
 
-   public function profile(): void
+    /**
+     *
+     */
+    public function profile(): void
    {
       if (!$this->helper->isLoggedIn()) {
          header('location: ' . URL_ROOT . '/errorPages/restricted');
@@ -154,7 +167,10 @@ class ControllerUsers extends Controller
       $this->view->render('users/profile', ['user' => $user]);
    }
 
-   public function update(): void
+    /**
+     *
+     */
+    public function update(): void
    {
       if (!$this->helper->isLoggedIn()) {
          header('location: ' . URL_ROOT . '/errorPages/restricted');
@@ -280,7 +296,10 @@ class ControllerUsers extends Controller
       $this->view->render('users/update', ['user' => $user, 'data' => $data]);
    }
 
-   public function delete(): void
+    /**
+     *
+     */
+    public function delete(): void
    {
       if (!$this->helper->isLoggedIn()) {
          header('location: ' . URL_ROOT . '/errorPages/restricted');
@@ -327,7 +346,10 @@ class ControllerUsers extends Controller
       $this->view->render('users/delete', ['user' => $user, 'redirect' => $redirect]);
    }
 
-   public function ban(): void
+    /**
+     *
+     */
+    public function ban(): void
    {
       if (!$this->helper->isLoggedIn()) {
          header('location: ' . URL_ROOT . '/errorPages/restricted');
@@ -378,7 +400,10 @@ class ControllerUsers extends Controller
       $this->view->render('users/ban', ['user' => $user, 'redirect' => $redirect]);
    }
 
-   public function logout(): void
+    /**
+     *
+     */
+    public function logout(): void
    {
       $this->helper->clearUserSession();
       header('Location: ' . URL_ROOT . '/pages/index');
