@@ -8,7 +8,7 @@ class Helper
 
    private function __construct()
    {
-      $instance = $this;
+      self::$instance = $this;
    }
 
    public static function getInstance(): Helper
@@ -55,42 +55,13 @@ class Helper
       return URL_ROOT . '/topics/topic/' . $topic->id;
    }
 
-   function getUserActionsAdmin(int $userId): string
-   {
-      $methods = ['profile', 'update', 'delete', 'ban'];
-      $iconLocation = URL_ROOT . '/img/icons/';
-      $icons = ['file-person.svg', 'wrench.svg', 'x-lg.svg', 'mic-mute.svg'];
-      $returnString = '';
-      for ($i = 0; $i < count($methods); $i++) {
-         $returnString .= '<a href=' . URL_ROOT . '/users/' . $methods[$i] . '/' . $userId . '><img data-toggle="tooltip" data-placement="bottom" title="' . $methods[$i] . '" width=20px src="' . $iconLocation . $icons[$i] . '" alt="' . $methods[$i] . '" /></a> ';
-      }
-      return $returnString;
-   }
-
-   function getUserActions(int $userId): string
-   {
-      $methods = ['profile'];
-      $iconLocation = URL_ROOT . '/img/icons/';
-      $icons = ['file-person.svg'];
-      $returnString = '';
-      for ($i = 0; $i < count($methods); $i++) {
-         $returnString .= '<a href=' . URL_ROOT . '/users/' . $methods[$i] . '/' . $userId . '><img data-toggle="tooltip" data-placement="bottom" title="' . $methods[$i] . '" width=20px src="' . $iconLocation . $icons[$i] . '" alt="' . $methods[$i] . '" /></a> ';
-      }
-      return $returnString;
-   }
-
-   function roleToString(int $role): string
+    function roleToString(int $role): string
    {
       $roles = ['user', 'admin'];
       return $roles[$role];
    }
 
-   function bannedToString(int $banned): string
-   {
-      return $banned ? 'yes' : 'no';
-   }
-
-   function bannedToCheckbox(int $banned, bool $disabled = false): string
+    function bannedToCheckbox(int $banned, bool $disabled = false): string
    {
       return '<input class="form-check-input mx-auto" type="checkbox" name="banned" value="true" ' . ($disabled ? 'disabled' : '') . ' ' . ($banned ? 'checked' : '') . '>';
    }

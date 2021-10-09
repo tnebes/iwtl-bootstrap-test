@@ -9,9 +9,6 @@ class ControllerErrorPages extends Controller
       parent::__construct();
    }
 
-
-   // TODO: implement data for these pages instead of using three different pages!
-
     /**
      *
      */
