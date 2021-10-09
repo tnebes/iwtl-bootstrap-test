@@ -30,7 +30,7 @@
          <div class="col">
             <?php if(Helper::getInstance()->isLoggedIn()) : ?>
                <?php
-               $userReview = (new UserSuggestionReview)->getReviewByUser((int) $suggestion->user, (int) $suggestion->id);
+               $userReview = (new UserSuggestionReview)->getReviewByUser((int) $_SESSION['id'], (int) $suggestion->id);
                ?>
                <div class="row">
                   <a href="<?php echo URL_ROOT . '/suggestionReview/reviewPositive/' . $suggestion->id ?>" class="btn <?php echo $userReview == 1 ? 'btn-success' : 'btn-primary'; ?> mt-1 btn-sm " role="button">&#128077;</a>

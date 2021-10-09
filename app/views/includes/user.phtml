@@ -1,7 +1,7 @@
 <?php if (Helper::getInstance()->isAdmin()) : ?>
 <div class="container border m-1 mx-auto pb-2" id="user-container">
    <div class="container p-0 pb-1 text-center">
-      <a class="badge rounded-pill bg-info text-dark" href="<?php echo URL_ROOT . 'users/user/' . $user->id?>"><?php echo $user->username?></a>
+      <a class="badge rounded-pill bg-info text-dark" href="<?php echo URL_ROOT . '/users/user/' . $user->id?>"><?php echo $user->username?></a>
    </div>
    <div class="container p-0 m-0 text-danger text-center">
       <?php echo $user->banned != 0 ? '<strong>BANNED</strong>' : '' ?>
