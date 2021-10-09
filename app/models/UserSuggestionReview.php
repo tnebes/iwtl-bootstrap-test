@@ -90,5 +90,15 @@ class UserSuggestionReview extends Model
         return $statement->fetch()[0] ?? 0;
     }
 
+    public function getReviewByUser(int $userId, int $suggestionId) : ?int
+    {
+       $sql = "select userScore from $this->TABLE_NAME where user = :userId and suggestion = :suggestionId;";
+       $statement = $this->dbHandler->prepare($sql);
+       $statement->bindParam(':userId', $userId);
+       $statement->bindParam(':suggestionId', $suggestionId);
+       $statement->execute();
+       return $statement->fetch()[0] ?? null;
+    }
+
 
 }
