@@ -1,3 +1,8 @@
 <?php declare(strict_types = 1);
 ?>
 
+<?php foreach($users as $user): ?>
+<div class="container">
+   <?php include APP_ROOT . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'user.phtml';  ?>
+</div>
+<?php endforeach; ?>

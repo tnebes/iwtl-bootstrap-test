@@ -33,23 +33,21 @@ class Helper
 
    public function isAdmin(): bool
    {
-      if ($this->isLoggedIn()) {
-         $userModel = new User();
-         return $userModel->getIsAdmin($_SESSION['id']);
-      }
-      return false;
+      return isset($_SESSION['admin']) && $_SESSION['admin'] == true;
    }
 
    public function createUserSession(stdClass $user): void
    {
       $_SESSION['id'] = $user->id;
       $_SESSION['username'] = $user->username;
+      $_SESSION['admin'] = $user->role != 0;
    }
 
    public function clearUserSession(): void
    {
       unset($_SESSION['id']);
       unset($_SESSION['username']);
+      unset($_SESSION['admin']);
    }
 
    function getLinkToTopic(stdClass $topic): string
