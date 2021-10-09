@@ -7,7 +7,7 @@ class ControllerSuggestionReview extends Controller
     public function __construct()
     {
         parent::__construct();
-        $this->model = $this->getModel('userSuggestionReview');
+        $this->model = $this->getModel('UserSuggestionReview');
     }
 
     public function reviewPositive() : void
