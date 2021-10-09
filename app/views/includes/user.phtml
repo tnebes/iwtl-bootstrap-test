@@ -1,0 +1,77 @@
+<?php if (Helper::getInstance()->isAdmin()) : ?>
+<div class="container" id="user-container">
+   <div class="container border">
+      <?php echo $user->username; ?>
+   </div>
+   <div class="container">
+      <?php echo $user->banned ?? 'BANNED' ?>
+   </div>
+   <div class="container" id="user-information">
+      <div class="row">
+         <div class="col">
+            <div class="row">
+               Date Registered:
+            </div>
+            <div class="row">
+               Email:
+            </div>
+            <div class="row">
+               Role:
+            </div>
+            <div class="row">
+               Last Login:
+            </div>
+            <div class="row">
+               Date Banned:
+            </div>
+         </div>
+         <div class="col">
+            <div class="row">
+               <?php echo $user->registrationDate; ?>
+            </div>
+            <div class="row">
+               <?php echo $user->email; ?>
+            </div>
+            <div class="row">
+               <?php echo $user->role; ?>
+            </div>
+            <div class="row">
+               <?php echo $user->lastLogin; ?>
+            </div>
+            <div class="row">
+               <?php echo $user->dateBanned; ?>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="container" id="actions">
+      actions go here.
+   </div>
+</div>
+<?php else: ?>
+   <div class="container" id="user-container">
+   <div class="container border">
+      <?php echo $user->username; ?>
+   </div>
+   <div class="container">
+      <?php echo $user->banned ?? 'BANNED' ?>
+   </div>
+   <div class="container" id="user-information">
+      <div class="row">
+         <div class="col">
+            <div class="row">
+               Date Registered:
+            </div>
+         </div>
+         <div class="col">
+            <div class="row">
+               <?php echo $user->registrationDate; ?>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="container" id="actions">
+      actions go here.
+   </div>
+</div>
+<?php endif; ?>
