@@ -10,7 +10,7 @@
    }
    
 ?>
-   <div class="" id="topic">
+   <div class="container" id="topic">
       <div class="" id="topic-container">
          <img src="...image..." alt="...img...">
          <div class="" id="topic-content">
@@ -65,7 +65,7 @@
       <?php 
          if (isset($suggestions))
          {
-            echo '<div class="alert" id="suggestions-container">';
+            echo '<div class="container mx-0 p-1" id="suggestions-container">';
             foreach($suggestions as $suggestion)
             {
                include APP_ROOT . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'suggestion.phtml';

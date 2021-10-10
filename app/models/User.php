@@ -60,20 +60,8 @@ class User extends Model
       return $user ? $user[0] : null;
    }
 
-   public function banUserById(int $id): bool
-   {
-      // TODO: ban and unban methods.
-      return true;
-   }
-
-   public function unbanUserById(int $id): bool
-   {
-      return true;
-   }
-
    public function deleteUserById(int $id): bool
    {
-      // TODO: implement an admin check so that admins cannot be deleted by using getIsAdmin();
       return $this->delete($this->TABLE_NAME, ['id'], [$id]);
    }
 
@@ -81,7 +69,7 @@ class User extends Model
    {
       $user = (array) $user;
       $userId = (int) $user['id'];
-      unset($user['id']); // to prevent the id from being updated
+      unset($user['id']); // cursed: to prevent the id from being updated
       $userCols = array_keys($user);
       return $this->update($this->TABLE_NAME, $userCols, $user, ['id'], [$userId]);
    }
