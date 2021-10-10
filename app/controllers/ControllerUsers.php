@@ -67,10 +67,18 @@ class ControllerUsers extends Controller
          if (empty($data['loginError'])) {
             $user = $this->model->login($data['email'], $data['password']);
             if (!empty($user)) {
-               $this->helper->createUserSession($user);
-               $this->model->updateUserLogin((int) $user->id, (new DateTime())->format('Y-m-d H:i:s'));
-               header('Location: ' . URL_ROOT . '/users/index');
-               return;
+               if ($user->banned == 1)
+               {
+                  $data['loginError'] .= 'You cannot login as you have been banned.';
+                  $data['password'] = '';
+               }
+               else
+               {
+                  $this->helper->createUserSession($user);
+                  $this->model->updateUserLogin((int) $user->id, (new DateTime())->format('Y-m-d H:i:s'));
+                  header('Location: ' . URL_ROOT . '/users/index');
+                  return;
+               }
             } else {
                $data['loginError'] .= 'Invalid email or password.';
                $data['password'] = '';

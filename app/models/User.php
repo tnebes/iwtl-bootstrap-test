@@ -21,9 +21,6 @@ class User extends Model
       if (!$user) {
          return null;
       }
-      if ($user->banned) {
-         return null;
-      }
       $hashedPassword = $user->password;
       return password_verify($password, $hashedPassword) ? $user : null;
    }
