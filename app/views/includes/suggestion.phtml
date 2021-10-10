@@ -47,9 +47,16 @@
                   </div>
             <?php endif; ?>
          </div>
-         <div class="col">
-            <div class="row">
-               <strong>Upvotes: <?php echo (new UserSuggestionReview)->getReviewScore($suggestion->id)?></strong>
+         <div class="col-3 my-auto">
+            <div class="row justify-content-start">
+               <?php
+               $reviewScore = (new UserSuggestionReview)->getReviewScore($suggestion->id);
+               $liked = $reviewScore >= 0;
+               if ($liked) :?>
+               <strong><i class="fas fa-3x fa-arrow-up" style="color: green"></i><?php echo $reviewScore?></strong>
+               <?php else : ?>
+               <strong><i class="fas fa-3x fa-arrow-down" style="color: red"></i><?php echo $reviewScore?></strong>
+               <?php endif;?>
             </div>
          </div>
       </div>
