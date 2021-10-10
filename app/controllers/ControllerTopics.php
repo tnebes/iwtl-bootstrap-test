@@ -29,7 +29,10 @@ class ControllerTopics extends Pagination
       }
 
       $topics = $this->model->getTopics((int) (ENTRIES_PER_PAGE * ($this->currentPage - 1)), (int) (ENTRIES_PER_PAGE * $this->currentPage));
-      $this->view->render('topics/index', ['topics' => $topics]);
+      $this->view->render('topics/index', ['topics' => $topics,
+         'numberOfPages' => $this->numberOfPages,
+         'currentPage' => $this->currentPage,
+         'link' => URL_ROOT . '/topics/index/']);
    }
 
     /**

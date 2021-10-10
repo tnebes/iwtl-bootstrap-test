@@ -1,17 +1,38 @@
+<?php
+echo 'current: ' . $currentPage;
+echo '<br/>';
+echo 'of pages: ' . $numberOfPages;
+echo '<br/>';
+echo 'link: ' . $link;
+$currentPage = (int) $currentPage;
+$numberOfPages = (int) $numberOfPages;
+?>
+
 <div class="container text-center">
-<nav aria-label="...">
-  <ul class="pagination justify-content-center">
-    <li class="page-item disabled">
-      <a class="page-link" href="#" tabindex="-1">Previous</a>
-    </li>
-    <li class="page-item"><a class="page-link" href="#">1</a></li>
-    <li class="page-item active">
-      <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
-    </li>
-    <li class="page-item"><a class="page-link" href="#">3</a></li>
-    <li class="page-item">
-      <a class="page-link" href="#">Next</a>
-    </li>
-  </ul>
-</nav>
+   <nav aria-label="...">
+      <ul class="pagination justify-content-center">
+         <li class="page-item <?php echo $currentPage < 2 ? 'disabled' : 'enabled'; ?>">
+            <a class="page-link" href="<?php echo $link . $currentPage - 1; ?>" tabindex="-1">Previous</a>
+         </li>
+         <?php
+         // extremely cursed.
+         $initialisation = $currentPage - ceil(PAGINATION_BUTTONS / 2);
+         if ($initialisation < 1)
+         {
+            $initialisation = 1;
+         }
+         $condition = $currentPage + PAGINATION_BUTTONS - 1;
+         for ($i = $initialisation; $i < $condition && $i <= $numberOfPages; $i++) :
+
+         ?>
+            <?php $onCurrentPage = $i == $currentPage ?>
+            <li class="page-item <?php echo $onCurrentPage ? 'active' : ''; ?>">
+               <a class="page-link" href="<?php echo $link . $i; ?>"><?php echo $i; ?> <span class="sr-only">(current)</span></a>
+            </li>
+         <?php endfor; ?>
+         <li class="page-item <?php echo $currentPage >= $numberOfPages ? 'disabled' : 'enabled'; ?>">
+            <a class="page-link" href="<?php echo $link . $currentPage + 1; ?>" tabindex="1">Next</a>
+         </li>
+      </ul>
+   </nav>
 </div>
