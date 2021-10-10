@@ -8,6 +8,7 @@ if (!isset($topics) && !is_array($topics) && count($topics) < 1) {
    header('Location: ' . URL_ROOT . '/errorPages/internalError');
    return;
 }
+var_dump([$_GET]);
 ?>
 
 <?php if($helper->isLoggedIn()) :?>

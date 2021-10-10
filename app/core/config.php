@@ -16,5 +16,6 @@ const DB_PASS = 'edunova';
 // Constants for the database
 const PUBLIC_SQL_DATA = 'id, username, registrationDate';
 const PRIVATE_SQL_DATA = 'id, username, email, registrationDate, role, lastLogin, banned, dateBanned';
+const ENTRIES_PER_PAGE = 10;
 
 const ADMIN_ROLE = 1;

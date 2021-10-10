@@ -76,7 +76,7 @@ class ControllerUsers extends Controller
                {
                   $this->helper->createUserSession($user);
                   $this->model->updateUserLogin((int) $user->id, (new DateTime())->format('Y-m-d H:i:s'));
-                  header('Location: ' . URL_ROOT . '/users/index');
+                  header('Location: ' . URL_ROOT . '/topics/index');
                   return;
                }
             } else {
