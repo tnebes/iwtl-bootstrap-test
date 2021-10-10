@@ -16,10 +16,19 @@ class ControllerTopics extends Pagination
      */
     public function index(): void
    {
+      $this->currentPage = func_get_arg(0) ?? 1;
       $this->numberOfEntries = $this->getEntries();
-      
+      $this->numberOfPages = ceil($this->numberOfEntries / ENTRIES_PER_PAGE);
+      if ($this->currentPage > $this->numberOfPages)
+      {
+         $this->currentPage = $this->numberOfPages;
+      }
+      else if ($this->currentPage < 1)
+      {
+         $this->currentPage = 1;
+      }
 
-      $topics = $this->model->getTopics();
+      $topics = $this->model->getTopics((int) (ENTRIES_PER_PAGE * ($this->currentPage - 1)), (int) (ENTRIES_PER_PAGE * $this->currentPage));
       $this->view->render('topics/index', ['topics' => $topics]);
    }
 

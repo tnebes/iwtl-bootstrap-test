@@ -21,10 +21,12 @@ class Topic extends Model
       return (int) $this->read($this->TABLE_NAME, ['id'], ['name', 'description', 'datePosted', 'user'], [$name, $description, $datePosted, $user])[0]->id;
    }
 
-   public function getTopics(): array
+   public function getTopics(int $from, int $to): array
    {
-      $sql = "SELECT * FROM $this->TABLE_NAME order by datePosted desc";
+      $sql = "SELECT * FROM $this->TABLE_NAME order by datePosted desc limit :from, :to;";
       $statement = $this->dbHandler->prepare($sql);
+      $statement->bindParam(':from', $from, PDO::PARAM_INT);
+      $statement->bindParam(':to', $to, PDO::PARAM_INT);
       $statement->execute();
       return $statement->fetchAll(PDO::FETCH_OBJ);
    }
