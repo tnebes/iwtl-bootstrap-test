@@ -2,12 +2,13 @@
 
 declare(strict_types=1);
 
-class ControllerTopics extends Controller
+class ControllerTopics extends Pagination
 {
    public function __construct()
    {
       parent::__construct();
       $this->model = $this->getModel('Topic');
+      $this->tableName = 'topic';
    }
 
     /**
@@ -15,6 +16,9 @@ class ControllerTopics extends Controller
      */
     public function index(): void
    {
+      $this->numberOfEntries = $this->getEntries();
+      
+
       $topics = $this->model->getTopics();
       $this->view->render('topics/index', ['topics' => $topics]);
    }

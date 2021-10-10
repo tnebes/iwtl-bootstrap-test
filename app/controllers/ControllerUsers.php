@@ -2,12 +2,13 @@
 
 declare(strict_types=1);
 
-class ControllerUsers extends Controller
+class ControllerUsers extends Pagination
 {
    public function __construct()
    {
       parent::__construct();
       $this->model = $this->getModel('User');
+      $this->tableName = 'user';
    }
 
     /**
