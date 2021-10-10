@@ -44,8 +44,11 @@
          </div>
       </div>
    </div>
-   <div class="container p-0 m-0" id="actions">
-      
+   <div class="container p-1 m-0 my-1 text-center border" id="actions">
+      <a href="<?php echo URL_ROOT . '/users/profile/' . $user->id ?>"><i title="View user" class="far mx-1 mt-1 fa-2x fa-id-badge" style="color: lightgreen"></i></a>
+      <a href="<?php echo URL_ROOT . '/users/update/' . $user->id ?>"><i title="Edit user" class="far mx-1 mt-1 fa-2x fas fa-user-edit" style="color: lightblue"></i></a>
+      <a href="<?php echo URL_ROOT . '/users/delete/' . $user->id ?>"><i title="Delete user" class="far mx-1 mt-1 fa-2x fa-trash-alt" style="color: black"></i></a>
+      <a href="<?php echo URL_ROOT . '/users/ban/' . $user->id ?>"><i title="Ban user" class="far mx-1 mt-1 fa-2x fas fa-ban" style="color: red"></i></a>
    </div>
 </div>
 <?php else: ?>
@@ -70,8 +73,12 @@
          </div>
       </div>
    </div>
-   <div class="container p-0 m-0" id="actions">
-      actions go here.
+   <div class="container p-1 m-0 my-1 text-center border" id="actions">
+      <a href="<?php echo URL_ROOT . '/users/profile/' . $user->id ?>"><i title="View user" class="far mx-1 mt-1 fa-2x fa-id-badge" style="color: lightgreen"></i></a>
+      <?php if ($_SESSION['id'] == $user->id) : ?>
+         <a href="<?php echo URL_ROOT . '/users/update/' . $user->id ?>"><i title="Edit user" class="far mx-1 mt-1 fa-2x fas fa-user-edit" style="color: lightblue"></i></a>
+         <a href="<?php echo URL_ROOT . '/users/delete/' . $user->id ?>"><i title="Delete user" class="far mx-1 mt-1 fa-2x fa-trash-alt" style="color: black"></i></a>
+      <? endif; ?>
    </div>
 </div>
 <?php endif; ?>

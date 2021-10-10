@@ -190,6 +190,11 @@ class ControllerUsers extends Controller
          return;
       }
       $id = (int) $id[0];
+      if ($this->helper->isAdmin() || $_SESSION['id'] != $id)
+      {
+         header('location: ' . URL_ROOT . '/errorPages/restricted');
+         return;
+      }
       $data =
          [
             'redirect' => $_POST['redirect'] ?? $_SERVER['HTTP_REFERER'],
@@ -318,6 +323,11 @@ class ControllerUsers extends Controller
          header('location: ' . URL_ROOT . '/errorPages/internalError');
          return;
       }
+      if ($this->helper->isAdmin() || $_SESSION['id'] != $id)
+      {
+         header('location: ' . URL_ROOT . '/errorPages/restricted');
+         return;
+      }
       $user = $this->model->getUserById($id);
       if (empty($user)) {
          header('location: ' . URL_ROOT . '/errorPages/internalError');
@@ -347,6 +357,10 @@ class ControllerUsers extends Controller
          if (isset($_POST['confirm']) && filter_var($_POST['confirm'], FILTER_VALIDATE_BOOLEAN)) {
             // TODO: add a check to see whether anything is tied to the user
             $this->model->deleteUserById($id);
+            if ($_SESSION['id'] == $id)
+            {
+               $this->logout();
+            }
          }
          header('location: ' . $redirect);
          return;
@@ -359,7 +373,7 @@ class ControllerUsers extends Controller
      */
     public function ban(): void
    {
-      if (!$this->helper->isLoggedIn()) {
+      if (!$this->helper->isLoggedIn() || !$this->helper->isAdmin()) {
          header('location: ' . URL_ROOT . '/errorPages/restricted');
          return;
       }
