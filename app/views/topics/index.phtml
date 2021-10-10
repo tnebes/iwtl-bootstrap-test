@@ -20,6 +20,7 @@ if (!isset($topics) && !is_array($topics) && count($topics) < 1) {
 <?php endif; ?>
 
 <?php
+include APP_ROOT . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'pagination.phtml';
 echo '<ul class="list-group">';
 // TODO: cursed
 $numberOfSuggestions = 3;
@@ -28,5 +29,7 @@ foreach ($topics as $topic) {
    include APP_ROOT . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'topic.phtml';
 }
 echo '</ul>';
-
+?>
+<?php
+include APP_ROOT . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'pagination.phtml';
 ?>

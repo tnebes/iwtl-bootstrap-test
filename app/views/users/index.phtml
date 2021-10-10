@@ -6,6 +6,9 @@ $userCounter = 0;
 $numOfUsers = count($users);
 ?>
 
+<?php
+include APP_ROOT . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'pagination.phtml';
+?>
 <div class="container">
    <?php
    while(true)
@@ -30,3 +33,7 @@ $numOfUsers = count($users);
    }
 ?>
 </div>
+<?php
+include APP_ROOT . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'pagination.phtml';
+?>
+
