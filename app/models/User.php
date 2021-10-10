@@ -34,14 +34,14 @@ class User extends Model
       );
    }
 
-   public function getUsersPrivate(): array
+   public function getUsers(string $data, int $from, int $to) : array
    {
-      return $this->read($this->TABLE_NAME, [PRIVATE_SQL_DATA], null, null);
-   }
-
-   public function getUsersPublic(): array
-   {
-      return $this->read($this->TABLE_NAME, [PUBLIC_SQL_DATA], null, null);
+      $sql = "select $data from $this->TABLE_NAME limit :from, :to;";
+      $statement = $this->dbHandler->prepare($sql);
+      $statement->bindParam(':from', $from, PDO::PARAM_INT);
+      $statement->bindParam(':to', $to, PDO::PARAM_INT);
+      $statement->execute();
+      return $statement->fetchAll(PDO::FETCH_OBJ);
    }
 
    public function userByEmailExists(string $email): bool

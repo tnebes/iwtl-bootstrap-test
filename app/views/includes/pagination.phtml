@@ -1,9 +1,4 @@
-<?php
-echo 'current: ' . $currentPage;
-echo '<br/>';
-echo 'of pages: ' . $numberOfPages;
-echo '<br/>';
-echo 'link: ' . $link;
+<?php declare(strict_types = 1);
 $currentPage = (int) $currentPage;
 $numberOfPages = (int) $numberOfPages;
 ?>
@@ -17,13 +12,22 @@ $numberOfPages = (int) $numberOfPages;
          <?php
          // extremely cursed.
          $initialisation = $currentPage - ceil(PAGINATION_BUTTONS / 2);
-         if ($initialisation < 1)
+         $condition = $currentPage + ceil(PAGINATION_BUTTONS / 2);
+         while ($initialisation < 1)
          {
-            $initialisation = 1;
+            $initialisation++;
+            $condition++;
          }
-         $condition = $currentPage + PAGINATION_BUTTONS - 1;
-         for ($i = $initialisation; $i < $condition && $i <= $numberOfPages; $i++) :
-
+         if ($condition > $numberOfPages)
+         {
+            $condition = $numberOfPages;
+         }
+         if ($currentPage + ceil(PAGINATION_BUTTONS / 2) > $numberOfPages)
+         {
+            $initialisation -= $currentPage + ceil(PAGINATION_BUTTONS / 2) - $numberOfPages;
+         }
+          
+         for ($i = $initialisation; $i <= $condition; $i++) :
          ?>
             <?php $onCurrentPage = $i == $currentPage ?>
             <li class="page-item <?php echo $onCurrentPage ? 'active' : ''; ?>">

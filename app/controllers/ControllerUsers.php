@@ -20,14 +20,27 @@ class ControllerUsers extends Pagination
          header('location: ' . URL_ROOT . '/errorPages/restricted');
          return;
       }
-      $data = [];
-      if ($this->helper->isLoggedIn()) {
-         $users = $this->model->getUsersPrivate();
-      } else {
-         $users = $this->model->getUsersPublic();
+      $this->currentPage = func_get_arg(0) ?? 1;
+      $this->numberOfEntries = $this->getEntries();
+      $this->numberOfPages = ceil($this->numberOfEntries / ENTRIES_PER_PAGE);
+      if ($this->currentPage > $this->numberOfPages)
+      {
+         $this->currentPage = $this->numberOfPages;
       }
-       $data['users'] = $users;
-       $this->view->render('users/index', $data);
+      else if ($this->currentPage < 1)
+      {
+         $this->currentPage = 1;
+      }
+
+      if ($this->helper->isLoggedIn()) {
+         $users = $this->model->getUsers(PRIVATE_SQL_DATA, (int) (ENTRIES_PER_PAGE * ($this->currentPage - 1)), (int) (ENTRIES_PER_PAGE * $this->currentPage));
+      } else {
+         $users = $this->model->getUsers(PUBLIC_SQL_DATA, (int) (ENTRIES_PER_PAGE * ($this->currentPage - 1)), (int) (ENTRIES_PER_PAGE * $this->currentPage));
+      }
+      $this->view->render('users/index', ['users' => $users,
+         'numberOfPages' => $this->numberOfPages,
+         'currentPage' => $this->currentPage,
+         'link' => URL_ROOT . '/users/index/']);
    }
 
     /**
