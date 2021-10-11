@@ -1,6 +1,6 @@
 <main class="form-signin">
    <form class="from-inline" method="POST" action="/users/register">
-      <img class="mb-4" src="/img/logo2.png" width="150">
+      <img alt="logo of <?php echo APP_NAME; ?>"class="mb-4" src="/img/logo2.png" width="150">
       <h1 class="h2 mb-3 fw-normal">Register</h1>
       <label for="username">Username</label>
       <?php if (!empty($usernameError)) : ?>
@@ -22,7 +22,7 @@
          <input type="password" class="form-control" id="password" name="password" placeholder="Password">
       </div>
       <div class="form-floating">
-         <label for="password">Confirm Password</label>
+         <label for="confirmPassword">Confirm Password</label>
          <?php if (!empty($confirmPasswordError)) : ?>
             <span class="text-warning"><?php echo $usernameError ?></span>
          <?php endif; ?>

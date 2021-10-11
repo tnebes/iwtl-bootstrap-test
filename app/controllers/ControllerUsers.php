@@ -199,10 +199,11 @@ class ControllerUsers extends Pagination
          return;
       }
       $id = (int) $id[0];
-      if ($this->helper->isAdmin() || $_SESSION['id'] != $id) {
-         header('location: ' . URL_ROOT . '/errorPages/restricted');
-         return;
-      }
+      // if is not admin or is not admin and not own id
+       if (!$this->helper->isAdmin() && $_SESSION['id'] != $id) {
+           header('location: ' . URL_ROOT . '/errorPages/restricted');
+           return;
+       }
       $data =
          [
             'redirect' => $_POST['redirect'] ?? $_SERVER['HTTP_REFERER'],

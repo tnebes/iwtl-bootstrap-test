@@ -18,9 +18,9 @@
             <p><?php echo $user->username ?></p>
          </div>
          <div class="col-md-6">
-            <label class="badge bg-info text-dark">New Username</label>
+            <label for="username" class="badge bg-info text-dark">New Username</label>
             <span class="text-danger"><?php echo $data['usernameError'] ?></span>
-            <input type="text" name="username" class="form-control" value="<?php echo $user->username ?>">
+            <input type="text" id="username" name="username" class="form-control" value="<?php echo $user->username ?>">
          </div>
       </div>
       <div class="row">
@@ -29,18 +29,18 @@
             <p><?php echo $user->email ?></p>
          </div>
          <div class="col-md-6">
-            <label class="badge bg-info text-dark">New Email</label>
+            <label for="email" class="badge bg-info text-dark">New Email</label>
             <span class="text-danger"><?php echo $data['emailError'] ?></span>
-            <input type="email" name="email" class="form-control" value="<?php echo $user->email ?>">
+            <input type="email" id="email" name="email" class="form-control" value="<?php echo $user->email ?>">
          </div>
       </div>
       <div class="row">
          <div class="col-md-6">
          </div>
          <div class="col-md-6">
-            <label class="badge bg-info text-dark">New Password</label>
+            <label for="password" class="badge bg-info text-dark">New Password</label>
             <span class="text-danger"><?php echo $data['passwordError'] ?></span>
-            <input type="password" name="password" class="form-control" value="">
+            <input type="password" id="password" name="password" class="form-control" value="">
          </div>
       </div>
       <div class="row">
@@ -49,9 +49,9 @@
             <p><?php echo $user->registrationDate ?></p>
          </div>
          <div class="col-md-6">
-            <label class="badge bg-info text-dark">New Registration Date</label>
+            <label for="registrationDate" class="badge bg-info text-dark">New Registration Date</label>
             <span class="text-danger"><?php echo $data['registrationDateError'] ?></span>
-            <input type="date" name="registrationDate" class="form-control" value="<?php echo date("Y-m-d", strtotime($user->registrationDate)); ?>">
+            <input type="date" id="registrationDate" name="registrationDate" class="form-control" value="<?php echo date("Y-m-d", strtotime($user->registrationDate)); ?>">
          </div>
       </div>
       <div class="row">
@@ -60,9 +60,9 @@
             <p><?php echo Helper::getInstance()->roleToString($user->role) ?></p>
          </div>
          <div class="col-md-6">
-            <label class="badge bg-info text-dark">New Role</label>
+            <label for="role" class="badge bg-info text-dark">New Role</label>
             <span class="text-danger"><?php echo $data['roleError'] ?></span>
-            <select name="role" class="form-control">
+            <select id="role" name="role" class="form-control">
                <option selected value="<?php echo $user->role ?>"><?php echo Helper::getInstance()->roleToString($user->role) ?></option>
                <option value="0">User</option>
                <option value="1">Admin</option>
@@ -75,9 +75,9 @@
             <p><?php echo $user->lastLogin ?></p>
          </div>
          <div class="col-md-6">
-            <label class="badge bg-info text-dark">New Last Login</label>
+            <label for="lastLogin" class="badge bg-info text-dark">New Last Login</label>
             <span class="text-danger"><?php echo $data['lastLoginError'] ?></span>
-            <input type="date" name="lastLogin" class="form-control" value="<?php echo date("Y-m-d", strtotime($user->lastLogin)) ?>">
+            <input type="date" id="lastLogin" name="lastLogin" class="form-control" value="<?php echo date("Y-m-d", strtotime($user->lastLogin)) ?>">
          </div>
       </div>
       <div class="row">
@@ -96,9 +96,9 @@
             <p><?php echo $user->banned ? $user->dateBanned : ''; ?></p>
          </div>
          <div class="col-md-6">
-            <label class="badge bg-info text-dark">New Date Banned</label>
+            <label for="dateBannned" class="badge bg-info text-dark">New Date Banned</label>
             <span class="text-danger"><?php echo $data['dateBannedError'] ?></span>
-            <input type="date" name="dateBanned" class="form-control" value="<?php echo date("Y-m-d", strtotime($user->dateBanned)); ?>">
+            <input type="date" id="dateBannned" name="dateBanned" class="form-control" value="<?php echo date("Y-m-d", strtotime($user->dateBanned)); ?>">
          </div>
       </div>
       <div class="row">

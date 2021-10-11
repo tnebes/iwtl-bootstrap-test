@@ -13,13 +13,13 @@
       <div class="">
          <img src="...image..." alt="...img...">
          <div class="">
-            <h1>
-                  <div class="">
-                     <a href="<?php echo $helper->getLinkToTopic($topic); ?>">
-                        <?php echo $topic->name ?>
-                     </a>
-                  </div>
-            </h1>
+            <div class="">
+               <h1>
+                  <a href="<?php echo $helper->getLinkToTopic($topic); ?>">
+                     <?php echo $topic->name ?>
+                  </a>
+               </h1>
+            </div>
             <h6>
                <a href="<?php echo $topic->user; ?>">
                   <span class="badge bg-info text-dark">
@@ -28,7 +28,7 @@
                </a>
             </h6>
             <p><?php echo $topic->description ?></p>
-            <p><small class="text-muted center">Date asked: <?php echo date('d m Y', strtotime($topic->datePosted)) ?></small></p>
+            <p><small class="text-muted center">Date asked: <?php echo (new DateTime($topic->datePosted))->format('d M Y') ?></small></p>
          </div>
 
          <p>
@@ -63,7 +63,7 @@
       <?php endif; ?>
       <?php
       if (isset($suggestions)) {
-         echo '<div class="container mx-0 p-1" id="suggestions-container">';
+         echo '<div class="container mx-0 p-1">';
          foreach ($suggestions as $suggestion) {
             include APP_ROOT . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'suggestion.phtml';
          }

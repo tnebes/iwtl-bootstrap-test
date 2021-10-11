@@ -13,8 +13,8 @@ echo '</ul>';
       <input type="hidden" name="redirect" value="<?php echo $redirect ?? URL_ROOT; ?>">
       <!-- Title input -->
       <div class="form-outline mx-auto mb-4">
-         <h1>Edit the title</h1>
-         <input type="text" name="title" class="form-control" value="<?php echo $suggestionTitle ?>" placeholder="Title of your answer." />
+          <label for = "title"><h1>Edit the title</h1></label>
+         <input type="text" id="title" name="title" class="form-control" value="<?php echo $suggestionTitle ?>" placeholder="Title of your answer." />
          <?php if (!empty($suggestionTitleError)) : ?>
             <span class="text-warning" role="alert"><?php echo $suggestionTitleError ?></span>
          <?php endif; ?>
@@ -22,16 +22,16 @@ echo '</ul>';
 
       <!-- Description input -->
       <div class="form-outline mb-4">
-         <h2>Edit the (optional) description</h2>
-         <textarea class="form-control" name="longDescription" rows="10" placeholder="Long answer goes here."><?php echo $suggestionLongDescription ?></textarea>
+          <label for="longDescription"><h2>Edit the (optional) description</h2></label>
+         <textarea class="form-control" id="longDescription" name="longDescription" rows="10" placeholder="Long answer goes here."><?php echo $suggestionLongDescription ?></textarea>
          <?php if (!empty($suggestionLongDescriptionError)) : ?>
             <span class="text-warning" role="alert"><?php echo $suggestionLongDescriptionError ?></span>
          <?php endif; ?>
 
       </div>
       <div class="form-outline mb-4">
-         <h2>Edit the tl;dr (too long didn't read)</h2>
-         <textarea class="form-control" name="shortDescription" rows="5" placeholder="Short answer goes here."><?php echo $suggestionShortDescription ?></textarea>
+          <label for="shortDescription"><h2>Edit the tl;dr (too long didn't read)</h2></label>
+         <textarea class="form-control" id="shortDescription" name="shortDescription" rows="5" placeholder="Short answer goes here."><?php echo $suggestionShortDescription ?></textarea>
          <?php if (!empty($suggestionShortDescriptionError)) : ?>
             <span class="text-warning" role="alert"><?php echo $suggestionShortDescriptionError ?></span>
          <?php endif; ?>

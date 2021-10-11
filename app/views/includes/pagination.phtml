@@ -14,7 +14,7 @@ $numberOfPages = (int) $numberOfPages;
             </li>
          <?php endif; ?>
          <li class="page-item <?php echo $currentPage < 2 ? 'disabled' : 'enabled'; ?>">
-            <a class="page-link" href="<?php echo $link . $currentPage - 1; ?>" tabindex="-1">Previous</a>
+            <a class="page-link" href="<?php echo $link . ($currentPage - 1); ?>" tabindex="-1">Previous</a>
          </li>
          <?php
          // extremely cursed.
@@ -39,7 +39,7 @@ $numberOfPages = (int) $numberOfPages;
             </li>
          <?php endfor; ?>
          <li class="page-item <?php echo $currentPage >= $numberOfPages ? 'disabled' : 'enabled'; ?>">
-            <a class="page-link" href="<?php echo $link . $currentPage + 1; ?>" tabindex="1">Next</a>
+            <a class="page-link" href="<?php echo $link . ($currentPage + 1); ?>" tabindex="1">Next</a>
          </li>
          <?php if ($currentPage != $numberOfPages) : ?>
             <li class="page-item <?php echo $currentPage == $numberOfPages ? 'disabled' : 'enabled'; ?>">
