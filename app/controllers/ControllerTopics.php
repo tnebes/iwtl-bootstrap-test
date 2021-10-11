@@ -11,50 +11,46 @@ class ControllerTopics extends Pagination
       $this->tableName = 'topic';
    }
 
-    /**
-     *
-     */
-    public function index(): void
+   /**
+    *
+    */
+   public function index(): void
    {
       $this->currentPage = func_get_arg(0) ?? 1;
       $this->numberOfEntries = $this->getEntries();
       $this->numberOfPages = ceil($this->numberOfEntries / ENTRIES_PER_PAGE);
-      if ($this->currentPage > $this->numberOfPages)
-      {
+      if ($this->currentPage > $this->numberOfPages) {
          $this->currentPage = $this->numberOfPages;
-      }
-      else if ($this->currentPage < 1)
-      {
+      } else if ($this->currentPage < 1) {
          $this->currentPage = 1;
       }
 
       $topics = $this->model->getTopics((int) (ENTRIES_PER_PAGE * ($this->currentPage - 1)), (int) (ENTRIES_PER_PAGE * $this->currentPage));
-      $this->view->render('topics/index', ['topics' => $topics,
+      $this->view->render('topics/index', [
+         'topics' => $topics,
          'numberOfPages' => $this->numberOfPages,
          'currentPage' => $this->currentPage,
-         'link' => URL_ROOT . '/topics/index/']);
+         'link' => URL_ROOT . '/topics/index/'
+      ]);
    }
 
-    /**
-     * Method handles the contents of a topic passed to view.
-     */
-    public function topic(): void
+   /**
+    * Method handles the contents of a topic passed to view.
+    */
+   public function topic(): void
    {
       $topicId = (int) func_get_arg(0);
-      if (is_int($topicId))
-      {
+      if (is_int($topicId)) {
          $this->model->getTopicById($topicId) ? $this->view->render('topics/topic', ['topic' => $this->model->getTopicById($topicId)]) : header('location: ' . URL_ROOT . '/errorPages/notFound');
-      }
-      else
-      {
+      } else {
          header('location: ' . URL_ROOT . '/errorPages/notFound');
       }
    }
 
-    /**
-     * Method handles the creation of a topic
-     */
-    public function create(): void
+   /**
+    * Method handles the creation of a topic
+    */
+   public function create(): void
    {
       if ($this->redirectIfNotLoggedIn()) {
          return;
@@ -82,11 +78,10 @@ class ControllerTopics extends Pagination
          unset($_POST);
 
          $data['nameError'] = $this->validateName($data['name']);
-         $data['descriptionError'] = $this->validateDescription($data['description']);        
+         $data['descriptionError'] = $this->validateDescription($data['description']);
          $data['imageError'] = ''; // TODO: $this->validateImage($data['image']);
 
-         if ($data['nameError'] !== '' || $data['descriptionError'] !== '' || $data['imageError'] !== '')
-         {
+         if ($data['nameError'] !== '' || $data['descriptionError'] !== '' || $data['imageError'] !== '') {
             $this->view->render('topics/create', $data);
             return;
          }
@@ -98,25 +93,22 @@ class ControllerTopics extends Pagination
       $this->view->render('topics/create', $data);
    }
 
-    /**
-     * Method handles the editing of topics
-     */
-    public function edit(): void
+   /**
+    * Method handles the editing of topics
+    */
+   public function edit(): void
    {
       $userId = (int) $_SESSION['id'];
       $topicId = (int) func_get_arg(0);
       $topic = null;
-      if (is_int($topicId))
-      {
+      if (is_int($topicId)) {
          $topic = $this->model->getTopicById($topicId);
       }
-      if ($topic === null)
-      {
+      if ($topic === null) {
          header('location: ' . URL_ROOT . '/errorPages/notFound');
          return;
       }
-      if ($userId !== (int) $topic->user && !$this->helper->isAdmin())
-      {
+      if ($userId !== (int) $topic->user && !$this->helper->isAdmin()) {
          header('location: ' . URL_ROOT . '/errorPages/restricted');
          return;
       }
@@ -131,8 +123,7 @@ class ControllerTopics extends Pagination
          'user' => $topic->user,
          'image' => $topic->image
       ];
-      if ($_SERVER['REQUEST_METHOD'] === 'POST')
-      {
+      if ($_SERVER['REQUEST_METHOD'] === 'POST') {
          $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
          $data['name'] = trim($_POST['name']);
          $data['description'] = trim($_POST['description']);
@@ -142,10 +133,9 @@ class ControllerTopics extends Pagination
          unset($_POST);
 
          $data['nameError'] = $this->validateName($data['name']);
-         $data['descriptionError'] = $this->validateDescription($data['description']);        
+         $data['descriptionError'] = $this->validateDescription($data['description']);
          $data['imageError'] = ''; // TODO: $this->validateImage($data['image']);
-         if ($data['nameError'] !== '' || $data['descriptionError'] !== '' || $data['imageError'] !== '')
-         {
+         if ($data['nameError'] !== '' || $data['descriptionError'] !== '' || $data['imageError'] !== '') {
             $this->view->render('topics/edit', $data);
             return;
          }
@@ -155,17 +145,15 @@ class ControllerTopics extends Pagination
          $topic->image = $data['image'];
          // TODO: redirect in header so that the user can go back.
          header('location: ' . URL_ROOT . '/topics/topic/' . $this->model->updateTopic($topic));
-      }
-      else
-      {
+      } else {
          $this->view->render('topics/edit', $data);
       }
    }
 
-    /**
-     * Method handles the deletion of topics
-     */
-    public function delete(): void
+   /**
+    * Method handles the deletion of topics
+    */
+   public function delete(): void
    {
       if ($this->redirectIfNotLoggedIn()) {
          return;
@@ -173,17 +161,14 @@ class ControllerTopics extends Pagination
       $userId = (int) $_SESSION['id'];
       $topicId = (int) func_get_arg(0);
       $topic = null;
-      if (is_int($topicId))
-      {
+      if (is_int($topicId)) {
          $topic = $this->model->getTopicById($topicId);
       }
-      if ($topic === null)
-      {
+      if ($topic === null) {
          header('location: ' . URL_ROOT . '/errorPages/notFound');
          return;
       }
-      if ($userId !== (int) $topic->user && !$this->helper->isAdmin())
-      {
+      if ($userId !== (int) $topic->user && !$this->helper->isAdmin()) {
          header('location: ' . URL_ROOT . '/errorPages/restricted');
          return;
       }
@@ -199,58 +184,51 @@ class ControllerTopics extends Pagination
       $this->view->render('topics/delete', ['topic' => $topic]);
    }
 
-    /**
-     * Method validates the name (title) of a topic and returns an empty string if valid.
-     * @param string $name
-     * @return string
-     */
-    private function validateName(string $name): string
+   /**
+    * Method validates the name (title) of a topic and returns an empty string if valid.
+    * @param string $name
+    * @return string
+    */
+   private function validateName(string $name): string
    {
-      if (empty($name))
-      {
+      if (empty($name)) {
          return 'Title cannot be empty';
       }
-      if (strlen($name) < 12)
-      {
+      if (strlen($name) < 12) {
          return 'Title must be at least 12 characters';
       }
-      if (strlen($name) > 255)
-      {
+      if (strlen($name) > 255) {
          return 'Title must be less than 255 characters';
       }
       return '';
    }
 
-    /**
-     * Method validates the description of a topic and returns an empty string if valid.
-     * @param string $description
-     * @return string
-     */
-    private function validateDescription(string $description): string
+   /**
+    * Method validates the description of a topic and returns an empty string if valid.
+    * @param string $description
+    * @return string
+    */
+   private function validateDescription(string $description): string
    {
-      if (empty($description))
-      {
+      if (empty($description)) {
          return 'Description cannot be empty';
       }
-      if (strlen($description) < 12)
-      {
+      if (strlen($description) < 12) {
          return 'Description must be at least 32 characters';
       }
-      if (strlen($description) > 3000)
-      {
+      if (strlen($description) > 3000) {
          return 'Description must be less than 3000 characters';
       }
       return '';
    }
 
-    /**
-     * Method validates an image and returns an empty string if valid.
-     * @param string $image
-     * @return string
-     */
-    private function validateImage(string $image): string
+   /**
+    * Method validates an image and returns an empty string if valid.
+    * @param string $image
+    * @return string
+    */
+   private function validateImage(string $image): string
    {
       return '';
    }
-
 }

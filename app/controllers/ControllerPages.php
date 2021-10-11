@@ -9,18 +9,18 @@ class ControllerPages extends Controller
       parent::__construct();
    }
 
-    /**
-     *
-     */
-    public function index(): void
+   /**
+    *
+    */
+   public function index(): void
    {
       $this->view->render('pages/index');
    }
 
-    /**
-     *
-     */
-    public function about(): void
+   /**
+    *
+    */
+   public function about(): void
    {
       header('location: https://www.github.com/tnebes');
    }

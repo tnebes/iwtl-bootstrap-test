@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 // used to display the columns per row
 // TODO: this is absolutely cursed.
 const COLUMNS = 2;
@@ -11,29 +13,24 @@ include APP_ROOT . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'views' .
 ?>
 <div class="container">
    <?php
-   while(true)
-   {
-      if ($userCounter > $numOfUsers - 1)
-      {
+   while (true) {
+      if ($userCounter > $numOfUsers - 1) {
          break;
       }
       echo '<div class="row">';
-      for ($i = 0; $i < COLUMNS; $i++)
-      {
+      for ($i = 0; $i < COLUMNS; $i++) {
          $user = $users[$userCounter++];
          echo '<div class="col">';
          include APP_ROOT . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'user.phtml';
          echo '</div>';
-         if ($userCounter > $numOfUsers - 1)
-         {
+         if ($userCounter > $numOfUsers - 1) {
             break;
-         }   
+         }
       }
       echo '</div>';
    }
-?>
+   ?>
 </div>
 <?php
 include APP_ROOT . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'pagination.phtml';
 ?>
-

@@ -1,84 +1,84 @@
 <?php if (Helper::getInstance()->isAdmin()) : ?>
-<div class="container border m-1 mx-auto pb-2" id="user-container">
-   <div class="container p-0 pb-1 text-center">
-      <a class="badge rounded-pill bg-info text-dark" href="<?php echo URL_ROOT . '/users/profile/' . $user->id?>"><?php echo $user->username; ?></a>
-   </div>
-   <div class="container p-0 m-0 text-danger text-center">
-      <?php echo $user->banned != 0 ? '<strong>BANNED</strong>' : '' ?>
-   </div>
-   <div class="container" id="user-information">
-      <div class="row">
-         <div class="col">
-            <div class="row">
-               <strong>Date Registered:</strong>
-            </div>
-            <div class="row">
-               <strong>Email:</strong>
-            </div>
-            <div class="row">
-               <strong>Role:</strong>
-            </div>
-            <div class="row">
-               <strong>Last Login:</strong>
-            </div>
-            <div class="row">
-               <?php echo $user->banned != 0 ? '<strong>Date Banned:</strong>' : '' ?>
-            </div>
-         </div>
-         <div class="col font-weight-light">
-            <div class="row">
-               <?php echo (new DateTime($user->registrationDate))->format('dS M Y'); ?>
-            </div>
-            <div class="row">
-               <?php echo $user->email; ?>
-            </div>
-            <div class="row">
-               <?php echo $user->role; ?>
-            </div>
-            <div class="row">
-               <?php echo (new DateTime($user->lastLogin))->format('dS M Y'); ?>
-            </div>
-            <div class="row">
-               <?php echo $user->banned ? (new DateTime($user->dateBanned))->format('dS M Y') : ''; ?>
-            </div>
-         </div>
-      </div>
-   </div>
-   <div class="container p-1 m-0 my-1 text-center border" id="actions">
-      <a href="<?php echo URL_ROOT . '/users/profile/' . $user->id ?>"><i title="View user" class="far mx-1 mt-1 fa-2x fa-id-badge" style="color: lightgreen"></i></a>
-      <a href="<?php echo URL_ROOT . '/users/update/' . $user->id ?>"><i title="Edit user" class="far mx-1 mt-1 fa-2x fas fa-user-edit" style="color: lightblue"></i></a>
-      <a href="<?php echo URL_ROOT . '/users/delete/' . $user->id ?>"><i title="Delete user" class="far mx-1 mt-1 fa-2x fa-trash-alt" style="color: black"></i></a>
-      <a href="<?php echo URL_ROOT . '/users/ban/' . $user->id ?>"><i title="Ban user" class="far mx-1 mt-1 fa-2x fas fa-ban" style="color: red"></i></a>
-   </div>
-</div>
-<?php else: ?>
    <div class="container border m-1 mx-auto pb-2" id="user-container">
-   <div class="container p-0 pb-1 text-center">
-      <a class="badge rounded-pill bg-info text-dark" href="<?php echo URL_ROOT . '/users/profile/' . $user->id?>"><?php echo $user->username?></a>
-   </div>
-   <div class="container p-0 m-0 text-danger text-center">
-      <?php echo $user->banned != 0 ? '<strong>BANNED</strong>' : '' ?>
-   </div>
-   <div class="container" id="user-information">
-      <div class="row">
-         <div class="col">
-            <div class="row">
-               <strong>Date Registered:</strong>
+      <div class="container p-0 pb-1 text-center">
+         <a class="badge rounded-pill bg-info text-dark" href="<?php echo URL_ROOT . '/users/profile/' . $user->id ?>"><?php echo $user->username; ?></a>
+      </div>
+      <div class="container p-0 m-0 text-danger text-center">
+         <?php echo $user->banned != 0 ? '<strong>BANNED</strong>' : '' ?>
+      </div>
+      <div class="container" id="user-information">
+         <div class="row">
+            <div class="col">
+               <div class="row">
+                  <strong>Date Registered:</strong>
+               </div>
+               <div class="row">
+                  <strong>Email:</strong>
+               </div>
+               <div class="row">
+                  <strong>Role:</strong>
+               </div>
+               <div class="row">
+                  <strong>Last Login:</strong>
+               </div>
+               <div class="row">
+                  <?php echo $user->banned != 0 ? '<strong>Date Banned:</strong>' : '' ?>
+               </div>
             </div>
-         </div>
-         <div class="col font-weight-light">
-            <div class="row">
-               <?php echo (new DateTime($user->registrationDate))->format('dS M Y'); ?>
+            <div class="col font-weight-light">
+               <div class="row">
+                  <?php echo (new DateTime($user->registrationDate))->format('dS M Y'); ?>
+               </div>
+               <div class="row">
+                  <?php echo $user->email; ?>
+               </div>
+               <div class="row">
+                  <?php echo $user->role; ?>
+               </div>
+               <div class="row">
+                  <?php echo (new DateTime($user->lastLogin))->format('dS M Y'); ?>
+               </div>
+               <div class="row">
+                  <?php echo $user->banned ? (new DateTime($user->dateBanned))->format('dS M Y') : ''; ?>
+               </div>
             </div>
          </div>
       </div>
-   </div>
-   <div class="container p-1 m-0 my-1 text-center border" id="actions">
-      <a href="<?php echo URL_ROOT . '/users/profile/' . $user->id ?>"><i title="View user" class="far mx-1 mt-1 fa-2x fa-id-badge" style="color: lightgreen"></i></a>
-      <?php if ($_SESSION['id'] == $user->id) : ?>
+      <div class="container p-1 m-0 my-1 text-center border" id="actions">
+         <a href="<?php echo URL_ROOT . '/users/profile/' . $user->id ?>"><i title="View user" class="far mx-1 mt-1 fa-2x fa-id-badge" style="color: lightgreen"></i></a>
          <a href="<?php echo URL_ROOT . '/users/update/' . $user->id ?>"><i title="Edit user" class="far mx-1 mt-1 fa-2x fas fa-user-edit" style="color: lightblue"></i></a>
          <a href="<?php echo URL_ROOT . '/users/delete/' . $user->id ?>"><i title="Delete user" class="far mx-1 mt-1 fa-2x fa-trash-alt" style="color: black"></i></a>
-      <?php endif; ?>
+         <a href="<?php echo URL_ROOT . '/users/ban/' . $user->id ?>"><i title="Ban user" class="far mx-1 mt-1 fa-2x fas fa-ban" style="color: red"></i></a>
+      </div>
    </div>
-</div>
+<?php else : ?>
+   <div class="container border m-1 mx-auto pb-2" id="user-container">
+      <div class="container p-0 pb-1 text-center">
+         <a class="badge rounded-pill bg-info text-dark" href="<?php echo URL_ROOT . '/users/profile/' . $user->id ?>"><?php echo $user->username ?></a>
+      </div>
+      <div class="container p-0 m-0 text-danger text-center">
+         <?php echo $user->banned != 0 ? '<strong>BANNED</strong>' : '' ?>
+      </div>
+      <div class="container" id="user-information">
+         <div class="row">
+            <div class="col">
+               <div class="row">
+                  <strong>Date Registered:</strong>
+               </div>
+            </div>
+            <div class="col font-weight-light">
+               <div class="row">
+                  <?php echo (new DateTime($user->registrationDate))->format('dS M Y'); ?>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="container p-1 m-0 my-1 text-center border" id="actions">
+         <a href="<?php echo URL_ROOT . '/users/profile/' . $user->id ?>"><i title="View user" class="far mx-1 mt-1 fa-2x fa-id-badge" style="color: lightgreen"></i></a>
+         <?php if ($_SESSION['id'] == $user->id) : ?>
+            <a href="<?php echo URL_ROOT . '/users/update/' . $user->id ?>"><i title="Edit user" class="far mx-1 mt-1 fa-2x fas fa-user-edit" style="color: lightblue"></i></a>
+            <a href="<?php echo URL_ROOT . '/users/delete/' . $user->id ?>"><i title="Delete user" class="far mx-1 mt-1 fa-2x fa-trash-alt" style="color: black"></i></a>
+         <?php endif; ?>
+      </div>
+   </div>
 <?php endif; ?>

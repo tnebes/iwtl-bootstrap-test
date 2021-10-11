@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 class Pagination extends Controller
 {
@@ -12,7 +14,7 @@ class Pagination extends Controller
       parent::__construct();
    }
 
-   protected function getEntries() : ?int
+   protected function getEntries(): ?int
    {
       return (new ModelPagination)->getEntries($this->tableName);
    }

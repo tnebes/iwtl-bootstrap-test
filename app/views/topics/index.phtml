@@ -10,12 +10,12 @@ if (!isset($topics) && !is_array($topics) && count($topics) < 1) {
 }
 ?>
 
-<?php if($helper->isLoggedIn()) :?>
+<?php if ($helper->isLoggedIn()) : ?>
    <div class="alert bg-light">
       <a href="<?php echo URL_ROOT . '/topics/create' ?>">
          <i title="Add" class="fas fa-2x fa-plus-square" style="color: lightgreen"></i>
          Add a new question
-      </a>      
+      </a>
    </div>
 <?php endif; ?>
 

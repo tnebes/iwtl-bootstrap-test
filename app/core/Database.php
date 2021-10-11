@@ -32,14 +32,14 @@ class Database
    }
 
    /**
-   * Get the value of dbHandler
-   */ 
-   public function getDbHandler() : ?PDO
+    * Get the value of dbHandler
+    */
+   public function getDbHandler(): ?PDO
    {
       return $this->dbHandler;
-   } 
+   }
 
-   public static function getInstance() : Database
+   public static function getInstance(): Database
    {
       if (!isset(self::$instance)) {
          self::$instance = new Database();
@@ -92,5 +92,4 @@ class Database
       $this->execute();
       return $this->statement->rowCount();
    }
-
 }

@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 $currentPage = (int) $currentPage;
 $numberOfPages = (int) $numberOfPages;
 ?>
@@ -18,20 +20,17 @@ $numberOfPages = (int) $numberOfPages;
          // extremely cursed.
          $initialisation = $currentPage - ceil(PAGINATION_BUTTONS / 2);
          $condition = $currentPage + ceil(PAGINATION_BUTTONS / 2);
-         while ($initialisation < 1)
-         {
+         while ($initialisation < 1) {
             $initialisation++;
             $condition++;
          }
-         if ($condition > $numberOfPages)
-         {
+         if ($condition > $numberOfPages) {
             $condition = $numberOfPages;
          }
-         if ($currentPage + ceil(PAGINATION_BUTTONS / 2) > $numberOfPages)
-         {
+         if ($currentPage + ceil(PAGINATION_BUTTONS / 2) > $numberOfPages) {
             $initialisation -= $currentPage + ceil(PAGINATION_BUTTONS / 2) - $numberOfPages;
          }
-          
+
          for ($i = $initialisation; $i <= $condition; $i++) :
          ?>
             <?php $onCurrentPage = $i == $currentPage ?>

@@ -6,7 +6,7 @@ require_once '../app/controllers/ControllerAuthorisation.php';
 
 class ControllerControlpanel extends ControllerAuthorisation
 {
-   public function index() : void
+   public function index(): void
    {
       echo 'test';
    }

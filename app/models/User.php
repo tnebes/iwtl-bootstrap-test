@@ -34,7 +34,7 @@ class User extends Model
       );
    }
 
-   public function getUsers(string $data, int $from, int $to) : array
+   public function getUsers(string $data, int $from, int $to): array
    {
       $sql = "select $data from $this->TABLE_NAME limit :from, :to;";
       $statement = $this->dbHandler->prepare($sql);
@@ -76,11 +76,11 @@ class User extends Model
 
    public function updateUserLogin(int $userId, string $time): bool
    {
-       $sql = "UPDATE $this->TABLE_NAME SET lastLogin = :time WHERE id = :id";
-       $statement = $this->dbHandler->prepare($sql);
-       $statement->bindParam(':time', $time);
-       $statement->bindParam(':id', $userId, PDO::PARAM_INT);
-       return $statement->execute();
+      $sql = "UPDATE $this->TABLE_NAME SET lastLogin = :time WHERE id = :id";
+      $statement = $this->dbHandler->prepare($sql);
+      $statement->bindParam(':time', $time);
+      $statement->bindParam(':id', $userId, PDO::PARAM_INT);
+      return $statement->execute();
    }
 
    public function getIsAdmin(string $id): bool

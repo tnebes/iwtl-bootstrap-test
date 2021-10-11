@@ -11,10 +11,10 @@ class ControllerUsers extends Pagination
       $this->tableName = 'user';
    }
 
-    /**
-     * Method handles the sending of data to view.
-     */
-    public function index(): void
+   /**
+    * Method handles the sending of data to view.
+    */
+   public function index(): void
    {
       if (!$this->helper->isLoggedIn()) {
          header('location: ' . URL_ROOT . '/errorPages/restricted');
@@ -23,12 +23,9 @@ class ControllerUsers extends Pagination
       $this->currentPage = func_get_arg(0) ?? 1;
       $this->numberOfEntries = $this->getEntries();
       $this->numberOfPages = ceil($this->numberOfEntries / ENTRIES_PER_PAGE);
-      if ($this->currentPage > $this->numberOfPages)
-      {
+      if ($this->currentPage > $this->numberOfPages) {
          $this->currentPage = $this->numberOfPages;
-      }
-      else if ($this->currentPage < 1)
-      {
+      } else if ($this->currentPage < 1) {
          $this->currentPage = 1;
       }
 
@@ -37,16 +34,18 @@ class ControllerUsers extends Pagination
       } else {
          $users = $this->model->getUsers(PUBLIC_SQL_DATA, (int) (ENTRIES_PER_PAGE * ($this->currentPage - 1)), (int) (ENTRIES_PER_PAGE * $this->currentPage));
       }
-      $this->view->render('users/index', ['users' => $users,
+      $this->view->render('users/index', [
+         'users' => $users,
          'numberOfPages' => $this->numberOfPages,
          'currentPage' => $this->currentPage,
-         'link' => URL_ROOT . '/users/index/']);
+         'link' => URL_ROOT . '/users/index/'
+      ]);
    }
 
-    /**
-     * Method handles the logging in of a user.
-     */
-    public function login(): void
+   /**
+    * Method handles the logging in of a user.
+    */
+   public function login(): void
    {
       if ($this->helper->isLoggedIn()) {
          header('location: ' . URL_ROOT . '/users/index');
@@ -81,13 +80,10 @@ class ControllerUsers extends Pagination
          if (empty($data['loginError'])) {
             $user = $this->model->login($data['email'], $data['password']);
             if (!empty($user)) {
-               if ($user->banned == 1)
-               {
+               if ($user->banned == 1) {
                   $data['loginError'] .= 'You cannot login as you have been banned.';
                   $data['password'] = '';
-               }
-               else
-               {
+               } else {
                   $this->helper->createUserSession($user);
                   $this->model->updateUserLogin((int) $user->id, (new DateTime())->format('Y-m-d H:i:s'));
                   header('Location: ' . URL_ROOT . '/topics/index');
@@ -103,10 +99,10 @@ class ControllerUsers extends Pagination
       $this->view->render('users/login', $data);
    }
 
-    /**
-     * Method handles the registration of a user.
-     */
-    public function register(): void
+   /**
+    * Method handles the registration of a user.
+    */
+   public function register(): void
    {
       if ($this->helper->isLoggedIn() && !$this->helper->isAdmin()) {
          header('location: ' . URL_ROOT . '/users/index');
@@ -141,8 +137,7 @@ class ControllerUsers extends Pagination
          $data['emailError'] = $this->helper->validateEmail($data['email']);
          $data['passwordError'] = $this->helper->validatePassword($data['password']);
          $data['confirmPasswordError'] = $this->helper->validateConfirmPassword($data['password'], $data['confirmPassword']);
-         if ($data['passwordError'] || $data['confirmPasswordError'])
-         {
+         if ($data['passwordError'] || $data['confirmPasswordError']) {
             $data['password'] = '';
             $data['confirmPassword'] = '';
          }
@@ -164,10 +159,10 @@ class ControllerUsers extends Pagination
       $this->view->render('/users/register', $data);
    }
 
-    /**
-     * Method handles the showing of a user profile.
-     */
-    public function profile(): void
+   /**
+    * Method handles the showing of a user profile.
+    */
+   public function profile(): void
    {
       if (!$this->helper->isLoggedIn()) {
          header('location: ' . URL_ROOT . '/errorPages/restricted');
@@ -189,10 +184,10 @@ class ControllerUsers extends Pagination
       $this->view->render('users/profile', ['user' => $user]);
    }
 
-    /**
-     * Method handles the update of an user based on the user id.
-     */
-    public function update(): void
+   /**
+    * Method handles the update of an user based on the user id.
+    */
+   public function update(): void
    {
       if (!$this->helper->isLoggedIn()) {
          header('location: ' . URL_ROOT . '/errorPages/restricted');
@@ -204,8 +199,7 @@ class ControllerUsers extends Pagination
          return;
       }
       $id = (int) $id[0];
-      if ($this->helper->isAdmin() || $_SESSION['id'] != $id)
-      {
+      if ($this->helper->isAdmin() || $_SESSION['id'] != $id) {
          header('location: ' . URL_ROOT . '/errorPages/restricted');
          return;
       }
@@ -323,10 +317,10 @@ class ControllerUsers extends Pagination
       $this->view->render('users/update', ['user' => $user, 'data' => $data]);
    }
 
-    /**
-     * Method handles the deletion of a user.
-     */
-    public function delete(): void
+   /**
+    * Method handles the deletion of a user.
+    */
+   public function delete(): void
    {
       if (!$this->helper->isLoggedIn()) {
          header('location: ' . URL_ROOT . '/errorPages/restricted');
@@ -337,8 +331,7 @@ class ControllerUsers extends Pagination
          header('location: ' . URL_ROOT . '/errorPages/internalError');
          return;
       }
-      if ($this->helper->isAdmin() || $_SESSION['id'] != $id)
-      {
+      if ($this->helper->isAdmin() || $_SESSION['id'] != $id) {
          header('location: ' . URL_ROOT . '/errorPages/restricted');
          return;
       }
@@ -350,18 +343,13 @@ class ControllerUsers extends Pagination
 
       // cursed
       // check if the redirect exists
-      if (!isset(func_get_args()[1]) && !isset($_POST['redirect']))
-      {
+      if (!isset(func_get_args()[1]) && !isset($_POST['redirect'])) {
          // no redirect
          $redirect = $_SERVER['HTTP_REFERER'] ?? URL_ROOT . '/users/index';
-      }
-      elseif (isset($_POST['redirect']))
-      {
+      } elseif (isset($_POST['redirect'])) {
          // redirect exists
          $redirect = $_POST['redirect'];
-      }
-      else
-      {
+      } else {
          $redirect = func_get_args()[1];
       }
 
@@ -371,8 +359,7 @@ class ControllerUsers extends Pagination
          if (isset($_POST['confirm']) && filter_var($_POST['confirm'], FILTER_VALIDATE_BOOLEAN)) {
             // TODO: add a check to see whether anything is tied to the user
             $this->model->deleteUserById($id);
-            if ($_SESSION['id'] == $id)
-            {
+            if ($_SESSION['id'] == $id) {
                $this->logout();
             }
          }
@@ -382,10 +369,10 @@ class ControllerUsers extends Pagination
       $this->view->render('users/delete', ['user' => $user, 'redirect' => $redirect]);
    }
 
-    /**
-     * Method handles the banning of an user.
-     */
-    public function ban(): void
+   /**
+    * Method handles the banning of an user.
+    */
+   public function ban(): void
    {
       if (!$this->helper->isLoggedIn() || !$this->helper->isAdmin()) {
          header('location: ' . URL_ROOT . '/errorPages/restricted');
@@ -393,10 +380,9 @@ class ControllerUsers extends Pagination
       }
 
       $id = (int) func_get_args()[0];
-      if (empty($id))
-      {
+      if (empty($id)) {
          header('location: ' . URL_ROOT . '/errorPages/internalError');
-         return;   
+         return;
       }
 
       $user = $this->model->getUserById($id);
@@ -407,25 +393,19 @@ class ControllerUsers extends Pagination
 
       // cursed
       // check if the redirect exists
-      if (!isset(func_get_args()[1]) && !isset($_POST['redirect']))
-      {
+      if (!isset(func_get_args()[1]) && !isset($_POST['redirect'])) {
          // no redirect
          $redirect = $_SERVER['HTTP_REFERER'] ?? URL_ROOT . '/users/index';
-      }
-      elseif (isset($_POST['redirect']))
-      {
+      } elseif (isset($_POST['redirect'])) {
          // redirect exists
          $redirect = $_POST['redirect'];
-      }
-      else
-      {
+      } else {
          $redirect = func_get_args()[1];
       }
 
       $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
       if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-         if (isset($_POST['confirm']) && filter_var($_POST['confirm'], FILTER_VALIDATE_BOOLEAN))
-         {
+         if (isset($_POST['confirm']) && filter_var($_POST['confirm'], FILTER_VALIDATE_BOOLEAN)) {
             $user->banned = $user->banned ? 0 : 1;
             $user->dateBanned = (new DateTime())->format('Y-m-d H:i:s');
             $this->model->updateUser($user);
@@ -436,10 +416,10 @@ class ControllerUsers extends Pagination
       $this->view->render('users/ban', ['user' => $user, 'redirect' => $redirect]);
    }
 
-    /**
-     *
-     */
-    public function logout(): void
+   /**
+    *
+    */
+   public function logout(): void
    {
       $this->helper->clearUserSession();
       header('Location: ' . URL_ROOT . '/pages/index');

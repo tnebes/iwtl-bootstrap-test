@@ -11,7 +11,7 @@
       ?>
    </div>
    <form class="card-body" method="POST" action="<?php echo URL_ROOT . '/users/update/' . $user->id; ?>">
-      <input type="hidden" name="redirect" value="<?php echo $data['redirect']?>">
+      <input type="hidden" name="redirect" value="<?php echo $data['redirect'] ?>">
       <div class="row">
          <div class="col-md-6">
             <label class="badge bg-primary text-dark">Username</label>
@@ -104,7 +104,7 @@
       <div class="row">
          <div class="col-md-6">
             <input type="submit" class="btn btn-success" value="Update User">
-            <a href="<?php echo $data['redirect'] ?? URL_ROOT;?>" class="btn btn-secondary">Back</a>
+            <a href="<?php echo $data['redirect'] ?? URL_ROOT; ?>" class="btn btn-secondary">Back</a>
          </div>
       </div>
    </form>

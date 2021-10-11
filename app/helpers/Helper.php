@@ -55,13 +55,13 @@ class Helper
       return URL_ROOT . '/topics/topic/' . $topic->id;
    }
 
-    function roleToString(int $role): string
+   function roleToString(int $role): string
    {
       $roles = ['user', 'admin'];
       return $roles[$role];
    }
 
-    function bannedToCheckbox(int $banned, bool $disabled = false): string
+   function bannedToCheckbox(int $banned, bool $disabled = false): string
    {
       return '<input class="form-check-input mx-auto" type="checkbox" name="banned" value="true" ' . ($disabled ? 'disabled' : '') . ' ' . ($banned ? 'checked' : '') . '>';
    }
@@ -147,13 +147,13 @@ class Helper
    function getRandomTopicTitle(): string
    {
       $topicTitles =
-      [
-         'How to learn PHP OOP',
-         'Where to learn Java inheritance',
-         'How can I create MVC app',
-         'How to use databases?',
-         'How does an PHP autoloader work?'
-      ];
+         [
+            'How to learn PHP OOP',
+            'Where to learn Java inheritance',
+            'How can I create MVC app',
+            'How to use databases?',
+            'How does an PHP autoloader work?'
+         ];
       return $topicTitles[array_rand($topicTitles)];
    }
 

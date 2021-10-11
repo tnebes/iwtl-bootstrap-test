@@ -1,5 +1,5 @@
 <div class="container border my-1 px-4 py-1">
-   <a class="badge rounded-pill bg-info text-dark" href="<?php echo URL_ROOT . '/users/profile/' . $suggestion->user?>"><?php echo $suggestion->username?></a>
+   <a class="badge rounded-pill bg-info text-dark" href="<?php echo URL_ROOT . '/users/profile/' . $suggestion->user ?>"><?php echo $suggestion->username ?></a>
    <div class="col">
       <div class="row">
          <div class="col">
@@ -13,22 +13,22 @@
                <small class="text-muted">
                   <?php echo (new DateTime($suggestion->datePosted))->format('dS M Y'); ?>
                </small>
-            </div>      
+            </div>
          </div>
       </div>
       <div class="row">
          <div class="col">
-            <?php if(Helper::getInstance()->isAdmin() || (Helper::getInstance()->isLoggedIn() && $suggestion->user == $_SESSION['id'])) : ?>
-            <div class="row">
-               <a href="<?php echo URL_ROOT . '/suggestions/edit/' . $suggestion->id; ?>" type="button" class="btn btn-success mt-1 btn-sm" role="button">Edit</a>
-            </div>
-            <div class="row">
-            <a href="<?php echo URL_ROOT . '/suggestions/delete/' . $suggestion->id; ?>" type="button" class="btn btn-danger mt-1 btn-sm" role="button">Delete</a>
-            </div>
+            <?php if (Helper::getInstance()->isAdmin() || (Helper::getInstance()->isLoggedIn() && $suggestion->user == $_SESSION['id'])) : ?>
+               <div class="row">
+                  <a href="<?php echo URL_ROOT . '/suggestions/edit/' . $suggestion->id; ?>" type="button" class="btn btn-success mt-1 btn-sm" role="button">Edit</a>
+               </div>
+               <div class="row">
+                  <a href="<?php echo URL_ROOT . '/suggestions/delete/' . $suggestion->id; ?>" type="button" class="btn btn-danger mt-1 btn-sm" role="button">Delete</a>
+               </div>
             <?php endif; ?>
          </div>
          <div class="col">
-            <?php if(Helper::getInstance()->isLoggedIn()) : ?>
+            <?php if (Helper::getInstance()->isLoggedIn()) : ?>
                <?php
                $userReview = (new UserSuggestionReview)->getReviewByUser((int) $_SESSION['id'], (int) $suggestion->id);
                ?>
@@ -38,13 +38,13 @@
                <div class="row">
                   <a href="<?php echo URL_ROOT . '/suggestionReview/reviewNegative/' . $suggestion->id ?>" class="btn <?php echo $userReview == -1 ? 'btn-danger' : 'btn-primary'; ?> mt-1 btn-sm" role="button">&#128078;</a>
                </div>
-               <?php else: ?>
-                  <div class="row">
-                     <a href="#" class="btn btn-outline-primary mt-1 disabled" disabled role="button">&#128077;</a>
-                  </div>
-                  <div class="row">
-                     <a href="#" class="btn btn-outline-primary mt-1 disabled" disabled role="button">&#128078;</a>
-                  </div>
+            <?php else : ?>
+               <div class="row">
+                  <a href="#" class="btn btn-outline-primary mt-1 disabled" disabled role="button">&#128077;</a>
+               </div>
+               <div class="row">
+                  <a href="#" class="btn btn-outline-primary mt-1 disabled" disabled role="button">&#128078;</a>
+               </div>
             <?php endif; ?>
          </div>
          <div class="col-3 my-auto">
@@ -52,17 +52,17 @@
                <?php
                $reviewScore = (new UserSuggestionReview)->getReviewScore($suggestion->id);
                $liked = $reviewScore >= 0;
-               if ($liked) :?>
+               if ($liked) : ?>
                   <i class="fas fa-3x fa-arrow-up" style="color: green"></i>
                   <h4>
-                     <strong class="mx-3"><?php echo $reviewScore?></strong>
+                     <strong class="mx-3"><?php echo $reviewScore ?></strong>
                   </h4>
                <?php else : ?>
                   <i class="fas fa-3x fa-arrow-down" style="color: red"></i>
                   <h4>
-                     <strong class="mx-3"><?php echo $reviewScore?></strong>
-                  </h4>                  
-               <?php endif;?>
+                     <strong class="mx-3"><?php echo $reviewScore ?></strong>
+                  </h4>
+               <?php endif; ?>
             </div>
          </div>
       </div>

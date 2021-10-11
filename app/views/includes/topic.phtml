@@ -1,15 +1,14 @@
 <li class="list-group-item text-dark mx-auto my-2">
 
-<?php 
-// TODO: this is not responsive
+   <?php
+   // TODO: this is not responsive
    $helper = Helper::getInstance();
    $subscribed = false;
-   if ($helper->isLoggedIn())
-   {
+   if ($helper->isLoggedIn()) {
       $subscribed = (new UserTopicSubscription)->userIsSubscribedToTopic($_SESSION['id'], $topic->id);
    }
-   
-?>
+
+   ?>
    <div class="container" id="topic">
       <div class="" id="topic-container">
          <img src="...image..." alt="...img...">
@@ -18,7 +17,7 @@
                <a href="<?php echo $helper->getLinkToTopic($topic); ?>">
                   <div class="">
                      <?php echo $topic->name ?>
-                  </div>      
+                  </div>
                </a>
             </h1>
             <h6>
@@ -33,13 +32,13 @@
          </div>
 
          <p id="buttons">
-<!--             TODO: remove the like and dislike button and move them to suggestions -->
+            <!--             TODO: remove the like and dislike button and move them to suggestions -->
             <?php if ($helper->isLoggedIn()) : ?>
-               <a href="<?php echo URL_ROOT . '/suggestions/create/' . $topic->id ;?>" class="btn btn-primary mt-1" role="button">Suggest</a>
-               <a href="<?php echo URL_ROOT . '/subscriptions/subscribe/' . $topic->id ;?>" class="btn btn-<?php echo $subscribed ? 'secondary' : 'primary'?> mt-1" role="button"><?php echo $subscribed ? 'Unsubscribe' : 'Subscribe'?></a>
+               <a href="<?php echo URL_ROOT . '/suggestions/create/' . $topic->id; ?>" class="btn btn-primary mt-1" role="button">Suggest</a>
+               <a href="<?php echo URL_ROOT . '/subscriptions/subscribe/' . $topic->id; ?>" class="btn btn-<?php echo $subscribed ? 'secondary' : 'primary' ?> mt-1" role="button"><?php echo $subscribed ? 'Unsubscribe' : 'Subscribe' ?></a>
                <?php if ($helper->isAdmin() || $_SESSION['id'] == $topic->user) : ?>
-                  <a href="<?php echo URL_ROOT . '/topics/edit/' . $topic->id ;?>" class="btn btn-success mt-1" role="button">Edit</a>
-                  <a href="<?php echo URL_ROOT . '/topics/delete/' . $topic->id ;?>" class="btn btn-danger mt-1" role="button">Delete</a>
+                  <a href="<?php echo URL_ROOT . '/topics/edit/' . $topic->id; ?>" class="btn btn-success mt-1" role="button">Edit</a>
+                  <a href="<?php echo URL_ROOT . '/topics/delete/' . $topic->id; ?>" class="btn btn-danger mt-1" role="button">Delete</a>
                <?php endif; ?>
             <?php else : ?>
                <a href="#" class="btn btn-outline-primary mt-1 disabled" disabled role="button">Suggest</a>
@@ -54,27 +53,25 @@
       <?php if (isset($numberOfSuggestions)) : ?>
          <?php if ($numberOfSuggestions > 0) : ?>
             <?php
-               $suggestions = (new Suggestion)->getNumTopicsByTopicId((int) $topic->id, $numberOfSuggestions);
+            $suggestions = (new Suggestion)->getNumTopicsByTopicId((int) $topic->id, $numberOfSuggestions);
             ?>
          <?php endif; ?>
       <?php else : ?>
-            <?php
-               $suggestions = (new Suggestion)->getSuggestionsByTopicId((int) $topic->id);
-            ?>
-      <?php endif; ?>
-      <?php 
-         if (isset($suggestions))
-         {
-            echo '<div class="container mx-0 p-1" id="suggestions-container">';
-            foreach($suggestions as $suggestion)
-            {
-               include APP_ROOT . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'suggestion.phtml';
-            }               
-            echo '</div>';
-         }
+         <?php
+         $suggestions = (new Suggestion)->getSuggestionsByTopicId((int) $topic->id);
          ?>
+      <?php endif; ?>
+      <?php
+      if (isset($suggestions)) {
+         echo '<div class="container mx-0 p-1" id="suggestions-container">';
+         foreach ($suggestions as $suggestion) {
+            include APP_ROOT . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'suggestion.phtml';
+         }
+         echo '</div>';
+      }
+      ?>
    </div>
 
-<?php
+   <?php
    echo '</li>';
-?>
+   ?>

@@ -7,7 +7,8 @@ create table `user`(
    `password` varchar(255) not null,
    email varchar(255) not null,
    registrationDate datetime not null default current_timestamp,
-   `role` tinyint not null default 0,   -- 0 - user, 1 - admin
+   `role` tinyint not null default 0,
+   -- 0 - user, 1 - admin
    lastLogin datetime default current_timestamp,
    banned bit not null default 0,
    dateBanned datetime default current_timestamp

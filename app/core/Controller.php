@@ -36,5 +36,4 @@ class Controller
       $this->view = new View();
       $this->helper = Helper::getInstance();
    }
-
 }

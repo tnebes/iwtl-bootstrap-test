@@ -10,7 +10,7 @@ class Suggestion extends Model
       $this->TABLE_NAME = 'suggestion';
    }
 
-   public function insert(stdClass $suggestion) : bool
+   public function insert(stdClass $suggestion): bool
    {
       $sql = "INSERT INTO $this->TABLE_NAME VALUES (null, :user, :title, :topic, :datePosted, :shortDescription, :longDescription)";
       $statement = $this->dbHandler->prepare($sql);
@@ -23,7 +23,7 @@ class Suggestion extends Model
       return $statement->execute();
    }
 
-   public function getAll() : array
+   public function getAll(): array
    {
       $sql = "SELECT * FROM $this->TABLE_NAME";
       $statement = $this->dbHandler->prepare($sql);
@@ -31,7 +31,7 @@ class Suggestion extends Model
       return $statement->fetchAll(PDO::FETCH_OBJ);
    }
 
-   public function getById(int $id) : ?stdClass
+   public function getById(int $id): ?stdClass
    {
       $sql = "SELECT * FROM $this->TABLE_NAME WHERE id = :id";
       $statement = $this->dbHandler->prepare($sql);
@@ -68,7 +68,7 @@ class Suggestion extends Model
       return $statement->fetchAll(PDO::FETCH_OBJ);
    }
 
-   public function getByUser(int $user) : array
+   public function getByUser(int $user): array
    {
       $sql = "SELECT * FROM $this->TABLE_NAME WHERE user = :user";
       $statement = $this->dbHandler->prepare($sql);
@@ -77,7 +77,7 @@ class Suggestion extends Model
       return $statement->fetchAll(PDO::FETCH_OBJ);
    }
 
-   public function getByTopic(int $topic) : array
+   public function getByTopic(int $topic): array
    {
       $sql = "SELECT * FROM $this->TABLE_NAME WHERE topic = :topic";
       $statement = $this->dbHandler->prepare($sql);
@@ -86,7 +86,7 @@ class Suggestion extends Model
       return $statement->fetchAll(PDO::FETCH_OBJ);
    }
 
-   public function getByTitle(string $title) : array
+   public function getByTitle(string $title): array
    {
       $sql = "SELECT * FROM $this->TABLE_NAME WHERE title = :title";
       $statement = $this->dbHandler->prepare($sql);
@@ -95,7 +95,7 @@ class Suggestion extends Model
       return $statement->fetchAll(PDO::FETCH_OBJ);
    }
 
-   public function getByShortDescription(string $shortDescription) : array
+   public function getByShortDescription(string $shortDescription): array
    {
       $sql = "SELECT * FROM $this->TABLE_NAME WHERE shortDescription = :shortDescription";
       $statement = $this->dbHandler->prepare($sql);
@@ -104,7 +104,7 @@ class Suggestion extends Model
       return $statement->fetchAll(PDO::FETCH_OBJ);
    }
 
-   public function getByLongDescription(string $longDescription) : array
+   public function getByLongDescription(string $longDescription): array
    {
       $sql = "SELECT * FROM $this->TABLE_NAME WHERE longDescription = :longDescription";
       $statement = $this->dbHandler->prepare($sql);
@@ -113,7 +113,7 @@ class Suggestion extends Model
       return $statement->fetchAll(PDO::FETCH_OBJ);
    }
 
-   public function myUpdate(stdClass $suggestion) : bool
+   public function myUpdate(stdClass $suggestion): bool
    {
       $sql = "UPDATE $this->TABLE_NAME SET user = :user, title = :title, topic = :topic, datePosted = :datePosted, shortDescription = :shortDescription, longDescription = :longDescription WHERE id = :id";
       $statement = $this->dbHandler->prepare($sql);
@@ -127,7 +127,7 @@ class Suggestion extends Model
       return $statement->execute();
    }
 
-   public function myDelete(int $id) : bool
+   public function myDelete(int $id): bool
    {
       $sql = "DELETE FROM $this->TABLE_NAME WHERE id = :id";
       $statement = $this->dbHandler->prepare($sql);
@@ -135,4 +135,3 @@ class Suggestion extends Model
       return $statement->execute();
    }
 }
-
