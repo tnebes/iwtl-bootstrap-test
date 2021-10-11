@@ -6,6 +6,11 @@ $numberOfPages = (int) $numberOfPages;
 <div class="container text-center">
    <nav aria-label="...">
       <ul class="pagination justify-content-center">
+         <?php if ($currentPage != 1) : ?>
+            <li class="page-item enabled">
+               <a class="page-link" href="<?php echo $link . 1; ?>">First</a>
+            </li>
+         <?php endif; ?>
          <li class="page-item <?php echo $currentPage < 2 ? 'disabled' : 'enabled'; ?>">
             <a class="page-link" href="<?php echo $link . $currentPage - 1; ?>" tabindex="-1">Previous</a>
          </li>
@@ -37,6 +42,11 @@ $numberOfPages = (int) $numberOfPages;
          <li class="page-item <?php echo $currentPage >= $numberOfPages ? 'disabled' : 'enabled'; ?>">
             <a class="page-link" href="<?php echo $link . $currentPage + 1; ?>" tabindex="1">Next</a>
          </li>
+         <?php if ($currentPage != $numberOfPages) : ?>
+            <li class="page-item <?php echo $currentPage == $numberOfPages ? 'disabled' : 'enabled'; ?>">
+               <a class="page-link" href="<?php echo $link . $numberOfPages; ?>">Last</a>
+            </li>
+         <?php endif; ?>
       </ul>
    </nav>
 </div>

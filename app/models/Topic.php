@@ -23,7 +23,10 @@ class Topic extends Model
 
    public function getTopics(int $from, int $to): array
    {
-      $sql = "SELECT * FROM $this->TABLE_NAME order by datePosted desc limit :from, :to;";
+      $sql = "SELECT a.id, a.name, a.description, a.datePosted, a.user, image, b.username FROM $this->TABLE_NAME a
+      inner join user b on a.`user` = b.id
+      order by datePosted desc
+      limit :from, :to;";
       $statement = $this->dbHandler->prepare($sql);
       $statement->bindParam(':from', $from, PDO::PARAM_INT);
       $statement->bindParam(':to', $to, PDO::PARAM_INT);
@@ -38,12 +41,13 @@ class Topic extends Model
 
    public function getTopicById(int $id): ?stdClass
    {
-      return $this->read($this->TABLE_NAME, ['*'], ['id'], [$id])[0] ?? null;
-   }
-
-   public function getTopicsBySubscription(int $subscriptionId): array
-   {
-      return [];
+      $sql = "SELECT a.id, a.name, a.description, a.datePosted, a.user, image, b.username FROM $this->TABLE_NAME a
+      inner join user b on a.`user` = b.id
+      where a.id = :topicId;";
+      $statement = $this->dbHandler->prepare($sql);
+      $statement->bindParam(':topicId', $id, PDO::PARAM_INT);
+      $statement->execute();
+      return $statement->fetchAll(PDO::FETCH_OBJ)[0] ?? null;
    }
 
    public function updateTopic(stdClass $topic): int

@@ -22,9 +22,9 @@
                </a>
             </h1>
             <h6>
-               <a href="<?php echo $helper->getLinkToUser($helper->getUserFromTopic($topic)); ?>">
+               <a href="<?php echo $topic->user; ?>">
                   <span class="badge bg-info text-dark">
-                     <?php echo $helper->getUserFromTopic($topic)->username ?>
+                     <?php echo $topic->username; ?>
                   </span>
                </a>
             </h6>
