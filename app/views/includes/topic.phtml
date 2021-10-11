@@ -9,16 +9,16 @@
    }
 
    ?>
-   <div class="container" id="topic">
-      <div class="" id="topic-container">
+   <div class="container">
+      <div class="">
          <img src="...image..." alt="...img...">
-         <div class="" id="topic-content">
+         <div class="">
             <h1>
-               <a href="<?php echo $helper->getLinkToTopic($topic); ?>">
                   <div class="">
-                     <?php echo $topic->name ?>
+                     <a href="<?php echo $helper->getLinkToTopic($topic); ?>">
+                        <?php echo $topic->name ?>
+                     </a>
                   </div>
-               </a>
             </h1>
             <h6>
                <a href="<?php echo $topic->user; ?>">
@@ -28,10 +28,10 @@
                </a>
             </h6>
             <p><?php echo $topic->description ?></p>
-            <small class="text-muted" class="center">Date asked: <p><?php echo date('d m Y', strtotime($topic->datePosted)) ?></p></small>
+            <p><small class="text-muted center">Date asked: <?php echo date('d m Y', strtotime($topic->datePosted)) ?></small></p>
          </div>
 
-         <p id="buttons">
+         <p>
             <!--             TODO: remove the like and dislike button and move them to suggestions -->
             <?php if ($helper->isLoggedIn()) : ?>
                <a href="<?php echo URL_ROOT . '/suggestions/create/' . $topic->id; ?>" class="btn btn-primary mt-1" role="button">Suggest</a>
@@ -44,7 +44,7 @@
                <a href="#" class="btn btn-outline-primary mt-1 disabled" disabled role="button">Suggest</a>
                <a href="#" class="btn btn-outline-primary mt-1 disabled" disabled role="button">Subscribe</a>
                <a href="<?php echo URL_ROOT . '/users/login' ?>">
-                  <p>Log in to comment and subscribe to this question.</p>
+                  Log in to comment and subscribe to this question.
                </a>
 
             <?php endif; ?>
