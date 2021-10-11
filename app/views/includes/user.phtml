@@ -1,7 +1,7 @@
 <?php if (Helper::getInstance()->isAdmin()) : ?>
 <div class="container border m-1 mx-auto pb-2" id="user-container">
    <div class="container p-0 pb-1 text-center">
-      <a class="badge rounded-pill bg-info text-dark" href="<?php echo URL_ROOT . '/users/profile/' . $user->id?>"><?php echo $user->username?></a>
+      <a class="badge rounded-pill bg-info text-dark" href="<?php echo URL_ROOT . '/users/profile/' . $user->id?>"><?php echo $user->username; ?></a>
    </div>
    <div class="container p-0 m-0 text-danger text-center">
       <?php echo $user->banned != 0 ? '<strong>BANNED</strong>' : '' ?>
@@ -78,7 +78,7 @@
       <?php if ($_SESSION['id'] == $user->id) : ?>
          <a href="<?php echo URL_ROOT . '/users/update/' . $user->id ?>"><i title="Edit user" class="far mx-1 mt-1 fa-2x fas fa-user-edit" style="color: lightblue"></i></a>
          <a href="<?php echo URL_ROOT . '/users/delete/' . $user->id ?>"><i title="Delete user" class="far mx-1 mt-1 fa-2x fa-trash-alt" style="color: black"></i></a>
-      <? endif; ?>
+      <?php endif; ?>
    </div>
 </div>
 <?php endif; ?>
