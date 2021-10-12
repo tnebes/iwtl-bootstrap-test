@@ -30,6 +30,10 @@ $numberOfPages = (int) $numberOfPages;
          if ($currentPage + ceil(PAGINATION_BUTTONS / 2) > $numberOfPages) {
             $initialisation -= $currentPage + ceil(PAGINATION_BUTTONS / 2) - $numberOfPages;
          }
+         if ($initialisation < 0)
+         {
+            $initialisation = 1;
+         }
 
          for ($i = $initialisation; $i <= $condition; $i++) :
          ?>
