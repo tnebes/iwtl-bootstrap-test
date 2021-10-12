@@ -130,13 +130,16 @@ class Helper
 
    function validateDate(string $date): string
    {
-      // TODO: add validation here.
+      if (empty($date)) {
+         return ' is required. ';
+      } else if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $date)) {
+         return ' must be in the format YYYY-MM-DD. ';
+      }
       return '';
    }
 
    function validateRole(string $role): string
    {
-      // TODO: update this if new roles are added.
       return $role < 0 || $role > 1 ? ' must be a valid role. ' : '';
    }
 

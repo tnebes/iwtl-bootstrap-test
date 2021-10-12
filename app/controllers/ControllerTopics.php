@@ -42,7 +42,7 @@ class ControllerTopics extends Pagination
    {
       $topicId = (int) func_get_arg(0);
       if (is_int($topicId)) {
-         $this->model->getTopicById($topicId) ? $this->view->render('topics/topic', ['topic' => $this->model->getTopicById($topicId)]) : header('location: ' . URL_ROOT . '/errorPages/notFound');
+         $this->model->getTopicById($topicId) ? $this->view->render('topics/topic', ['topic' => $this->model->getTopicById($topicId), 'scripts' => true]) : header('location: ' . URL_ROOT . '/errorPages/notFound');
       } else {
          header('location: ' . URL_ROOT . '/errorPages/notFound');
       }

@@ -6,8 +6,6 @@ function main() {
       likeButtons.push($(this).attr('id'));
    });
 
-   console.log(likeButtons);
-
    likeButtons.forEach(likeButton => {
       let id = likeButton.split('-')[2];
       attachFunctionToButton(id);
