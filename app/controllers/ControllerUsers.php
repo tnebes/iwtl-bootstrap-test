@@ -312,7 +312,7 @@ class ControllerUsers extends Pagination
 
             $this->model->updateUser($updatedUser);
 
-            $this->profile($updatedUser->id);
+            header('location: ' . URL_ROOT . '/users/profile/' . $updatedUser->id);
             return;
          }
       }

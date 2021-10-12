@@ -171,4 +171,9 @@ class Helper
    {
       return URL_ROOT . '/users/profile/' . $user->id;
    }
+
+   function createTestData() : void
+   {
+      
+   }
 }

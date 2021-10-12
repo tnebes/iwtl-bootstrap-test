@@ -57,6 +57,7 @@
             <?php
             echo $user->username ?>'s Profile
          </h2>
+         <?php echo (Helper::getInstance()->isLoggedIn() && $_SESSION['id'] == $user->id) ? '<a class="btn btn-info" href=' . URL_ROOT . '/users/update/' . $user->id . '>Edit User</a>' : '';?>
       </div>
       <div class="card-body">
          <div class="row">
@@ -68,19 +69,11 @@
                <label class="badge bg-info text-dark">Registration Date</label>
                <p><?php echo $user->registrationDate ?></p>
             </div>
-            <div class="col-md-6">
-               <label class="badge bg-info text-dark">Role</label>
-               <p><?php echo $user->role ?></p>
-            </div>
          </div>
          <div class="row">
             <div class="col-md-6">
                <label class="badge bg-info text-dark">Banned</label>
                <p><?php echo $user->banned ?></p>
-            </div>
-            <div class="col-md-6">
-               <label class="badge bg-info text-dark">Date Banned</label>
-               <p><?php echo $user->dateBanned ?></p>
             </div>
          </div>
       </div>
