@@ -205,7 +205,7 @@ class ControllerUsers extends Pagination
       }
       $data =
          [
-            'redirect' => $_POST['redirect'] ?? $_SERVER['HTTP_REFERER'],
+            'redirect' => $_POST['redirect'] ?? $_SERVER['HTTP_REFERER'] ?? URL_ROOT,
             'usernameError' => '',
             'emailError' => '',
             'passwordError' => '',
@@ -221,20 +221,22 @@ class ControllerUsers extends Pagination
       }
 
       if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+         $updatedUser = clone $user;
          $passwordChange = false;
          $registrationDateChange = false;
          $lastLoginChange = false;
          $dateBannedChange = false;
 
+         // extremely cursed way of doing this
          $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
          $data['username'] = strtolower(trim($_POST['username']));
          $data['email'] = strtolower(trim($_POST['email']));
          $data['password'] = trim($_POST['password']);
-         $data['registrationDate'] = trim($_POST['registrationDate']);
-         $data['role'] = trim($_POST['role']);
-         $data['lastLogin'] = trim($_POST['lastLogin']);
-         $data['banned'] = isset($_POST['banned']) ? 1 : 0; // TODO: bad workaround for when banned doesn't exist
-         $data['dateBanned'] = trim($_POST['dateBanned']);
+         $data['registrationDate'] = trim($_POST['registrationDate'] ?? $user->registrationDate);
+         $data['role'] = trim($_POST['role']?? $user->role);
+         $data['lastLogin'] = trim($_POST['lastLogin'] ?? $user->lastLogin);
+         $data['banned'] = (isset($_POST['banned']) ? 1 : 0 ?? $user->banned); // TODO: bad workaround for when banned doesn't exist
+         $data['dateBanned'] = trim($_POST['dateBanned'] ?? $user->dateBanned);
 
          unset($_POST['username']);
          unset($_POST['email']);
@@ -274,6 +276,7 @@ class ControllerUsers extends Pagination
             $data['passwordError'] = $this->helper->validatePassword($data['password']);
          }
          $data['registrationDateError'] = $this->helper->validateDate($data['registrationDate']);
+         echo $data['registrationDateError'];
          $data['roleError'] = $this->helper->validateRole($data['role']);
          $data['lastLoginError'] = $this->helper->validateDate($data['lastLogin']);
          $data['dateBannedError'] = $this->helper->validateDate($data['dateBanned']);
@@ -287,7 +290,6 @@ class ControllerUsers extends Pagination
             && empty($data['lastLoginError'])
             && empty($data['dateBannedError'])
          ) {
-            $updatedUser = clone $user;
 
             if ($passwordChange) {
                $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);

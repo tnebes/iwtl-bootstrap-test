@@ -1,3 +1,6 @@
+<?php declare(strict_types=1);
+$helper = Helper::getInstance();
+?>
 <!-- TODO: normal users shouldn't be able to edit sensitive data like registration date, their banned status or date banned... -->
 <div class="card bg-dark">
    <div class="card-header">
@@ -7,7 +10,7 @@
       </h2>
       <?php
       echo '<a class="btn btn-danger" href=' . URL_ROOT . '/users/delete/' . $user->id . '>Delete User</a>';
-      echo '<a class="btn btn-warning" href=' . URL_ROOT . '/users/ban/' . $user->id . '>Ban User</a>';
+      echo $helper->isAdmin() ?? '<a class="btn btn-warning" href=' . URL_ROOT . '/users/ban/' . $user->id . '>Ban User</a>';
       ?>
    </div>
    <form class="card-body" method="POST" action="<?php echo URL_ROOT . '/users/update/' . $user->id; ?>">
@@ -43,6 +46,7 @@
             <input type="password" id="password" name="password" class="form-control" value="">
          </div>
       </div>
+      <?php if ($helper->isAdmin()) : ?>
       <div class="row">
          <div class="col-md-6">
             <label class="badge bg-primary text-dark">Registration Date</label>
@@ -57,13 +61,13 @@
       <div class="row">
          <div class="col-md-6">
             <label class="badge bg-primary text-dark">Role</label>
-            <p><?php echo Helper::getInstance()->roleToString($user->role) ?></p>
+            <p><?php echo $helper->roleToString((int) $user->role) ?></p>
          </div>
          <div class="col-md-6">
             <label for="role" class="badge bg-info text-dark">New Role</label>
             <span class="text-danger"><?php echo $data['roleError'] ?></span>
             <select id="role" name="role" class="form-control">
-               <option selected value="<?php echo $user->role ?>"><?php echo Helper::getInstance()->roleToString($user->role) ?></option>
+               <option selected value="<?php echo $user->role ?>"><?php echo $helper->roleToString((int) $user->role) ?></option>
                <option value="0">User</option>
                <option value="1">Admin</option>
             </select>
@@ -86,7 +90,7 @@
          <div class="col-md-6">
             <label class="badge bg-info text-dark">Banned</label>
             <p>
-               <?php echo Helper::getInstance()->bannedToCheckbox($user->banned) ?>
+               <?php echo $helper->bannedToCheckbox((int) $user->banned) ?>
             </p>
          </div>
       </div>
@@ -101,6 +105,7 @@
             <input type="date" id="dateBannned" name="dateBanned" class="form-control" value="<?php echo date("Y-m-d", strtotime($user->dateBanned)); ?>">
          </div>
       </div>
+      <?php endif; ?>
       <div class="row">
          <div class="col-md-6">
             <input type="submit" class="btn btn-success" value="Update User">

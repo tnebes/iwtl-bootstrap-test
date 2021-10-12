@@ -130,10 +130,11 @@ class Helper
 
    function validateDate(string $date): string
    {
+      echo $date . ' ';
       if (empty($date)) {
          return ' is required. ';
-      } else if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $date)) {
-         return ' must be in the format YYYY-MM-DD. ';
+      } else if (!(preg_match('/^\d{4}-\d{2}-\d{2}$/', $date) || preg_match('/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/', $date))) {
+         return ' must be in the format YYYY-MM-DD or YYYY-MM-DD HH:MM:SS';
       }
       return '';
    }
