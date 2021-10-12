@@ -62,7 +62,42 @@ class User extends Model
 
    public function deleteUserById(int $id): bool
    {
-      return $this->delete($this->TABLE_NAME, ['id'], [$id]);
+      $this->dbHandler->beginTransaction();
+      $sql = "update topic set image = null where image = (select id from image where user = :userId);";
+      $statement = $this->dbHandler->prepare($sql);
+      $statement->bindParam(':userId', $id, PDO::PARAM_INT);
+      $statement->execute();
+
+      $sql = "delete from image where user = :userId;";
+      $statement = $this->dbHandler->prepare($sql);
+      $statement->bindParam(':userId', $id, PDO::PARAM_INT);
+      $statement->execute();
+
+      $sql = "delete from userSuggestionReview where user = :userId";
+      $statement = $this->dbHandler->prepare($sql);
+      $statement->bindParam(':userId', $id, PDO::PARAM_INT);
+      $statement->execute();
+
+      $sql = "delete from userTopicSubscription where user = :userId";
+      $statement = $this->dbHandler->prepare($sql);
+      $statement->bindParam(':userId', $id, PDO::PARAM_INT);
+      $statement->execute();
+
+      $sql = "delete from suggestion where user = :userId";
+      $statement = $this->dbHandler->prepare($sql);
+      $statement->bindParam(':userId', $id, PDO::PARAM_INT);
+      $statement->execute();
+
+      $sql = "delete from topic where user = :userId";
+      $statement = $this->dbHandler->prepare($sql);
+      $statement->bindParam(':userId', $id, PDO::PARAM_INT);
+      $statement->execute();
+      
+      $sql = "delete from user where id = :userId";
+      $statement = $this->dbHandler->prepare($sql);
+      $statement->bindParam(':userId', $id, PDO::PARAM_INT);
+      $statement->execute();      
+      return $this->dbHandler->commit();
    }
 
    public function updateUser(stdClass $user): bool

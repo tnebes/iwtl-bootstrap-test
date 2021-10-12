@@ -338,7 +338,7 @@ class ControllerUsers extends Pagination
          header('location: ' . URL_ROOT . '/errorPages/internalError');
          return;
       }
-      if ($this->helper->isAdmin() || $_SESSION['id'] != $id) {
+      if (!($this->helper->isAdmin() || $_SESSION['id'] == $id)) {
          header('location: ' . URL_ROOT . '/errorPages/restricted');
          return;
       }
@@ -363,8 +363,7 @@ class ControllerUsers extends Pagination
       $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
       if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-         if (isset($_POST['confirm']) && filter_var($_POST['confirm'], FILTER_VALIDATE_BOOLEAN)) {
-            // TODO: add a check to see whether anything is tied to the user
+         if (isset($_POST['confirm']) && filter_var($_POST['confirm'], FILTER_VALIDATE_BOOLEAN)) {            
             $this->model->deleteUserById($id);
             if ($_SESSION['id'] == $id) {
                $this->logout();
