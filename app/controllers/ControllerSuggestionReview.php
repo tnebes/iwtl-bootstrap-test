@@ -13,12 +13,14 @@ class ControllerSuggestionReview extends Controller
    public function reviewPositive(): void
    {
       if (!$this->helper->isLoggedIn()) {
-         header('location: ' . URL_ROOT . '/errorPages/restricted');
+         // header('location: ' . URL_ROOT . '/errorPages/restricted');
+         echo json_encode(['status' => 'error', 'message' => 'You must be logged in to review a suggestion']);
          return;
       }
       $suggestionId = (int) func_get_arg(0);
       if (!$suggestionId || !(new Suggestion())->getById($suggestionId)) {
-         header('location: ' . URL_ROOT . '/errorPages/internalError');
+         // header('location: ' . URL_ROOT . '/errorPages/internalError');
+         echo json_encode(['status' => 'error', 'message' => 'Suggestion not found']);
          return;
       }
       $userId = (int) $_SESSION['id'];
@@ -26,7 +28,8 @@ class ControllerSuggestionReview extends Controller
       $positiveReviewExists = $this->model->isReviewedSuggestion($userId, $suggestionId, 1);
       if ($positiveReviewExists) {
          $this->model->deleteReview($userId, $suggestionId);
-         header('location: ' . $redirect);
+         // header('location: ' . $redirect);
+         echo json_encode(['status' => 'success', 'message' => 'Review deleted', 'counter' => $this->model->getReviewScore($suggestionId)]);
          return;
       }
       $anyReviewExists = $this->model->isReviewedSuggestion($userId, $suggestionId);
@@ -35,18 +38,21 @@ class ControllerSuggestionReview extends Controller
       } else {
          $this->model->createSuggestionReview($userId, $suggestionId, 1);
       }
-      header('location: ' . $redirect);
+      // header('location: ' . $redirect);
+      echo json_encode(['status' => 'success', 'message' => 'Review added', 'counter' => $this->model->getReviewScore($suggestionId)]);
    }
 
    public function reviewNegative(): void
    {
       if (!$this->helper->isLoggedIn()) {
-         header('location: ' . URL_ROOT . '/errorPages/restricted');
+         // header('location: ' . URL_ROOT . '/errorPages/restricted');
+         echo json_encode(['status' => 'error', 'message' => 'You must be logged in to review a suggestion']);
          return;
       }
       $suggestionId = (int) func_get_arg(0);
       if (!$suggestionId || !(new Suggestion())->getById($suggestionId)) {
-         header('location: ' . URL_ROOT . '/errorPages/internalError');
+         // header('location: ' . URL_ROOT . '/errorPages/internalError');
+         echo json_encode(['status' => 'error', 'message' => 'Suggestion not found']);
          return;
       }
       $userId = (int) $_SESSION['id'];
@@ -54,7 +60,8 @@ class ControllerSuggestionReview extends Controller
       $negativeReviewExists = $this->model->isReviewedSuggestion($userId, $suggestionId, -1);
       if ($negativeReviewExists) {
          $this->model->deleteReview($userId, $suggestionId);
-         header('location: ' . $redirect);
+         // header('location: ' . $redirect);
+         echo json_encode(['status' => 'success', 'message' => 'Review deleted', 'counter' => $this->model->getReviewScore($suggestionId)]);
          return;
       }
       $anyReviewExists = $this->model->isReviewedSuggestion($userId, $suggestionId);
@@ -63,6 +70,7 @@ class ControllerSuggestionReview extends Controller
       } else {
          $this->model->createSuggestionReview($userId, $suggestionId, -1);
       }
-      header('location: ' . $redirect);
+      // header('location: ' . $redirect);
+      echo json_encode(['status' => 'success', 'message' => 'Review added', 'counter' => $this->model->getReviewScore($suggestionId)]);
    }
 }
