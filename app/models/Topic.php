@@ -58,7 +58,25 @@ class Topic extends Model
 
    public function deleteTopicById(int $id): bool
    {
-      // TODO: implement an admin check so that admins cannot be deleted by using getIsAdmin();
-      return $this->delete($this->TABLE_NAME, ['id'], [$id]);
+      $this->dbHandler->beginTransaction();
+
+      $sql = "delete from userTopicSubscription where topic = :topicId;";
+      $statement = $this->dbHandler->prepare($sql);
+      $statement->bindParam(':topicId', $id, PDO::PARAM_INT);
+      $statement->execute();
+
+      // TODO: cursed delete of userSuggestionReview 
+      
+      $sql = "delete from suggestion where topic = :topicId;";
+      $statement = $this->dbHandler->prepare($sql);
+      $statement->bindParam(':topicId', $id, PDO::PARAM_INT);
+      $statement->execute();
+
+      $sql = "delete from topic where id = :topicId;";
+      $statement = $this->dbHandler->prepare($sql);
+      $statement->bindParam(':topicId', $id, PDO::PARAM_INT);
+      $statement->execute();      
+
+      return $this->dbHandler->commit();
    }
 }
