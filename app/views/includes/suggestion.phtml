@@ -1,4 +1,4 @@
-<div class="container border my-1 px-4 py-1">
+<div class="container border my-1 px-4 py-1" id="suggestion-<?php echo $suggestion->id;?>">
    <a class="badge rounded-pill bg-info text-dark" href="<?php echo URL_ROOT . '/users/profile/' . $suggestion->user ?>"><?php echo $suggestion->username ?></a>
    <div class="col">
       <div class="row">
@@ -33,10 +33,10 @@
                $userReview = (new UserSuggestionReview)->getReviewByUser((int) $_SESSION['id'], (int) $suggestion->id);
                ?>
                <div class="row">
-                  <a href="<?php echo URL_ROOT . '/suggestionReview/reviewPositive/' . $suggestion->id ?>" class="btn <?php echo $userReview == 1 ? 'btn-success' : 'btn-primary'; ?> mt-1 btn-sm " role="button">&#128077;</a>
+                  <a href="<?php echo URL_ROOT . '/suggestionReview/reviewPositive/' . $suggestion->id ?>" id="suggestion-like-<?php echo $suggestion->id;?>" class="btn <?php echo $userReview == 1 ? 'btn-success' : 'btn-primary'; ?> mt-1 btn-sm " role="button">&#128077;</a>
                </div>
                <div class="row">
-                  <a href="<?php echo URL_ROOT . '/suggestionReview/reviewNegative/' . $suggestion->id ?>" class="btn <?php echo $userReview == -1 ? 'btn-danger' : 'btn-primary'; ?> mt-1 btn-sm" role="button">&#128078;</a>
+                  <a href="<?php echo URL_ROOT . '/suggestionReview/reviewNegative/' . $suggestion->id ?>" id="suggestion-dislike-<?php echo $suggestion->id;?>" class="btn <?php echo $userReview == -1 ? 'btn-danger' : 'btn-primary'; ?> mt-1 btn-sm" role="button">&#128078;</a>
                </div>
             <?php else : ?>
                <div class="row">
@@ -54,12 +54,12 @@
                $liked = $reviewScore >= 0;
                if ($liked) : ?>
                   <i class="fas fa-3x fa-arrow-up" style="color: green"></i>
-                  <h4>
+                  <h4 id="suggestion-likes-<?php echo $suggestion->id;?>">
                      <strong class="mx-3"><?php echo $reviewScore ?></strong>
                   </h4>
                <?php else : ?>
                   <i class="fas fa-3x fa-arrow-down" style="color: red"></i>
-                  <h4>
+                  <h4 id="suggestion-likes-<?php echo $suggestion->id;?>">
                      <strong class="mx-3"><?php echo $reviewScore ?></strong>
                   </h4>
                <?php endif; ?>

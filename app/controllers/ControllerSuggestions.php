@@ -48,7 +48,8 @@ class ControllerSuggestions extends Controller
 
             'suggestionTitleError' => '',
             'suggestionShortDescriptionError' => '',
-            'suggestionLongDescriptionError' => ''
+            'suggestionLongDescriptionError' => '',
+            'scripts' => true
          ];
 
       if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit']) && filter_var($_POST['submit'], FILTER_VALIDATE_BOOLEAN)) {
@@ -123,7 +124,8 @@ class ControllerSuggestions extends Controller
 
             'suggestionTitleError' => '',
             'suggestionShortDescriptionError' => '',
-            'suggestionLongDescriptionError' => ''
+            'suggestionLongDescriptionError' => '',
+            'scripts' => true
          ];
 
       if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit']) && filter_var($_POST['submit'], FILTER_VALIDATE_BOOLEAN)) {

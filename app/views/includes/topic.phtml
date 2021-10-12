@@ -1,7 +1,6 @@
 <li class="list-group-item text-dark mx-auto my-2">
 
    <?php
-   // TODO: this is not responsive
    $helper = Helper::getInstance();
    $subscribed = false;
    if ($helper->isLoggedIn()) {
@@ -32,7 +31,6 @@
          </div>
 
          <p>
-            <!--             TODO: remove the like and dislike button and move them to suggestions -->
             <?php if ($helper->isLoggedIn()) : ?>
                <a href="<?php echo URL_ROOT . '/suggestions/create/' . $topic->id; ?>" class="btn btn-primary mt-1" role="button">Suggest</a>
                <a href="<?php echo URL_ROOT . '/subscriptions/subscribe/' . $topic->id; ?>" class="btn btn-<?php echo $subscribed ? 'secondary' : 'primary' ?> mt-1" role="button"><?php echo $subscribed ? 'Unsubscribe' : 'Subscribe' ?></a>

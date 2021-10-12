@@ -30,7 +30,8 @@ class ControllerTopics extends Pagination
          'topics' => $topics,
          'numberOfPages' => $this->numberOfPages,
          'currentPage' => $this->currentPage,
-         'link' => URL_ROOT . '/topics/index/'
+         'link' => URL_ROOT . '/topics/index/',
+         'scripts' => true
       ]);
    }
 
@@ -65,7 +66,8 @@ class ControllerTopics extends Pagination
          'description' => '',
          'datePosted' => '',
          'user' => '',
-         'image' => ''
+         'image' => '',
+         'scripts' => true
       ];
 
       if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -121,7 +123,8 @@ class ControllerTopics extends Pagination
          'name' => $topic->name,
          'description' => $topic->description,
          'user' => $topic->user,
-         'image' => $topic->image
+         'image' => $topic->image,
+         'scripts' => true
       ];
       if ($_SERVER['REQUEST_METHOD'] === 'POST') {
          $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);

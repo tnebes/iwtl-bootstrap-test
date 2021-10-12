@@ -17,7 +17,7 @@ A web application for collecting information on how to learn anything.
 
 - [x] Set a minimum of 2 users and connection passwords on the authorization page
 
-- [ ] The private part must allow CRUD - entry, reading, modification and deletion of all data to one entity of your final work that is not bound to some other table with a foreign key. The data is stored in the ~~Session~~ DB.
+- [x] The private part must allow CRUD - entry, reading, modification and deletion of all data to one entity of your final work that is not bound to some other table with a foreign key. The data is stored in the ~~Session~~ DB.
 
 - [x] Upload to hosting application
 
