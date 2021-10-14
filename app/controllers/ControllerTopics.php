@@ -181,6 +181,7 @@ class ControllerTopics extends Pagination
       }
       if ($_SERVER['REQUEST_METHOD'] === 'POST') {
          if (isset($_POST['confirm']) && filter_var($_POST['confirm'], FILTER_VALIDATE_BOOLEAN)) {
+            // TODO: add a check to see whether anything is tied to the topic
             $this->model->deleteTopicById($topicId);
          }
          header('location: ' . URL_ROOT . '/topics/index');

@@ -33,7 +33,8 @@
                   <?php echo $user->email; ?>
                </div>
                <div class="row">
-                  <?php echo $user->role; ?>
+                  <!-- TODO: show the role as a role instead of int -->
+                  <?php echo Helper::getInstance()->roleToString($user->role); ?>
                </div>
                <div class="row">
                   <?php echo (new DateTime($user->lastLogin))->format('dS M Y'); ?>

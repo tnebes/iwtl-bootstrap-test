@@ -60,13 +60,21 @@ class Topic extends Model
    {
       $this->dbHandler->beginTransaction();
 
+      $sql = "delete from image where suggestion in (select id from suggestion where topic = :topicId);";
+      $statement = $this->dbHandler->prepare($sql);
+      $statement->bindParam(':topicId', $id, PDO::PARAM_INT);
+      $statement->execute();
+
       $sql = "delete from userTopicSubscription where topic = :topicId;";
       $statement = $this->dbHandler->prepare($sql);
       $statement->bindParam(':topicId', $id, PDO::PARAM_INT);
       $statement->execute();
 
-      // TODO: cursed delete of userSuggestionReview 
-      
+      $sql = "delete from userSuggestionReview where suggestion in (select id from suggestion where topic = :topicId);";
+      $statement = $this->dbHandler->prepare($sql);
+      $statement->bindParam(':topicId', $id, PDO::PARAM_INT);
+      $statement->execute();
+
       $sql = "delete from suggestion where topic = :topicId;";
       $statement = $this->dbHandler->prepare($sql);
       $statement->bindParam(':topicId', $id, PDO::PARAM_INT);
@@ -75,7 +83,7 @@ class Topic extends Model
       $sql = "delete from topic where id = :topicId;";
       $statement = $this->dbHandler->prepare($sql);
       $statement->bindParam(':topicId', $id, PDO::PARAM_INT);
-      $statement->execute();      
+      $statement->execute();
 
       return $this->dbHandler->commit();
    }

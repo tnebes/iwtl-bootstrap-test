@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+// this is good
+
 class Image
 {
    public function __construct(string $imagePath, string $imageType = 'png')

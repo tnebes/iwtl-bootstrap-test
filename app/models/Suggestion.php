@@ -129,9 +129,23 @@ class Suggestion extends Model
 
    public function myDelete(int $id): bool
    {
-      $sql = "DELETE FROM $this->TABLE_NAME WHERE id = :id";
+      $this->dbHandler->beginTransaction();
+
+      $sql = "update image set suggestion = null where suggestion = :suggestionId;";
       $statement = $this->dbHandler->prepare($sql);
-      $statement->bindParam(':id', $id);
-      return $statement->execute();
+      $statement->bindParam(':suggestionId', $id);
+      $statement->execute();
+
+      $sql = "delete from userSuggestionReview where suggestion = :suggestionId;";
+      $statement = $this->dbHandler->prepare($sql);
+      $statement->bindParam(':suggestionId', $id);
+      $statement->execute();
+
+      $sql = "delete from suggestion where id = :suggestionId;";
+      $statement = $this->dbHandler->prepare($sql);
+      $statement->bindParam(':suggestionId', $id);
+      $statement->execute();
+
+      return $this->dbHandler->commit();
    }
 }
