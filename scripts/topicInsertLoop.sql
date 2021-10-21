@@ -17,3 +17,5 @@ values(
 SET i = i - 1;
 END LOOP;
 END $$ DELIMITER;
+
+CALL topicInsert();

@@ -10,3 +10,5 @@ values(null, i, i, i, now(), 0, null, 0, null);
 SET i = i -1;
 END LOOP;
 END $$ DELIMITER;
+
+CALL userInsert();
