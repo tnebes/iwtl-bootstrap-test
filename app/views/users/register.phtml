@@ -6,25 +6,25 @@
       <?php if (!empty($usernameError)) : ?>
          <span class="text-warning" role="alert"><?php echo $usernameError ?></span>
       <?php endif; ?>
-      <input type="text" class="form-control" id="username" name="username" placeholder="username">
+      <input type="text" class="form-control" id="username" name="username" placeholder="username" value="<?php echo $username ?? '';?>">
       <div class="form-floating">
          <label for="email">Email address</label>
          <?php if (!empty($emailError)) : ?>
             <span class="text-warning"><?php echo $usernameError ?></span>
          <?php endif; ?>
-         <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com">
+         <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" value=<?php echo $email ?? '';?>>
       </div>
       <div class="form-floating">
          <label for="password">Password</label>
          <?php if (!empty($passwordError)) : ?>
-            <span class="text-warning"><?php echo $usernameError ?></span>
+            <span class="text-warning"><?php echo $passwordError ?></span>
          <?php endif; ?>
          <input type="password" class="form-control" id="password" name="password" placeholder="Password">
       </div>
       <div class="form-floating">
          <label for="confirmPassword">Confirm Password</label>
          <?php if (!empty($confirmPasswordError)) : ?>
-            <span class="text-warning"><?php echo $usernameError ?></span>
+            <span class="text-warning"><?php echo $confirmPasswordError ?></span>
          <?php endif; ?>
          <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password">
       </div>

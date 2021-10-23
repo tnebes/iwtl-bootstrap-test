@@ -39,6 +39,7 @@ class ControllerPages extends Controller
          (new Topic)->createTopic($faker->jobTitle(), $faker->realTextBetween(), (new DateTime())->format('Y-m-d H:i:s'), random_int(1, 100));
       }
       
+      
       echo 'inserted users.';
    }
 }
