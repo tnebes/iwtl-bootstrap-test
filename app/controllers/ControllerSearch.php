@@ -18,6 +18,14 @@ class ControllerSearch extends Controller
             'suggestions' => [],
             'error' => false
         ];
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST')
+        {
+            $data['error'] = true;
+            $data['title'] = 'Search Error';
+            $data['text'] = 'Search term should exist and be at least 2 characters long.';
+            $this->view->render('search/search', $data);
+            return;            
+        }
         $searchTerm = trim($_POST['search']);
         // TODO: these should be outside of this method
         if (empty($searchTerm))
@@ -40,7 +48,13 @@ class ControllerSearch extends Controller
         }
         else
         {
-            
+            $searchModel = new Search;
+            $data['users'] = $searchModel->searchUsers($searchTerm);
+            $data['topics'] = $searchModel->searchTopics($searchTerm);
+            $data['suggestions'] = $searchModel->searchSuggestions($searchTerm);
+            $searchResultCount = count($data['users']) + count($data['topics']) + count($data['suggestions']);
+            $data['title'] = 'Found ' . $searchResultCount . ' results.';
+            $data['text'] = 'Search results:';
         }
         $this->view->render('search/search', $data);           
     }
