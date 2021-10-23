@@ -1,10 +1,37 @@
-<?php 
-echo '<pre>';
-var_dump($title);
-var_dump($text);
-var_dump($users);
-var_dump($topics);
-var_dump($suggestions);
-var_dump($error);
-echo '</pre>';
+<?php declare(strict_types = 1);
+$helper = Helper::getInstance();
 ?>
+
+<div class="container">
+    <h1 <?php echo $error ? 'class="text-warning"' : '';?>><?php echo $title?></h1>
+    <h1 <?php echo $error ? 'class="text-warning"' : '';?>><?php echo $text?></h1>
+    <?php if (!$error) : ?>
+        <h3>Users</h3>
+        <hr/>
+        <ul>
+            <?php foreach($users as $user) : ?>
+                <li>
+                    <?php $helper->createUserPillLink((int) $user->id, $user->username); ?>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+        <h3>Topics</h3>
+        <hr/>
+        <ul>
+            <?php foreach($topics as $topic) : ?>
+                <li>
+                    <?php $helper->createTopicSearchLink((int) $topic->id, $topic->name, $topic->description); ?>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+        <h3>Suggestions</h3>
+        <hr/>
+        <ul>
+            <?php foreach($suggestions as $suggestion) : ?>
+                <li>
+                    <?php $helper->createSuggestionSearchLink((int) $suggestion->topic, $suggestion->title, $suggestion->shortDescription); ?>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    <?php endif; ?>
+</div>

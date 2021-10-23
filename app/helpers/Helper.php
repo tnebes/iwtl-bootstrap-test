@@ -176,4 +176,19 @@ class Helper
    {
       return (bool) ((new Topic)->getTopicById($topicId));
    }
+
+   public function createUserPillLink(int $userId, string $username) : void
+   {
+      echo '<a class="badge rounded-pill bg-info text-dark" href="' . URL_ROOT . '/users/profile/' . $userId . '">' . $username . '</a>';
+   }
+
+   public function createTopicSearchLink(int $topicId, string $topicName, string $topicDescription) : void
+   {
+      echo '<a href="' . URL_ROOT . '/topics/topic/' . $topicId . '">' . $topicName . '</a>: ' . $topicDescription;
+   }
+   
+   public function createSuggestionSearchLink(int $topicId, string $suggestionTitle, string $suggestionShortDescription) : void
+   {
+      echo '<a href="' . URL_ROOT . '/topics/topic/' . $topicId . '">' . $suggestionTitle . '</a>: ' . $suggestionShortDescription;
+   }
 }

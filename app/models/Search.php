@@ -21,8 +21,9 @@ class Search extends Model
     public function searchTopics(string $searchTerm) : array
     {
         $searchTerm = '%' . $searchTerm . '%';
-        $sql = "SELECT id, `description` FROM topic WHERE
-            `description` LIKE :searchTerm;";
+        $sql = "SELECT id, `name`, CONCAT(LEFT(`description`, 50), '...') as `description` FROM topic WHERE
+            `description` LIKE :searchTerm;
+            OR `name` LIKE :searchTerm;";
         $statement = $this->dbHandler->prepare($sql);
         $statement->bindParam(':searchTerm', $searchTerm);
         $statement->execute();
@@ -32,7 +33,7 @@ class Search extends Model
     public function searchSuggestions(string $searchTerm) : array
     {
         $searchTerm = '%' . $searchTerm . '%';
-        $sql = "SELECT id, title, shortDescription FROM suggestion WHERE
+        $sql = "SELECT topic, title, CONCAT(LEFT(shortDescription, 50), '...') as shortDescription FROM suggestion WHERE
             title LIKE :searchTerm
             OR shortDescription LIKE :searchTerm
             OR longDescription LIKE :searchTerm;";

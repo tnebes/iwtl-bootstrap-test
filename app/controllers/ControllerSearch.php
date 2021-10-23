@@ -38,7 +38,7 @@ class ControllerSearch extends Controller
         {
             $data['error'] = true;
             $data['title'] = 'Search Error';
-            $data['text'] = 'Search term be at least 2 characters long.';
+            $data['text'] = 'Search term must be at least 2 characters long.';
         }
         else if (strlen($searchTerm) > 100)
         {
