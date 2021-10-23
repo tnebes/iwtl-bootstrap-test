@@ -33,9 +33,9 @@ class ControllerUsers extends Pagination
       if ($this->currentPage != 0)
       {
          if ($this->helper->isLoggedIn()) {
-            $users = $this->model->getUsers(PRIVATE_SQL_DATA, (int) (ENTRIES_PER_PAGE * ($this->currentPage - 1)), (int) (ENTRIES_PER_PAGE * $this->currentPage));
+            $users = $this->model->getUsers(PRIVATE_SQL_DATA, (int) (ENTRIES_PER_PAGE * ($this->currentPage - 1)), (int) (ENTRIES_PER_PAGE));
          } else {
-            $users = $this->model->getUsers(PUBLIC_SQL_DATA, (int) (ENTRIES_PER_PAGE * ($this->currentPage - 1)), (int) (ENTRIES_PER_PAGE * $this->currentPage));
+            $users = $this->model->getUsers(PUBLIC_SQL_DATA, (int) (ENTRIES_PER_PAGE * ($this->currentPage - 1)), (int) (ENTRIES_PER_PAGE));
          }
       }
 

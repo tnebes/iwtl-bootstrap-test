@@ -28,7 +28,7 @@ class ControllerTopics extends Pagination
       $topics = [];
       if ($this->currentPage != 0)
       {
-         $topics = $this->model->getTopics((int) (ENTRIES_PER_PAGE * ($this->currentPage - 1)), (int) (ENTRIES_PER_PAGE * $this->currentPage));
+         $topics = $this->model->getTopics((int) (ENTRIES_PER_PAGE * ($this->currentPage - 1)), (int) (ENTRIES_PER_PAGE));
       }      
       $this->view->render('topics/index', [
          'topics' => $topics,
