@@ -10,7 +10,7 @@ $helper = Helper::getInstance();
       </h2>
       <?php
       echo '<a class="btn btn-danger" href=' . URL_ROOT . '/users/delete/' . $user->id . '>Delete User</a>';
-      echo $helper->isAdmin() ?? '<a class="btn btn-warning" href=' . URL_ROOT . '/users/ban/' . $user->id . '>Ban User</a>';
+      echo $helper->isAdmin() ? '<a class="btn btn-warning" href=' . URL_ROOT . '/users/ban/' . $user->id . '>Ban User</a>' : '';
       ?>
    </div>
    <form class="card-body" method="POST" action="<?php echo URL_ROOT . '/users/update/' . $user->id; ?>">
