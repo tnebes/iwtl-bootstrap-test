@@ -8,7 +8,8 @@
          <?php
          echo '<a class="btn btn-info" href=' . URL_ROOT . '/users/update/' . $user->id . '>Edit User</a>';
          echo '<a class="btn btn-danger" href=' . URL_ROOT . '/users/delete/' . $user->id . '>Delete User</a>';
-         echo '<a class="btn btn-warning" href=' . URL_ROOT . '/users/ban/' . $user->id . '>Ban User</a>';
+         $banText = $user->banned ? 'Unban' : 'Ban';
+         echo '<a class="btn btn-warning" href=' . URL_ROOT . '/users/ban/' . $user->id . '>' . $banText . ' User</a>';
          ?>
       </div>
       <div class="card-body">
