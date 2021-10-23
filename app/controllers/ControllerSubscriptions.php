@@ -28,12 +28,18 @@ class ControllerSubscriptions extends Controller
     */
    public function subscribe(): void
    {
+      $helper = Helper::getInstance();
       if (!$this->helper->isLoggedIn()) {
          header('location: ' . URL_ROOT . '/errorPages/restricted');
          return;
       }
       $topicId = (int) func_get_arg(0);
       if ($topicId < 1)
+      {
+         header('location: ' . URL_ROOT . '/errorPages/notFound');
+         return;
+      }
+      if (!$helper->checkTopicExists($topicId))
       {
          header('location: ' . URL_ROOT . '/errorPages/notFound');
          return;

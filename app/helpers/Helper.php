@@ -172,8 +172,8 @@ class Helper
       return URL_ROOT . '/users/profile/' . $user->id;
    }
 
-   function createTestData() : void
+   public function checkTopicExists(int $topicId) : bool
    {
-      
+      return (bool) ((new Topic)->getTopicById($topicId));
    }
 }
