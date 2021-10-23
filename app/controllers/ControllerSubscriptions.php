@@ -33,6 +33,11 @@ class ControllerSubscriptions extends Controller
          return;
       }
       $topicId = (int) func_get_arg(0);
+      if ($topicId < 1)
+      {
+         header('location: ' . URL_ROOT . '/errorPages/notFound');
+         return;
+      }
       $data = [
          'redirect' => $_SERVER['HTTP_REFERER'] ?? URL_ROOT . 'subscriptions',
       ];
