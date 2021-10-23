@@ -19,6 +19,7 @@ abstract class Model
 
    /**
     * Protected create function.
+    * @deprecated
     * @param string $tName is the table name in the SQL database
     * @param array $cols is the column(s) to be created
     * @param array $vals is the values to be inserted into the columns
@@ -65,6 +66,7 @@ abstract class Model
 
    /**
     * Protected read function
+   * @deprecated
     * @param string $tName
     * @param array $cols
     * @param array|null $criteria
@@ -164,6 +166,9 @@ abstract class Model
       return $this->db->execute();
    }
 
+   /**
+    * @deprecated
+    */
    protected function delete(string $tName, ?array $criteria, ?array $criteriaVals): bool
    {
       if (empty($tName)) {
