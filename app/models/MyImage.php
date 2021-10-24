@@ -10,12 +10,11 @@ class MyImage extends Model
 
     public function createImage(int $userId, string $filePath, string $altText, int $suggestionId = null) : int
     {
-        $sql = "INSERT INTO $this->TABLE_NAME (user, filePath, altText, suggestion) values (:userId, :filePath, :altText, :suggestion);";
+        $sql = "INSERT INTO $this->TABLE_NAME (user, filePath, altText) values (:userId, :filePath, :altText);";
         $statement = $this->dbHandler->prepare($sql);
         $statement->bindParam(':userId', $userId, PDO::PARAM_INT);
         $statement->bindParam(':filePath', $filePath);
         $statement->bindParam(':altText', $altText);
-        $statement->bindParam(':suggestion', $suggestionId);
         $statement->execute();
         return (int) $this->dbHandler->lastInsertId();
     }

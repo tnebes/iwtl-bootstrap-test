@@ -71,11 +71,6 @@ class Topic extends Model
    {
       $this->dbHandler->beginTransaction();
 
-      $sql = "delete from image where suggestion in (select id from suggestion where topic = :topicId);";
-      $statement = $this->dbHandler->prepare($sql);
-      $statement->bindParam(':topicId', $id, PDO::PARAM_INT);
-      $statement->execute();
-
       $sql = "delete from userTopicSubscription where topic = :topicId;";
       $statement = $this->dbHandler->prepare($sql);
       $statement->bindParam(':topicId', $id, PDO::PARAM_INT);
@@ -92,6 +87,16 @@ class Topic extends Model
       $statement->execute();
 
       $sql = "delete from topic where id = :topicId;";
+      $statement = $this->dbHandler->prepare($sql);
+      $statement->bindParam(':topicId', $id, PDO::PARAM_INT);
+      $statement->execute();
+
+      $sql = "delete from image where id in (select image from suggestion where topic = :topicId);";
+      $statement = $this->dbHandler->prepare($sql);
+      $statement->bindParam(':topicId', $id, PDO::PARAM_INT);
+      $statement->execute();
+
+      $sql = "delete from image where id in (select image from topic where id = :topicId);";
       $statement = $this->dbHandler->prepare($sql);
       $statement->bindParam(':topicId', $id, PDO::PARAM_INT);
       $statement->execute();

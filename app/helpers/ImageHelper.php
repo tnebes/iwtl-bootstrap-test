@@ -27,7 +27,7 @@ class ImageHelper
         return '';
     }
 
-    public static function moveImage(array $image, int $suggestionId = null) : int
+    public static function moveImage(array $image) : int
     {
         $myImage = new MyImage;
         $uniqueId = $myImage->getMaxId();
@@ -42,6 +42,6 @@ class ImageHelper
         //     die('Failed to upload file ' . $image['tmp_name'] . ' to ' . $newFileName);
         // }
         move_uploaded_file($image['tmp_name'], $newFileName);
-        return $myImage->createImage((int) $_SESSION['id'], $newFileName, 'example alt text', $suggestionId);
+        return $myImage->createImage((int) $_SESSION['id'], $newFileName, 'example alt text');
     }
 }

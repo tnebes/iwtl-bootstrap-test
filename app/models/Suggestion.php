@@ -12,7 +12,7 @@ class Suggestion extends Model
 
    public function insert(stdClass $suggestion): bool
    {
-      $sql = "INSERT INTO $this->TABLE_NAME VALUES (null, :user, :title, :topic, :datePosted, :shortDescription, :longDescription)";
+      $sql = "INSERT INTO $this->TABLE_NAME VALUES (null, :user, :title, :topic, :datePosted, :shortDescription, :longDescription, :image)";
       $statement = $this->dbHandler->prepare($sql);
       $statement->bindParam(':user', $suggestion->user);
       $statement->bindParam(':title', $suggestion->title);
@@ -20,6 +20,7 @@ class Suggestion extends Model
       $statement->bindParam(':datePosted', $suggestion->datePosted);
       $statement->bindParam(':shortDescription', $suggestion->shortDescription);
       $statement->bindParam(':longDescription', $suggestion->longDescription);
+      $statement->bindParam(':image', $suggestion->image);
       return $statement->execute();
    }
 
@@ -43,8 +44,9 @@ class Suggestion extends Model
    public function getSuggestionsByTopicId(int $topicId)
    {
       // TODO: update this to show the most upvoted things.
-      $sql = "select a.id, a.`user`, a.title, a.topic, a.datePosted, a.shortDescription, a.longDescription, b.username from $this->TABLE_NAME a 
+      $sql = "select a.id, a.`user`, a.title, a.topic, a.datePosted, a.shortDescription, a.longDescription, b.username, c.filePath from $this->TABLE_NAME a 
       inner join user b on a.`user` = b.id
+      left join image c on a.image = c.id
       where a.topic = :topicId
       order by (select sum(userScore) from userSuggestionReview c where a.id = c.suggestion) desc, a.datePosted desc;";
       $statement = $this->dbHandler->prepare($sql);
@@ -56,8 +58,9 @@ class Suggestion extends Model
    public function getNumTopicsByTopicId(int $topicId, int $numb)
    {
       // TODO: update this to show the most upvoted things.
-      $sql = "select a.id, a.`user`, a.title, a.topic, a.datePosted, a.shortDescription, a.longDescription, b.username from $this->TABLE_NAME a 
+      $sql = "select a.id, a.`user`, a.title, a.topic, a.datePosted, a.shortDescription, a.longDescription, b.username, c.filePath from $this->TABLE_NAME a 
       inner join user b on a.`user` = b.id
+      left join image c on a.image = c.id
       where a.topic = :topicId
       order by (select sum(userScore) from userSuggestionReview c where a.id = c.suggestion) desc, a.datePosted desc
       limit :numb;";
@@ -115,7 +118,7 @@ class Suggestion extends Model
 
    public function myUpdate(stdClass $suggestion): bool
    {
-      $sql = "UPDATE $this->TABLE_NAME SET user = :user, title = :title, topic = :topic, datePosted = :datePosted, shortDescription = :shortDescription, longDescription = :longDescription WHERE id = :id";
+      $sql = "UPDATE $this->TABLE_NAME SET user = :user, title = :title, topic = :topic, datePosted = :datePosted, shortDescription = :shortDescription, longDescription = :longDescription image=:image WHERE id = :id";
       $statement = $this->dbHandler->prepare($sql);
       $statement->bindParam(':user', $suggestion->user);
       $statement->bindParam(':title', $suggestion->title);
@@ -123,6 +126,7 @@ class Suggestion extends Model
       $statement->bindParam(':datePosted', $suggestion->datePosted);
       $statement->bindParam(':shortDescription', $suggestion->shortDescription);
       $statement->bindParam(':longDescription', $suggestion->longDescription);
+      $statement->bindParam(':image', $suggestion->image);
       $statement->bindParam(':id', $suggestion->id);
       return $statement->execute();
    }
@@ -131,17 +135,17 @@ class Suggestion extends Model
    {
       $this->dbHandler->beginTransaction();
 
-      $sql = "update image set suggestion = null where suggestion = :suggestionId;";
-      $statement = $this->dbHandler->prepare($sql);
-      $statement->bindParam(':suggestionId', $id);
-      $statement->execute();
-
       $sql = "delete from userSuggestionReview where suggestion = :suggestionId;";
       $statement = $this->dbHandler->prepare($sql);
       $statement->bindParam(':suggestionId', $id);
       $statement->execute();
 
       $sql = "delete from suggestion where id = :suggestionId;";
+      $statement = $this->dbHandler->prepare($sql);
+      $statement->bindParam(':suggestionId', $id);
+      $statement->execute();
+
+      $sql = "delete from image where id in (select image from $this->TABLE_NAME where id = :suggestionId)";
       $statement = $this->dbHandler->prepare($sql);
       $statement->bindParam(':suggestionId', $id);
       $statement->execute();

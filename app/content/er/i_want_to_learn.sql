@@ -19,7 +19,7 @@ create table topic(
    `description` text not null,
    datePosted datetime not null default current_timestamp,
    user int not null,
-   image int
+   `image` int
 );
 create table suggestion(
    id int primary key not null auto_increment,
@@ -28,15 +28,15 @@ create table suggestion(
    topic int not null,
    datePosted datetime not null default current_timestamp,
    shortDescription varchar(255) not null,
-   longDescription text
+   longDescription text,
+   `image` int
 );
 create table image(
    id int primary key not null auto_increment,
    `user` int not null,
    filePath varchar(255) not null,
    datePosted datetime not null default current_timestamp,
-   altText varchar(255),
-   suggestion int
+   altText varchar(255)
 );
 create table userTopicSubscription(
    `user` int not null,
@@ -57,10 +57,10 @@ alter table suggestion
 add foreign key (user) references user(id);
 alter table suggestion
 add foreign key (topic) references topic(id);
+alter table suggestion
+add foreign key (image) references image(id);
 alter table image
 add foreign key (user) references user(id);
-alter table image
-add foreign key (suggestion) references suggestion(id);
 alter table userTopicSubscription
 add foreign key (user) references user(id);
 alter table userTopicSubscription
