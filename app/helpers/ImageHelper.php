@@ -17,13 +17,26 @@ class ImageHelper
             8 => "A PHP extension stopped the file upload."
         ];
         $type = explode('/', $image['type']);
-        if ($type[0] != 'image') {
-            return 'A valid image must be uploaded.';
-        }
-        elseif (isset($image['error']))
+        if ($image['error'] != 0)
         {
             return $ERRORS[$image['error']];
         }
+        if ($type[0] != 'image') {
+            return 'A valid image must be uploaded.';
+        }
         return '';
+    }
+
+    public static function moveImage(array $image, int $suggestionId = null) : int
+    {
+        $myImage = new MyImage;
+        $uniqueId = $myImage->getMaxId();
+        if (is_null($uniqueId))
+        {
+            $uniqueId = 1;
+        }
+        $newFileName = UPLOAD_PATH . $uniqueId . '.' . (explode('/', $image['type'])[1]);
+        move_uploaded_file($image['tmp_name'] . $image['name'], $newFileName);
+        return $myImage->createImage((int) $_SESSION['id'], $newFileName, 'example alt text', $suggestionId);
     }
 }

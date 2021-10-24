@@ -35,12 +35,13 @@ class MyImage extends Model
     /**
      * Function used to determine the random name of an uploaded image based on ids. This should never go wrong, now can it?
      */
-    public function getMaxId() : int
+    public function getMaxId() : ?int
     {
         $sql = "SELECT MAX(id) from $this->TABLE_NAME;";
         $statement = $this->dbHandler->prepare($sql);
         $statement->execute();
-        return $statement->fetchAll()[0];
+        // cursed
+        return (int) $statement->fetchAll()[0][0] ?? null;
     }
  
 }

@@ -7,6 +7,7 @@ const APP_AUTHOR = 'tnebes';
 
 const URL_ROOT = 'http://bootstrap.com';
 define('APP_ROOT', dirname(__DIR__, 2));
+define('UPLOAD_PATH', APP_ROOT . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'content' . DIRECTORY_SEPARATOR . 'img' . DIRECTORY_SEPARATOR);
 
 const DB_HOST = 'localhost';
 const DB_NAME = 'iwtl';

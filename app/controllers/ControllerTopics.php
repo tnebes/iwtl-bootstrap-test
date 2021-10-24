@@ -86,12 +86,12 @@ class ControllerTopics extends Pagination
          $data['nameError'] = $this->validateName($data['name']);
          $data['descriptionError'] = $this->validateDescription($data['description']);
          $data['imageError'] = isset($data['image']) ? ImageHelper::validateImage($data['image']) : '';
-         die(var_dump($data));
 
          if ($data['nameError'] !== '' || $data['descriptionError'] !== '' || $data['imageError'] !== '') {
             $this->view->render('topics/create', $data);
             return;
          }
+         die(ImageHelper::moveImage($data['image']));
          $topicId = $this->model->createTopic($data['name'], $data['description'], $data['datePosted'], $data['user']);
          header('location:' . URL_ROOT . '/topics/topic/' . $topicId);
          // $this->topic($topicId);
