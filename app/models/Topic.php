@@ -14,17 +14,20 @@ class Topic extends Model
    /**
     * Unlike similar methods in the parent class, this method returns the int id of the created row.
     */
+
    public function createTopic(string $name, string $description, string $datePosted, int $user, int $imageId = null): int
    {
       $this->create($this->TABLE_NAME, ['name', 'description', 'datePosted', 'user', 'image'], [$name, $description, $datePosted, $user, $imageId]);
       // cursed
-      return (int) $this->read($this->TABLE_NAME, ['id'], ['name', 'description', 'datePosted', 'user'], [$name, $description, $datePosted, $user])[0]->id;
+      return (int) $this->read($this->TABLE_NAME, ['id'], ['name', 'description', 'datePosted', 'user', 'image'], [$name, $description, $datePosted, $user, $imageId])[0]->id;
    }
 
+   //select * from topic a inner join user b on a.user = b.id left join image c on a.image = c.id where a.image is not null and a.id = 103;
    public function getTopics(int $from, int $to): array
    {
-      $sql = "SELECT a.id, a.name, a.description, a.datePosted, a.user, image, b.username FROM $this->TABLE_NAME a
+      $sql = "SELECT a.id, a.name, a.description, a.datePosted, a.user, image, c.filePath, c.altText, b.username FROM $this->TABLE_NAME a
       inner join user b on a.`user` = b.id
+      left join image c on a.image = c.id
       order by datePosted desc
       limit :from, :to;";
       $statement = $this->dbHandler->prepare($sql);
@@ -41,8 +44,9 @@ class Topic extends Model
 
    public function getTopicById(int $id): ?stdClass
    {
-      $sql = "SELECT a.id, a.name, a.description, a.datePosted, a.user, image, b.username FROM $this->TABLE_NAME a
+      $sql = "SELECT a.id, a.name, a.description, a.datePosted, a.user, image, c.filePath, c.altText, b.username FROM $this->TABLE_NAME a
       inner join user b on a.`user` = b.id
+      left join image c on a.image = c.id
       where a.id = :topicId;";
       $statement = $this->dbHandler->prepare($sql);
       $statement->bindParam(':topicId', $id, PDO::PARAM_INT);

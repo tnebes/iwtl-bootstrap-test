@@ -29,14 +29,14 @@ class ControllerPages extends Controller
    {
       $faker = Faker\Factory::create();
       $NUM_OF_USER_TOPICS = 100;
-      // create 100 users, 100 topics for each user, 1 review per topic
+      // create 100 users, 100 topics, 1 review per topic
       for ($i = 0; $i < $NUM_OF_USER_TOPICS; $i++)
       {
-         (new User)->register($faker->userName(), $faker->email(), $faker->password());
+         (new User)->register($faker->userName(), $faker->email(), password_hash($faker->password(), PASSWORD_DEFAULT));
       }
       for ($i = 0; $i < $NUM_OF_USER_TOPICS; $i++)
       {
-         (new Topic)->createTopic($faker->jobTitle(), $faker->realTextBetween(), (new DateTime())->format('Y-m-d H:i:s'), random_int(1, 100));
+         (new Topic)->createTopic($faker->jobTitle(), $faker->realTextBetween(), (new DateTime())->format('Y-m-d H:i:s'), random_int(1, 50), null);
       }
       
       

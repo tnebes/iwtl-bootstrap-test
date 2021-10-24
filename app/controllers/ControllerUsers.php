@@ -142,7 +142,6 @@ class ControllerUsers extends Pagination
          $data['emailError'] = $this->helper->validateEmail($data['email']);
          $data['passwordError'] = $this->helper->validatePassword($data['password']);
          $data['confirmPasswordError'] = $this->helper->validateConfirmPassword($data['password'], $data['confirmPassword']);
-         print_r($data);
          if ($data['passwordError'] || $data['confirmPasswordError']) {
             $data['password'] = '';
             $data['confirmPassword'] = '';

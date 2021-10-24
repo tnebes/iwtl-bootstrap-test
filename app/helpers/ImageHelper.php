@@ -36,6 +36,11 @@ class ImageHelper
             $uniqueId = 1;
         }
         $newFileName = UPLOAD_PATH . $uniqueId . '.' . (explode('/', $image['type'])[1]);
+        // die(Helper::getInstance()->debugDisplay($image));
+        // if (!move_uploaded_file($image['tmp_name'], $newFileName))
+        // {
+        //     die('Failed to upload file ' . $image['tmp_name'] . ' to ' . $newFileName);
+        // }
         move_uploaded_file($image['tmp_name'], $newFileName);
         return $myImage->createImage((int) $_SESSION['id'], $newFileName, 'example alt text', $suggestionId);
     }

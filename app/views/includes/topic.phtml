@@ -10,7 +10,7 @@
    ?>
    <div class="container">
       <div class="">
-         <img src="...image..." alt="...img...">
+         <?php !is_null($topic->filePath) ? ImageGetter::getImage($topic->filePath, null, $topic->altText, 300, 300) : '';?>
          <div class="">
             <div class="">
                <h1>
