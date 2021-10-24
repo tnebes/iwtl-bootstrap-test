@@ -80,7 +80,7 @@ class ControllerTopics extends Pagination
          $data['description'] = trim($_POST['description']);
          $data['datePosted'] = (new DateTime())->format('Y-m-d H:i:s');
          $data['user'] = (int) $_SESSION['id'];
-         $data['image'] = null; // TODO: add the image path or something
+         $data['image'] = isset($_FILES['image']) ?? $_FILES['image'];
          unset($_POST);
 
          $data['nameError'] = $this->validateName($data['name']);

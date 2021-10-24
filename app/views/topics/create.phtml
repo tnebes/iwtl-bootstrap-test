@@ -1,6 +1,6 @@
 <div class="container mt-5">
-   <form method="POST" action="/topics/create">
-      <!-- Title input -->
+   <form method="POST" action="<?php echo URL_ROOT . '/topics/create';?>" enctype="multipart/form-data">
+
       <div class="form-outline mx-auto mb-4">
          <label for="name"><h1>Title of your question</h1></label>
          <input type="text" id="name" name="name" class="form-control" placeholder="<?php echo Helper::getInstance()->getRandomTopicTitle(); ?>" value="<?php echo $name ?>" />
@@ -9,17 +9,22 @@
          <?php endif; ?>
       </div>
 
-      <!-- Description input -->
       <div class="form-outline mb-4">
          <label for="description"><h2>Description of your question</h2></label>
          <textarea class="form-control" id="description" name="description" rows="10" placeholder="Short description goes here."><?php echo $description ?></textarea>
          <?php if (!empty($descriptionError)) : ?>
             <span class="text-warning" role="alert"><?php echo $descriptionError ?></span>
          <?php endif; ?>
-
       </div>
 
-      <!-- Submit button -->
+      <div class="form-outline mb-4">
+         <div class="container p-0 m-0">
+            <label for="image"><h2>Optional image</h2></label><br />
+            <input type="hidden" name="MAX_FILE_SIZE" value="<?php echo FILE_UPLOAD_SIZE?>">
+            <input type="file" name="image" id="image">
+         </div>
+      </div>
+
       <div class="container">
          <div class="col-xl">
             <div class="row mx-auto">
