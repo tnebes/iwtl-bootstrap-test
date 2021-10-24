@@ -80,12 +80,13 @@ class ControllerTopics extends Pagination
          $data['description'] = trim($_POST['description']);
          $data['datePosted'] = (new DateTime())->format('Y-m-d H:i:s');
          $data['user'] = (int) $_SESSION['id'];
-         $data['image'] = isset($_FILES['image']) ?? $_FILES['image'];
+         $data['image'] = $_FILES['image'] ?? $_FILES['image'];
          unset($_POST);
 
          $data['nameError'] = $this->validateName($data['name']);
          $data['descriptionError'] = $this->validateDescription($data['description']);
-         $data['imageError'] = ''; // TODO: $this->validateImage($data['image']);
+         $data['imageError'] = isset($data['image']) ? ImageHelper::validateImage($data['image']) : '';
+         die(var_dump($data));
 
          if ($data['nameError'] !== '' || $data['descriptionError'] !== '' || $data['imageError'] !== '') {
             $this->view->render('topics/create', $data);

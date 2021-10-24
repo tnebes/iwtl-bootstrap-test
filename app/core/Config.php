@@ -20,6 +20,6 @@ const ENTRIES_PER_PAGE = 10;
 // it is best not to change this constant.
 const PAGINATION_BUTTONS = 4;
 
-const FILE_UPLOAD_SIZE = 5120;
+const FILE_UPLOAD_SIZE = 3000000;
 
 const ADMIN_ROLE = 1;
