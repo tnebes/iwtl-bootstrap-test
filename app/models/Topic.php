@@ -17,9 +17,16 @@ class Topic extends Model
 
    public function createTopic(string $name, string $description, string $datePosted, int $user, int $imageId = null): int
    {
-      $this->create($this->TABLE_NAME, ['name', 'description', 'datePosted', 'user', 'image'], [$name, $description, $datePosted, $user, $imageId]);
-      // cursed
-      return (int) $this->read($this->TABLE_NAME, ['id'], ['name', 'description', 'datePosted', 'user', 'image'], [$name, $description, $datePosted, $user, $imageId])[0]->id;
+      $sql = "INSERT INTO $this->TABLE_NAME (name, description, datePosted, user, image)
+      values (:name, :description, :datePosted, :user, :imageId);";
+      $statement = $this->dbHandler->prepare($sql);
+      $statement->bindParam(':name', $name);
+      $statement->bindParam(':description', $description);
+      $statement->bindParam(':datePosted', $datePosted);
+      $statement->bindParam(':user', $user, PDO::PARAM_INT);
+      $statement->bindParam(':imageId', $imageId);
+      $statement->execute();
+      return (int) $this->dbHandler->lastInsertId();
    }
 
    //select * from topic a inner join user b on a.user = b.id left join image c on a.image = c.id where a.image is not null and a.id = 103;

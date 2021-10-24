@@ -18,18 +18,19 @@ if (!isset($topics) && !is_array($topics) && count($topics) < 1) {
       </a>
    </div>
 <?php endif; ?>
-
-<?php
-include APP_ROOT . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'pagination.phtml';
-echo '<ul class="list-group">';
-// TODO: cursed
-$numberOfSuggestions = 3;
-// end of cursed code
-foreach ($topics as $topic) {
-   include APP_ROOT . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'topic.phtml';
-}
-echo '</ul>';
+<div class="container mx-auto px-0">
+   <?php
+   include APP_ROOT . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'pagination.phtml';
+   echo '<ul class="list-group">';
+   // TODO: cursed
+   $numberOfSuggestions = 3;
+   // end of cursed code
+   foreach ($topics as $topic) {
+      include APP_ROOT . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'topic.phtml';
+   }
+   echo '</ul>';
 ?>
+</div>
 <?php
 include APP_ROOT . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'pagination.phtml';
 ?>

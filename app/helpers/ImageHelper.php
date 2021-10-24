@@ -35,7 +35,7 @@ class ImageHelper
         {
             $uniqueId = 1;
         }
-        $newFileName = UPLOAD_PATH . $uniqueId . '.' . (explode('/', $image['type'])[1]);
+        $newFileName = UPLOAD_PATH . $uniqueId;// . '.' . (explode('/', $image['type'])[1]);
         // die(Helper::getInstance()->debugDisplay($image));
         // if (!move_uploaded_file($image['tmp_name'], $newFileName))
         // {

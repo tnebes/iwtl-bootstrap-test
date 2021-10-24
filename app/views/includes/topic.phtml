@@ -9,10 +9,10 @@
 
    ?>
    <div class="container">
-      <div class="">
+      <div class="container">
          <?php !is_null($topic->filePath) ? ImageGetter::getImage($topic->filePath, null, $topic->altText, 300, 300) : '';?>
-         <div class="">
-            <div class="">
+         <div class="container">
+            <div class="container text-truncate">
                <h1>
                   <a href="<?php echo $helper->getLinkToTopic($topic); ?>">
                      <?php echo $topic->name ?>
