@@ -22,7 +22,7 @@
             <label for="image"><h2>Optional image</h2></label><br />
             <input type="hidden" name="MAX_FILE_SIZE" value="<?php echo FILE_UPLOAD_SIZE?>">
             <input class="p-1" type="file" name="image" id="image">
-            <?php if (!empty($descriptionError)) : ?>
+            <?php if (!empty($imageError)) : ?>
                <span class="text-warning" role="alert"><?php echo $imageError ?></span>
             <?php endif; ?>
          </div>

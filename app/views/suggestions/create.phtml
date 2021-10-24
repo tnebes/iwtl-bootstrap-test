@@ -9,7 +9,7 @@ echo '</ul>';
 ?>
 
 <div class="container mt-5">
-   <form method="POST" action="/suggestions/create/<?php echo $topic->id ?>">
+   <form method="POST" action="/suggestions/create/<?php echo $topic->id ?>" enctype="multipart/form-data">
       <!-- Title input -->
       <div class="form-outline mx-auto mb-4">
           <label for="title"><h1>Title of your answer</h1></label>
@@ -34,6 +34,17 @@ echo '</ul>';
          <?php if (!empty($suggestionShortDescriptionError)) : ?>
             <span class="text-warning" role="alert"><?php echo $suggestionShortDescriptionError ?></span>
          <?php endif; ?>
+      </div>
+
+      <div class="form-outline mb-4">
+         <div class="container p-0 m-0">
+            <label for="image"><h2>Optional image</h2></label><br />
+            <input type="hidden" name="MAX_FILE_SIZE" value="<?php echo FILE_UPLOAD_SIZE?>">
+            <input class="p-1" type="file" name="image" id="image">
+            <?php if (!empty($suggestionImageError)) : ?>
+               <span class="text-warning" role="alert"><?php echo $suggestionImageError ?></span>
+            <?php endif; ?>
+         </div>
       </div>
 
       <!-- Submit button -->

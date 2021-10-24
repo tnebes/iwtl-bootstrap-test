@@ -118,7 +118,7 @@ class Suggestion extends Model
 
    public function myUpdate(stdClass $suggestion): bool
    {
-      $sql = "UPDATE $this->TABLE_NAME SET user = :user, title = :title, topic = :topic, datePosted = :datePosted, shortDescription = :shortDescription, longDescription = :longDescription image=:image WHERE id = :id";
+      $sql = "UPDATE $this->TABLE_NAME SET user = :user, title = :title, topic = :topic, datePosted = :datePosted, shortDescription = :shortDescription, longDescription = :longDescription, `image`=:image WHERE id = :id";
       $statement = $this->dbHandler->prepare($sql);
       $statement->bindParam(':user', $suggestion->user);
       $statement->bindParam(':title', $suggestion->title);
@@ -127,13 +127,14 @@ class Suggestion extends Model
       $statement->bindParam(':shortDescription', $suggestion->shortDescription);
       $statement->bindParam(':longDescription', $suggestion->longDescription);
       $statement->bindParam(':image', $suggestion->image);
-      $statement->bindParam(':id', $suggestion->id);
+      $statement->bindParam(':id', $suggestion->id, PDO::PARAM_INT);
       return $statement->execute();
    }
 
    public function myDelete(int $id): bool
    {
       $this->dbHandler->beginTransaction();
+      $suggestionImageId = null;
 
       $sql = "delete from userSuggestionReview where suggestion = :suggestionId;";
       $statement = $this->dbHandler->prepare($sql);
@@ -145,9 +146,15 @@ class Suggestion extends Model
       $statement->bindParam(':suggestionId', $id);
       $statement->execute();
 
-      $sql = "delete from image where id in (select image from $this->TABLE_NAME where id = :suggestionId)";
+      $sql = "select image from suggestion where id = :suggestionId;";
       $statement = $this->dbHandler->prepare($sql);
       $statement->bindParam(':suggestionId', $id);
+      $statement->execute();
+      $suggestionImageId = $statement->fetchAll()[0];
+
+      $sql = "delete from image where id = :imageId";
+      $statement = $this->dbHandler->prepare($sql);
+      $statement->bindParam(':imageId', $suggestionImageId);
       $statement->execute();
 
       return $this->dbHandler->commit();

@@ -45,10 +45,12 @@ class ControllerSuggestions extends Controller
             'suggestionTitle' => '',
             'suggestionShortDescription' => '',
             'suggestionLongDescription' => '',
+            'image' => '',
 
             'suggestionTitleError' => '',
             'suggestionShortDescriptionError' => '',
             'suggestionLongDescriptionError' => '',
+            'suggestionImageError' => '',
             'scripts' => true
          ];
 
@@ -58,12 +60,14 @@ class ControllerSuggestions extends Controller
          $data['suggestionShortDescription'] = trim($_POST['shortDescription']);
          $data['suggestionLongDescription'] = trim($_POST['longDescription']);
          $data['topicSuggesterId'] = (int) $_SESSION['id'];
+         $data['image'] = $_FILES['image'] ?? null;
 
          $data['suggestionTitleError'] = $this->validateSuggestionTitle($data['suggestionTitle']);
          $data['suggestionShortDescriptionError'] = $this->validateSuggestionShortDescription($data['suggestionShortDescription']);
          $data['suggestionLongDescriptionError'] = $this->validateSuggestionLongDescription($data['suggestionLongDescription']);
+         $data['suggestionImageError'] = isset($data['image']) ? ImageHelper::validateImage($data['image']) : '';
 
-         if ($data['suggestionTitleError'] == '' && $data['suggestionShortDescriptionError'] == '' && $data['suggestionLongDescriptionError'] == '') {
+         if ($data['suggestionTitleError'] == '' && $data['suggestionShortDescriptionError'] == '' && $data['suggestionLongDescriptionError'] == '' && $data['suggestionImageError'] == '') {
             $suggestion = new stdClass;
             $suggestion->user = $data['topicSuggesterId'];
             $suggestion->title = $data['suggestionTitle'];
@@ -71,6 +75,7 @@ class ControllerSuggestions extends Controller
             $suggestion->datePosted = (new DateTime())->format('Y-m-d H:i:s');
             $suggestion->shortDescription = $data['suggestionShortDescription'];
             $suggestion->longDescription = $data['suggestionLongDescription'];
+            $suggestion->image = $data['image'] ? ImageHelper::moveImage($data['image']) : null;
 
             $this->model->insert($suggestion);
          } else {
@@ -121,10 +126,12 @@ class ControllerSuggestions extends Controller
             'suggestionTitle' => $suggestion->title,
             'suggestionShortDescription' => $suggestion->shortDescription,
             'suggestionLongDescription' => $suggestion->longDescription,
+            'image' => $suggestion->image,
 
             'suggestionTitleError' => '',
             'suggestionShortDescriptionError' => '',
             'suggestionLongDescriptionError' => '',
+            'suggestionImageError' => '',
             'scripts' => true
          ];
 
@@ -134,12 +141,14 @@ class ControllerSuggestions extends Controller
          $data['suggestionShortDescription'] = trim($_POST['shortDescription']);
          $data['suggestionLongDescription'] = trim($_POST['longDescription']);
          $data['topicSuggesterId'] = (int) $_SESSION['id'];
+         // $data['image'] = TODO:
 
          $data['suggestionTitleError'] = $this->validateSuggestionTitle($data['suggestionTitle']);
          $data['suggestionShortDescriptionError'] = $this->validateSuggestionShortDescription($data['suggestionShortDescription']);
          $data['suggestionLongDescriptionError'] = $this->validateSuggestionLongDescription($data['suggestionLongDescription']);
+         $data['suggestionImageError'] = ''; // ImageHelper::validateImage($data['image']); TODO:
 
-         if (empty($data['suggestionTitleError']) && empty($data['suggestionShortDescriptionError']) && empty($data['suggestionLongDescriptionError'])) {
+         if (empty($data['suggestionTitleError']) && empty($data['suggestionShortDescriptionError']) && empty($data['suggestionLongDescriptionError']) && empty($data['suggestionImageError'])) {
             $suggestion->title = $data['suggestionTitle'];
             $suggestion->shortDescription = $data['suggestionShortDescription'];
             $suggestion->longDescription = $data['suggestionLongDescription'];

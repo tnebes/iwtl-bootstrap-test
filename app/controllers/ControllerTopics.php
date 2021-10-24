@@ -80,7 +80,7 @@ class ControllerTopics extends Pagination
          $data['description'] = trim($_POST['description']);
          $data['datePosted'] = (new DateTime())->format('Y-m-d H:i:s');
          $data['user'] = (int) $_SESSION['id'];
-         $data['image'] = $_FILES['image'] ?? $_FILES['image'];
+         $data['image'] = $_FILES['image'] ?? null;
          unset($_POST);
 
          $data['nameError'] = $this->validateName($data['name']);
@@ -128,21 +128,21 @@ class ControllerTopics extends Pagination
          'name' => $topic->name,
          'description' => $topic->description,
          'user' => $topic->user,
-         'image' => $topic->image,
+         'image' => $topic->image ?? '',
          'scripts' => true
       ];
       if ($_SERVER['REQUEST_METHOD'] === 'POST') {
          $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
          $data['name'] = trim($_POST['name']);
          $data['description'] = trim($_POST['description']);
-         $data['image'] = null; // TODO: add the image path or something
+         // $data['image'] = $topic->image; TODO:
          $data['user'] = (int) $_SESSION['id'];
          $data['datePosted'] = $topic->datePosted;
          unset($_POST);
 
          $data['nameError'] = $this->validateName($data['name']);
          $data['descriptionError'] = $this->validateDescription($data['description']);
-         $data['imageError'] = ''; // TODO: $this->validateImage($data['image']);
+         $data['imageError'] = ''; // TODO: implement editing an image LATER.
          if ($data['nameError'] !== '' || $data['descriptionError'] !== '' || $data['imageError'] !== '') {
             $this->view->render('topics/edit', $data);
             return;
@@ -227,16 +227,6 @@ class ControllerTopics extends Pagination
       if (strlen($description) > 3000) {
          return 'Description must be less than 3000 characters';
       }
-      return '';
-   }
-
-   /**
-    * Method validates an image and returns an empty string if valid.
-    * @param string $image
-    * @return string
-    */
-   private function validateImage(string $image): string
-   {
       return '';
    }
 }

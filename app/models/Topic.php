@@ -70,6 +70,8 @@ class Topic extends Model
    public function deleteTopicById(int $id): bool
    {
       $this->dbHandler->beginTransaction();
+      $topicImageId = null;
+      $suggestionImageId = null;
 
       $sql = "delete from userTopicSubscription where topic = :topicId;";
       $statement = $this->dbHandler->prepare($sql);
@@ -81,24 +83,36 @@ class Topic extends Model
       $statement->bindParam(':topicId', $id, PDO::PARAM_INT);
       $statement->execute();
 
+      $sql = "select image from suggestion where topic = :topicId";
+      $statement = $this->dbHandler->prepare($sql);
+      $statement->bindParam(':topicId', $id, PDO::PARAM_INT);
+      $statement->execute();
+      $suggestionImageId = (int) $statement->fetch(PDO::FETCH_NUM)[0];
+
       $sql = "delete from suggestion where topic = :topicId;";
       $statement = $this->dbHandler->prepare($sql);
       $statement->bindParam(':topicId', $id, PDO::PARAM_INT);
       $statement->execute();
 
-      $sql = "delete from topic where id = :topicId;";
+      $sql = "select image from $this->TABLE_NAME where id = :topicId";
+      $statement = $this->dbHandler->prepare($sql);
+      $statement->bindParam(':topicId', $id, PDO::PARAM_INT);
+      $statement->execute();
+      $topicImageId = (int) $statement->fetch(PDO::FETCH_NUM)[0];
+
+      $sql = "delete from $this->TABLE_NAME where id = :topicId;";
       $statement = $this->dbHandler->prepare($sql);
       $statement->bindParam(':topicId', $id, PDO::PARAM_INT);
       $statement->execute();
 
-      $sql = "delete from image where id in (select image from suggestion where topic = :topicId);";
+      $sql = "delete from image where id = :id;";
       $statement = $this->dbHandler->prepare($sql);
-      $statement->bindParam(':topicId', $id, PDO::PARAM_INT);
+      $statement->bindParam(':id', $suggestionImageId, PDO::PARAM_INT);
       $statement->execute();
 
-      $sql = "delete from image where id in (select image from topic where id = :topicId);";
+      $sql = "delete from image where id = :id;";
       $statement = $this->dbHandler->prepare($sql);
-      $statement->bindParam(':topicId', $id, PDO::PARAM_INT);
+      $statement->bindParam(':id', $topicImageId, PDO::PARAM_INT);
       $statement->execute();
 
       return $this->dbHandler->commit();
