@@ -80,19 +80,24 @@ class ControllerTopics extends Pagination
          $data['description'] = trim($_POST['description']);
          $data['datePosted'] = (new DateTime())->format('Y-m-d H:i:s');
          $data['user'] = (int) $_SESSION['id'];
-         $data['image'] = $_FILES['image'] ?? null;
+         $data['image'] = $_FILES['image']['size'] != 0 ? $_FILES['image'] : null;
          unset($_POST);
 
          $data['nameError'] = $this->validateName($data['name']);
          $data['descriptionError'] = $this->validateDescription($data['description']);
-         $data['imageError'] = isset($data['image']) ? ImageHelper::validateImage($data['image']) : '';
+         $data['imageError'] = !is_null($data['image']) ? ImageHelper::validateImage($data['image']) : '';
 
          if ($data['nameError'] !== '' || $data['descriptionError'] !== '' || $data['imageError'] !== '') {
             $this->view->render('topics/create', $data);
             return;
          }
-         $imageId = ImageHelper::moveImage($data['image']);
-         $topicId = $this->model->createTopic($data['name'], $data['description'], $data['datePosted'], $data['user'], (int) $imageId);
+         $imageId = null;
+         if (!is_null($data['image']))
+         {
+            $imageId = ImageHelper::moveImage($data['image']);
+         }
+         Helper::getInstance()->debugDisplay($data);
+         $topicId = $this->model->createTopic($data['name'], $data['description'], $data['datePosted'], $data['user'], $imageId);
          header('location:' . URL_ROOT . '/topics/topic/' . $topicId);
          // $this->topic($topicId);
          return;

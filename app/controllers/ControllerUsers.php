@@ -281,7 +281,6 @@ class ControllerUsers extends Pagination
             $data['passwordError'] = $this->helper->validatePassword($data['password']);
          }
          $data['registrationDateError'] = $this->helper->validateDate($data['registrationDate']);
-         echo $data['registrationDateError'];
          $data['roleError'] = $this->helper->validateRole($data['role']);
          $data['lastLoginError'] = $this->helper->validateDate($data['lastLogin']);
          $data['dateBannedError'] = $this->helper->validateDate($data['dateBanned']);

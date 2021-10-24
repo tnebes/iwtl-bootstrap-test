@@ -33,6 +33,7 @@ class ControllerPages extends Controller
       $userModel = new User;
       $topicModel = new Topic;
       $userModel->register('tnebes', 't@nebes.hr', password_hash('letmeinside1', PASSWORD_DEFAULT));
+      $userModel->register('normie', 'normal@person.com', password_hash('letmeinside1', PASSWORD_DEFAULT));
       for ($i = 0; $i < $NUM_OF_USER_TOPICS; $i++)
       {
          $userModel->register($faker->userName(), $faker->email(), password_hash($faker->password(), PASSWORD_DEFAULT));

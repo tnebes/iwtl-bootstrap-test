@@ -44,7 +44,7 @@ class Suggestion extends Model
    public function getSuggestionsByTopicId(int $topicId)
    {
       // TODO: update this to show the most upvoted things.
-      $sql = "select a.id, a.`user`, a.title, a.topic, a.datePosted, a.shortDescription, a.longDescription, b.username, c.filePath from $this->TABLE_NAME a 
+      $sql = "select a.id, a.`user`, a.title, a.topic, a.datePosted, a.shortDescription, a.longDescription, b.username, c.filePath, c.altText from $this->TABLE_NAME a 
       inner join user b on a.`user` = b.id
       left join image c on a.image = c.id
       where a.topic = :topicId
@@ -58,7 +58,7 @@ class Suggestion extends Model
    public function getNumTopicsByTopicId(int $topicId, int $numb)
    {
       // TODO: update this to show the most upvoted things.
-      $sql = "select a.id, a.`user`, a.title, a.topic, a.datePosted, a.shortDescription, a.longDescription, b.username, c.filePath from $this->TABLE_NAME a 
+      $sql = "select a.id, a.`user`, a.title, a.topic, a.datePosted, a.shortDescription, a.longDescription, b.username, c.filePath, c.altText from $this->TABLE_NAME a 
       inner join user b on a.`user` = b.id
       left join image c on a.image = c.id
       where a.topic = :topicId

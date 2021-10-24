@@ -68,6 +68,11 @@ class User extends Model
       $statement->bindParam(':userId', $id, PDO::PARAM_INT);
       $statement->execute();
 
+      $sql = "update suggestion set image = null where image = (select id from image where user = :userId);";
+      $statement = $this->dbHandler->prepare($sql);
+      $statement->bindParam(':userId', $id, PDO::PARAM_INT);
+      $statement->execute();
+
       $sql = "delete from image where user = :userId;";
       $statement = $this->dbHandler->prepare($sql);
       $statement->bindParam(':userId', $id, PDO::PARAM_INT);

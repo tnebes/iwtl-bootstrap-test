@@ -15,9 +15,9 @@ class Topic extends Model
     * Unlike similar methods in the parent class, this method returns the int id of the created row.
     */
 
-   public function createTopic(string $name, string $description, string $datePosted, int $user, int $imageId = null): int
+   public function createTopic(string $name, string $description, string $datePosted, int $user, ?int $imageId = null): int
    {
-      $sql = "INSERT INTO $this->TABLE_NAME (name, description, datePosted, user, image)
+      $sql = "INSERT INTO $this->TABLE_NAME (name, description, datePosted, user, `image`)
       values (:name, :description, :datePosted, :user, :imageId);";
       $statement = $this->dbHandler->prepare($sql);
       $statement->bindParam(':name', $name);

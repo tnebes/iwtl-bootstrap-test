@@ -60,12 +60,12 @@ class ControllerSuggestions extends Controller
          $data['suggestionShortDescription'] = trim($_POST['shortDescription']);
          $data['suggestionLongDescription'] = trim($_POST['longDescription']);
          $data['topicSuggesterId'] = (int) $_SESSION['id'];
-         $data['image'] = $_FILES['image'] ?? null;
+         $data['image'] = $_FILES['image']['size'] != 0 ? $_FILES['image'] : null;
 
          $data['suggestionTitleError'] = $this->validateSuggestionTitle($data['suggestionTitle']);
          $data['suggestionShortDescriptionError'] = $this->validateSuggestionShortDescription($data['suggestionShortDescription']);
          $data['suggestionLongDescriptionError'] = $this->validateSuggestionLongDescription($data['suggestionLongDescription']);
-         $data['suggestionImageError'] = isset($data['image']) ? ImageHelper::validateImage($data['image']) : '';
+         $data['suggestionImageError'] = !is_null($data['image']) ? ImageHelper::validateImage($data['image']) : '';
 
          if ($data['suggestionTitleError'] == '' && $data['suggestionShortDescriptionError'] == '' && $data['suggestionLongDescriptionError'] == '' && $data['suggestionImageError'] == '') {
             $suggestion = new stdClass;

@@ -7,7 +7,7 @@ class ImageGetter
    {
       if (file_exists($imagePath)) {
         //  echo 'data:image/' . $imageType . ';base64,' . base64_encode(file_get_contents($imagePath));
-         echo '<img src="data:image/' . $imageType . ';base64,' . base64_encode(file_get_contents($imagePath)) . '" alt="' . ($altText ?? $altText) . '" class="rounded mx-auto d-block">';
+         echo '<img src="data:image/' . $imageType . ';base64,' . base64_encode(file_get_contents($imagePath)) . '" alt="' . ($altText ?? $altText) . '" class="rounded mx-auto d-block" width="' . $x . '">';
       } else {
           // TODO: insecure - shows server path. this needs to be done.
          echo 'Image not found! Intended file location: ' . $imagePath;

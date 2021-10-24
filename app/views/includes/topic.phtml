@@ -12,8 +12,8 @@
       <div class="container">
          <?php !is_null($topic->filePath) ? ImageGetter::getImage($topic->filePath, null, $topic->altText, 300, 300) : '';?>
          <div class="container">
-            <div class="container text-truncate">
-               <h1>
+            <div class="container text-truncate mx-0 px-0 mx-auto">
+               <h1 class="mx-0 px-0">
                   <a href="<?php echo $helper->getLinkToTopic($topic); ?>">
                      <?php echo $topic->name ?>
                   </a>
