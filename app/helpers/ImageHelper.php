@@ -36,7 +36,7 @@ class ImageHelper
             $uniqueId = 1;
         }
         $newFileName = UPLOAD_PATH . $uniqueId . '.' . (explode('/', $image['type'])[1]);
-        move_uploaded_file($image['tmp_name'] . $image['name'], $newFileName);
+        move_uploaded_file($image['tmp_name'], $newFileName);
         return $myImage->createImage((int) $_SESSION['id'], $newFileName, 'example alt text', $suggestionId);
     }
 }

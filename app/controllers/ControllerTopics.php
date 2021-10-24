@@ -61,7 +61,7 @@ class ControllerTopics extends Pagination
          return;
       }
       $data = [
-         'redirect' => $_SERVER['HTTP_REFERER'],
+         'redirect' => $_SERVER['HTTP_REFERER'] ?? URL_ROOT,
          'nameError' => '',
          'descriptionError' => '',
          'datePostedError' => '',
@@ -91,8 +91,8 @@ class ControllerTopics extends Pagination
             $this->view->render('topics/create', $data);
             return;
          }
-         die(ImageHelper::moveImage($data['image']));
-         $topicId = $this->model->createTopic($data['name'], $data['description'], $data['datePosted'], $data['user']);
+         $imageId = ImageHelper::moveImage($data['image']);
+         $topicId = $this->model->createTopic($data['name'], $data['description'], $data['datePosted'], $data['user'], );
          header('location:' . URL_ROOT . '/topics/topic/' . $topicId);
          // $this->topic($topicId);
          return;

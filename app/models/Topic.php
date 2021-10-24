@@ -14,9 +14,9 @@ class Topic extends Model
    /**
     * Unlike similar methods in the parent class, this method returns the int id of the created row.
     */
-   public function createTopic(string $name, string $description, string $datePosted, int $user): int
+   public function createTopic(string $name, string $description, string $datePosted, int $user, int $imageId = null): int
    {
-      $this->create($this->TABLE_NAME, ['name', 'description', 'datePosted', 'user'], [$name, $description, $datePosted, $user]);
+      $this->create($this->TABLE_NAME, ['name', 'description', 'datePosted', 'user', 'image'], [$name, $description, $datePosted, $user, $imageId]);
       // cursed
       return (int) $this->read($this->TABLE_NAME, ['id'], ['name', 'description', 'datePosted', 'user'], [$name, $description, $datePosted, $user])[0]->id;
    }
